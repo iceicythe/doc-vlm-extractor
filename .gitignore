@@ -47,6 +47,11 @@ _*.txt
 .workbuddy/
 private/
 
+# 含求职策略（简历写法 / 面试预备）的文档，不进公开仓库
+docs/多模态实习项目方案.md
+docs/多模态实习项目方案_v2.md
+requirements-backup.txt
+
 # ---------------- 密钥 ----------------
 .env
 *.key
