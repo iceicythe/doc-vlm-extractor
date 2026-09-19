@@ -196,7 +196,7 @@ def main() -> int:
                     help="逗号分隔的字段路径，如 明细.名称,表头.项目名称")
     ap.add_argument("--min-sim", type=float, default=0.50,
                     help="模糊匹配的最低相似度。默认 0.50 —— 阈值扫描的拐点："
-                         "0.50→0.40 时新增改动的有效率从 92% 掉到 43%（见 report_inject_sweep.md）")
+                         "0.50→0.40 时新增改动的有效率从 92%% 掉到 43%%（见 report_inject_sweep.md）")
     ap.add_argument("--min-gap", type=float, default=0.05)
     ap.add_argument("--no-fuzzy", action="store_true", help="只做精确命中，完全禁用模糊匹配")
     ap.add_argument("--include-date", action="store_true",

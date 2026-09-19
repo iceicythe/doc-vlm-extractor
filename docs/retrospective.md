@@ -1267,8 +1267,9 @@ SFT 之后词表纠正**无事可做**，因为 **SFT 已经把词表内化进�
 阈值是在**测试集**（n=102）上扫的。诚实做法：默认值取自「边际有效率拐点」而非最高分，
 并在报告里显式注明这条局限 —— 比装作没这回事更经得起追问。
 
-**产出**：`outputs/report_inject_zero_abl.md`、`report_inject_abl_base.md`、
-`report_inject_sweep.md`（阈值扫描 + 两档对照）、`eval_{zero_abl,abl_base}_inj_preds.jsonl`
+**产出**：`report_inject_sweep.md`（阈值扫描 + 档位对照，独立保留）、
+五个逐配置注入报告（② 零样本两档阈值、③ SFT、⑤ API 两档 —— 已合并进
+`outputs/reports_appendix.md` §2）、`eval_{zero_abl,abl_base}_inj_preds.jsonl`
 （结构同构，下游分析脚本可直接吃）。
 
 ---

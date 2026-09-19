@@ -28,6 +28,11 @@ data/public/*
 !data/public/.gitkeep
 # 跑批续跑标记（不是数据，别入库）
 data/processed/*.done
+# 探针文件与已弃用数据集的分片（本地保留，不影响任何已发布结果）
+data/processed/dpo_pilot.jsonl
+data/processed/dpo_probe.jsonl
+data/processed/xfund_train.jsonl
+data/processed/xfund_val.jsonl
 
 # ---------------- 产出（模型 checkpoint 太大，不进库） ----------------
 outputs/*
@@ -40,6 +45,16 @@ outputs/*
 !outputs/*summary.json
 !outputs/prompt_*.txt
 !outputs/dspy_optimized_flat.txt
+
+# 已并入 outputs/reports_appendix.md 的逐配置小报告
+# （内容全部保留在附录里；本地文件保留，src/analyze_errors.py 与 src/inject_knowledge.py 可重新生成）
+outputs/report_err_*.md
+outputs/report_zero_abl.md
+outputs/report_inject_abl_base.md
+outputs/report_inject_zero_abl.md
+outputs/report_inject_zero_abl_inj.md
+outputs/report_inject_api_ds.md
+outputs/report_inject_api_ds_nothk.md
 
 # ---------------- 临时调试产物 ----------------
 *.out

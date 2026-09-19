@@ -1,6 +1,7 @@
 # 知识注入：阈值选择与档位对照
 
-配套产物：`report_inject_zero_abl.md`（② 零样本档）、`report_inject_abl_base.md`（③ SFT 档）
+配套产物：五个注入配置（② 零样本两档阈值、③ SFT、⑤ API 两档）已合并进
+[`outputs/reports_appendix.md`](reports_appendix.md) §2
 
 ## 0. 一句话结论
 
@@ -135,6 +136,7 @@
 
 # 变体
 #   --min-sim 0.40 / --min-gap 0.00 / --include-date / --no-fuzzy
+# 注：这两个 --report 路径会重新生成为独立文件；其内容已合并进 outputs/reports_appendix.md §2
 ```
 
 ## 5. 已知局限

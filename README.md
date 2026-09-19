@@ -194,7 +194,8 @@ JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
 
 图表：`outputs/chart_ablation.svg`（分档 F1）、`outputs/chart_ablation_err.svg`（错误构成）、
 单页汇总 `outputs/ablation_report.html`、
-逐配置报告 `outputs/report_err_{base,d50,d25,r512,r768,lang}.md`。
+逐配置明细（九配置错误构成总表 + 逐配置要点 + 代表错例）见
+[`outputs/reports_appendix.md`](outputs/reports_appendix.md) §1。
 
 ---
 
@@ -508,7 +509,7 @@ CPU 单测（不花 API 钱）：
    —— 即**「词表约束」这一层纯 CPU 后处理，能把商用模型顶到专门微调的水平**。
    ⚠️ 这条递减的是**收益**而不是绝对水平：⑤ 档基线本就更高，可改进空间自然更小。
 
-失败结构（`outputs/report_err_api_ds.md`，159 个错误字段）：
+失败结构（[`outputs/reports_appendix.md`](outputs/reports_appendix.md) §1.4 ⑧，159 个错误字段）：
 
 - **「文本显著误读」占 37.1%**（本地 SFT 的 74 个错误里只有 5 个）。本地微调的错误
   几乎全是「一字之差」；DeepSeek 则大量在**项目名称、供应商这类工程专名上编词**，
@@ -610,6 +611,7 @@ CPU 单测（不花 API 钱）：
     --report outputs\report_inject_zero_abl.md
 
 # 变体：--min-sim 0.40 / --min-gap 0.00 / --include-date / --no-fuzzy（只精确命中）
+# 注：--report 会重新生成为独立文件；五个注入配置的汇总见 outputs/reports_appendix.md §2
 ```
 
 ---
