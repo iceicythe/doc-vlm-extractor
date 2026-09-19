@@ -26,6 +26,8 @@ data/synthetic/*
 !data/synthetic/.gitkeep
 data/public/*
 !data/public/.gitkeep
+# 跑批续跑标记（不是数据，别入库）
+data/processed/*.done
 
 # ---------------- 产出（模型 checkpoint 太大，不进库） ----------------
 outputs/*

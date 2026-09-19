@@ -1,10 +1,9 @@
 # 图文多模态文档结构化提取系统
 
 面向**工程单据**场景的图文多模态结构化提取，在 **8GB 消费级显卡**上完成
-Qwen3-VL-2B 的 QLoRA 微调与 DPO 后训练，并与 PaddleOCR+规则、8B 零样本、
-大型 API 模型做多档对比。
+Qwen3-VL-2B 的 QLoRA 微调与 DPO 后训练，并与商用 API 大模型做同口径多档对比。
 
-完整方案见 [`docs/多模态实习项目方案_v2.md`](docs/多模态实习项目方案_v2.md)。
+完整技术复盘见 [`docs/retrospective.md`](docs/retrospective.md)。
 
 ---
 
@@ -19,7 +18,7 @@ Qwen3-VL-2B 的 QLoRA 微调与 DPO 后训练，并与 PaddleOCR+规则、8B 零
 - [x] DPO 后训练（偏好数据 143 对 + 自写 DPO 循环 → **负结果，根因已定位**）
 - [x] 知识注入（标准词表 + 保守模糊纠错 → ② 零样本 **+0.0522** 且改坏 0 处；③ SFT 档 ±0）
 - [x] **Demo**（`src/demo.py`，Gradio 四栏对照 + 静态预览；29 项 CPU 自检全绿）
-- [x] **一页 Results + 简历段落**（[`outputs/results_onepager.md`](outputs/results_onepager.md) · [`outputs/resume_minivlm.md`](outputs/resume_minivlm.md)）
+- [x] **一页 Results + 项目简介**（[`outputs/results_onepager.md`](outputs/results_onepager.md) · [`outputs/resume_minivlm.md`](outputs/resume_minivlm.md)）
 - [x] **DSPy prompt 优化**（`src/optimize_prompt_dspy.py`，跨域 flat 模式）—— 优化成功
   （val F1 0.5205 → **0.7490**，¥0.46）；三组归因对照证明**收益全部来自「补齐缺失字段」**，
   GEPA 的措辞规则为负贡献（跨域 F1：手写 3 字段 0.4408 / **手写 8 字段 0.7085** / GEPA 0.6830）→
@@ -661,7 +660,7 @@ CPU 单测（不花 API 钱）：
 图由 `--render-sample 41 --png` 直接生成，用本机 Edge/Chrome 无头截图，
 不引入 playwright 这类重依赖；`outputs/demo_preview.html` 是同一份的 HTML。）
 
-**三个刻意的工程取舍**（面试会被追问）：
+**三个刻意的工程取舍**（最常被追问的三点）：
 
 1. **不重写打分逻辑。** 差异比对复用 `evaluate.flatten/align_rows`，
    知识注入复用 `inject_knowledge.correct_record`。`--check` 里有一项专门验证
