@@ -1,0 +1,1 @@
+请从这张收据图片中提取以下字段并输出 JSON：store_name（店铺名）、store_addr（店铺地址）、tel（电话）、date（日期）、time（时间）、subtotal（小计）、tax（税额）、total（总额）。字段名用英文，值保留图中原文。找不到的字段可省略。只输出 JSON，不要任何解释或代码块标记。

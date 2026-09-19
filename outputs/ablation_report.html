@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>消融实验结果 · MiniVLM</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:36px 28px 56px; background:#0b1220; color:#e2e8f0;
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif; }
+  .wrap { max-width:1040px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 6px; font-weight:650; }
+  .sub { color:#94a3b8; font-size:13.5px; margin-bottom:8px; }
+  .meta { color:#64748b; font-size:12px; margin-bottom:30px; }
+  h2 { font-size:15px; font-weight:600; color:#cbd5e1; margin:34px 0 12px;
+        padding-left:10px; border-left:3px solid #38bdf8; }
+  .card { background:#f8fafc; border-radius:12px; padding:4px; margin-bottom:8px;
+           box-shadow:0 8px 26px rgba(0,0,0,.45); overflow:hidden; }
+  .card svg { display:block; width:100%; height:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:4px; }
+  th, td { padding:9px 10px; text-align:right; border-bottom:1px solid #1e293b; }
+  th { color:#94a3b8; font-weight:600; font-size:11.5px; background:#111c2e;
+        line-height:1.4; }
+  th:first-child, td:first-child, td.name { text-align:left; }
+  td.name { color:#e2e8f0; }
+  td.tot { font-weight:700; color:#e2e8f0; }
+  td.sev { color:#f87171; font-weight:600; }
+  td.dim { color:#64748b; font-size:12px; }
+  tr.best td.tot { color:#34d399; }
+  tr.good td.tot { color:#38bdf8; }
+  tr.best td.sev, tr.good td.sev { color:#34d399; }
+  ul { font-size:13.5px; line-height:1.9; color:#cbd5e1; padding-left:20px; }
+  b { color:#f1f5f9; }
+  code { background:#1e293b; padding:1px 5px; border-radius:4px; font-size:12px; }
+  .note { color:#64748b; font-size:12px; margin-top:22px; line-height:1.75;
+           border-top:1px solid #1e293b; padding-top:16px; }
+</style></head><body><div class="wrap">
+  <h1>消融实验：分辨率与数据量各消灭一类错误</h1>
+  <div class="sub">Qwen3-VL-2B · QLoRA 4bit · RTX 4060 Laptop 8GB · 同一测试子集 n=102（clean/medium/heavy 各 34）· seed=3407</div>
+  <div class="meta">MiniVLM 图文多模态文档结构化提取 · 2026-09-17 · 6 档全部完成</div>
+
+  <h2>分档字段级 F1</h2>
+  <div class="card"><svg xmlns="http://www.w3.org/2000/svg" width="920" height="500" viewBox="0 0 920 500" font-family="Segoe UI,Microsoft YaHei,sans-serif">
+<rect width="920" height="500" fill="#f8fafc"/>
+<text x="40" y="42" font-size="20" font-weight="600" fill="#0f172a">消融实验：分辨率是主导因素，数据量要砍到 25% 才显形</text>
+<text x="40" y="68" font-size="13" fill="#64748b">Qwen3-VL-2B QLoRA · 同一测试子集 n=102（每档 34）· 固定 seed=3407 · 384px 基线可复现</text>
+<rect x="40" y="86" width="12" height="12" rx="2" fill="#059669"/>
+<text x="58" y="97" font-size="12" fill="#64748b">clean</text>
+<rect x="129" y="86" width="12" height="12" rx="2" fill="#2563eb"/>
+<text x="147" y="97" font-size="12" fill="#64748b">medium</text>
+<rect x="231" y="86" width="12" height="12" rx="2" fill="#ea580c"/>
+<text x="249" y="97" font-size="12" fill="#64748b">heavy</text>
+<line x1="95" y1="392.0" x2="875" y2="392.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="396.0" font-size="11" fill="#64748b" text-anchor="end">0.900</text>
+<line x1="95" y1="339.6" x2="875" y2="339.6" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="343.6" font-size="11" fill="#64748b" text-anchor="end">0.920</text>
+<line x1="95" y1="287.2" x2="875" y2="287.2" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="291.2" font-size="11" fill="#64748b" text-anchor="end">0.940</text>
+<line x1="95" y1="234.8" x2="875" y2="234.8" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="238.8" font-size="11" fill="#64748b" text-anchor="end">0.960</text>
+<line x1="95" y1="182.4" x2="875" y2="182.4" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="186.4" font-size="11" fill="#64748b" text-anchor="end">0.980</text>
+<line x1="95" y1="130.0" x2="875" y2="130.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="134.0" font-size="11" fill="#64748b" text-anchor="end">1.000</text>
+<text x="33" y="261" font-size="12" fill="#64748b" text-anchor="middle" transform="rotate(-90 33 261)">字段级 F1</text>
+<rect x="111.9" y="159.9" width="29.1" height="232.1" rx="3" fill="#059669"/>
+<text x="126.4" y="153.9" font-size="9.5" fill="#0f172a" text-anchor="middle">0.989</text>
+<rect x="144.0" y="171.1" width="29.1" height="220.9" rx="3" fill="#2563eb"/>
+<text x="158.5" y="165.1" font-size="9.5" fill="#0f172a" text-anchor="middle">0.984</text>
+<rect x="176.0" y="225.6" width="29.1" height="166.4" rx="3" fill="#ea580c"/>
+<text x="190.6" y="219.6" font-size="9.5" fill="#0f172a" text-anchor="middle">0.964</text>
+<text x="160.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="160.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<rect x="241.9" y="164.6" width="29.1" height="227.4" rx="3" fill="#059669"/>
+<text x="256.4" y="158.6" font-size="9.5" fill="#0f172a" text-anchor="middle">0.987</text>
+<rect x="274.0" y="186.6" width="29.1" height="205.4" rx="3" fill="#2563eb"/>
+<text x="288.5" y="180.6" font-size="9.5" fill="#0f172a" text-anchor="middle">0.978</text>
+<rect x="306.0" y="244.8" width="29.1" height="147.2" rx="3" fill="#ea580c"/>
+<text x="320.6" y="238.8" font-size="9.5" fill="#0f172a" text-anchor="middle">0.956</text>
+<text x="290.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="290.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">数据 50%</text>
+<line x1="225.0" y1="130" x2="225.0" y2="392" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="371.9" y="169.3" width="29.1" height="222.7" rx="3" fill="#059669"/>
+<text x="386.4" y="163.3" font-size="9.5" fill="#0f172a" text-anchor="middle">0.985</text>
+<rect x="404.0" y="191.8" width="29.1" height="200.2" rx="3" fill="#2563eb"/>
+<text x="418.5" y="185.8" font-size="9.5" fill="#0f172a" text-anchor="middle">0.976</text>
+<rect x="436.0" y="282.7" width="29.1" height="109.3" rx="3" fill="#ea580c"/>
+<text x="450.6" y="276.7" font-size="9.5" fill="#0f172a" text-anchor="middle">0.942</text>
+<text x="420.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="420.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">数据 25%</text>
+<line x1="355.0" y1="130" x2="355.0" y2="392" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="501.9" y="130.0" width="29.1" height="262.0" rx="3" fill="#059669"/>
+<text x="516.4" y="124.0" font-size="9.5" fill="#0f172a" text-anchor="middle">1.000</text>
+<rect x="534.0" y="137.6" width="29.1" height="254.4" rx="3" fill="#2563eb"/>
+<text x="548.5" y="131.6" font-size="9.5" fill="#0f172a" text-anchor="middle">0.997</text>
+<rect x="566.0" y="185.3" width="29.1" height="206.7" rx="3" fill="#ea580c"/>
+<text x="580.6" y="179.3" font-size="9.5" fill="#0f172a" text-anchor="middle">0.979</text>
+<text x="550.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">512px</text>
+<text x="550.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<line x1="485.0" y1="130" x2="485.0" y2="392" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="631.9" y="130.0" width="29.1" height="262.0" rx="3" fill="#059669"/>
+<text x="646.4" y="124.0" font-size="9.5" fill="#0f172a" text-anchor="middle">1.000</text>
+<rect x="664.0" y="130.0" width="29.1" height="262.0" rx="3" fill="#2563eb"/>
+<text x="678.5" y="124.0" font-size="9.5" fill="#0f172a" text-anchor="middle">1.000</text>
+<rect x="696.0" y="164.1" width="29.1" height="227.9" rx="3" fill="#ea580c"/>
+<text x="710.6" y="158.1" font-size="9.5" fill="#0f172a" text-anchor="middle">0.987</text>
+<text x="680.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">768px</text>
+<text x="680.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<line x1="615.0" y1="130" x2="615.0" y2="392" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="761.9" y="157.8" width="29.1" height="234.2" rx="3" fill="#059669"/>
+<text x="776.4" y="151.8" font-size="9.5" fill="#0f172a" text-anchor="middle">0.989</text>
+<rect x="794.0" y="163.5" width="29.1" height="228.5" rx="3" fill="#2563eb"/>
+<text x="808.5" y="157.5" font-size="9.5" fill="#0f172a" text-anchor="middle">0.987</text>
+<rect x="826.0" y="227.7" width="29.1" height="164.3" rx="3" fill="#ea580c"/>
+<text x="840.6" y="221.7" font-size="9.5" fill="#0f172a" text-anchor="middle">0.963</text>
+<text x="810.0" y="414.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="810.0" y="429.0" font-size="12" fill="#64748b" text-anchor="middle">仅语言层</text>
+<line x1="745.0" y1="130" x2="745.0" y2="392" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="40" y="484" font-size="11" fill="#64748b">注：y 轴从 0.90 起，刻意放大差异；柱顶数字为各档 F1。</text>
+</svg></div>
+
+  <h2>错误结构：分辨率把「语义误读」清零，数据量决定它有多少</h2>
+  <div class="card"><svg xmlns="http://www.w3.org/2000/svg" width="920" height="470" viewBox="0 0 920 470" font-family="Segoe UI,Microsoft YaHei,sans-serif">
+<rect width="920" height="470" fill="#f8fafc"/>
+<text x="40" y="42" font-size="19" font-weight="600" fill="#0f172a">错误结构：分辨率把「语义误读」清零，数据量不足才会引入语义错误</text>
+<text x="40" y="68" font-size="13" fill="#64748b">字段级错误构成 · 同一测试子集 n=102（clean/medium/heavy 各 34）· 全量 3387 个待抽字段</text>
+<rect x="40" y="86" width="12" height="12" rx="2" fill="#2563eb"/>
+<text x="58" y="97" font-size="12" fill="#64748b">近似误读（一字之差）</text>
+<rect x="240" y="86" width="12" height="12" rx="2" fill="#dc2626"/>
+<text x="258" y="97" font-size="12" fill="#64748b">显著误读（语义混淆）</text>
+<line x1="95" y1="364.0" x2="875" y2="364.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="368.0" font-size="11" fill="#64748b" text-anchor="end">0</text>
+<line x1="95" y1="314.8" x2="875" y2="314.8" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="318.8" font-size="11" fill="#64748b" text-anchor="end">28</text>
+<line x1="95" y1="265.6" x2="875" y2="265.6" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="269.6" font-size="11" fill="#64748b" text-anchor="end">56</text>
+<line x1="95" y1="216.4" x2="875" y2="216.4" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="220.4" font-size="11" fill="#64748b" text-anchor="end">85</text>
+<line x1="95" y1="167.2" x2="875" y2="167.2" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="171.2" font-size="11" fill="#64748b" text-anchor="end">113</text>
+<line x1="95" y1="118.0" x2="875" y2="118.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="83" y="122.0" font-size="11" fill="#64748b" text-anchor="end">141</text>
+<text x="33" y="241" font-size="12" fill="#64748b" text-anchor="middle" transform="rotate(-90 33 241)">错误字段数</text>
+<rect x="127.5" y="243.8" width="65.0" height="120.2" fill="#2563eb"/>
+<rect x="127.5" y="235.1" width="65.0" height="8.7" fill="#dc2626"/>
+<text x="160.0" y="226.1" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">74</text>
+<text x="160.0" y="209.1" font-size="10" fill="#dc2626" text-anchor="middle">显著 5</text>
+<text x="160.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="160.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<rect x="257.5" y="217.7" width="65.0" height="146.3" fill="#2563eb"/>
+<rect x="257.5" y="205.5" width="65.0" height="12.2" fill="#dc2626"/>
+<text x="290.0" y="196.5" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">91</text>
+<text x="290.0" y="179.5" font-size="10" fill="#dc2626" text-anchor="middle">显著 7</text>
+<text x="290.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="290.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">数据 50%</text>
+<rect x="387.5" y="196.8" width="65.0" height="167.2" fill="#2563eb"/>
+<rect x="387.5" y="167.2" width="65.0" height="29.6" fill="#dc2626"/>
+<text x="420.0" y="158.2" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">113</text>
+<text x="420.0" y="141.2" font-size="10" fill="#dc2626" text-anchor="middle">显著 17</text>
+<text x="420.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="420.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">数据 25%</text>
+<rect x="517.5" y="313.5" width="65.0" height="50.5" fill="#2563eb"/>
+<text x="550.0" y="304.5" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">29</text>
+<text x="550.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">512px</text>
+<text x="550.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<rect x="647.5" y="336.1" width="65.0" height="27.9" fill="#2563eb"/>
+<text x="680.0" y="327.1" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">16</text>
+<text x="680.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">768px</text>
+<text x="680.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">数据 100%</text>
+<rect x="777.5" y="252.5" width="65.0" height="111.5" fill="#2563eb"/>
+<rect x="777.5" y="240.3" width="65.0" height="12.2" fill="#dc2626"/>
+<text x="810.0" y="231.3" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">71</text>
+<text x="810.0" y="214.3" font-size="10" fill="#dc2626" text-anchor="middle">显著 7</text>
+<text x="810.0" y="386.0" font-size="12" fill="#64748b" text-anchor="middle">384px</text>
+<text x="810.0" y="401.0" font-size="12" fill="#64748b" text-anchor="middle">仅语言层</text>
+<text x="40" y="454" font-size="11" fill="#64748b">注：错误字段数由 src/analyze_errors.py 直接统计预测文件得出，可复核。</text>
+</svg></div>
+
+  <h2>消融总表（含错误构成与成本）</h2>
+  <table>
+    <thead><tr><th>配置</th><th>clean</th><th>medium</th><th>heavy</th>
+    <th>总体 F1</th><th>错误<br>字段数</th><th>其中<br>语义误读</th><th>训练<br>时长</th></tr></thead>
+    <tbody><tr class=""><td class="name">384px · 数据 100%（基线）</td><td>0.9886</td><td>0.9843</td><td>0.9635</td><td class="tot">0.9782</td><td>74</td><td class="sev">5</td><td class="dim">58.7 min</td></tr><tr class=""><td class="name">384px · 数据 50%</td><td>0.9868</td><td>0.9784</td><td>0.9562</td><td class="tot">0.9731</td><td>91</td><td class="sev">7</td><td class="dim">57.1 min</td></tr><tr class=""><td class="name">384px · 数据 25%</td><td>0.9850</td><td>0.9764</td><td>0.9417</td><td class="tot">0.9666</td><td>113</td><td class="sev">17</td><td class="dim">20.6 min</td></tr><tr class="good"><td class="name">512px · 数据 100%</td><td>1.0000</td><td>0.9971</td><td>0.9789</td><td class="tot">0.9914</td><td>29</td><td class="sev">—</td><td class="dim">57.3 min</td></tr><tr class="best"><td class="name">768px · 数据 100%</td><td>1.0000</td><td>1.0000</td><td>0.9870</td><td class="tot">0.9953</td><td>16</td><td class="sev">—</td><td class="dim">70.6 min</td></tr><tr class=""><td class="name">384px · 仅训语言层</td><td>0.9894</td><td>0.9872</td><td>0.9627</td><td class="tot">0.9790</td><td>71</td><td class="sev">7</td><td class="dim">50.5 min</td></tr></tbody>
+  </table>
+
+  <h2>三条结论</h2>
+  <ul>
+    <li><b>分辨率是主导因素。</b>384→512 涨 1.3 个点，384→768 涨 1.7 个点，
+        增益<b>全部来自 heavy 档</b>（0.9635→0.9870）；clean 档早已到顶（1.0000）。</li>
+    <li><b>数据量曲线 25%→50%→100% 为 0.9666→0.9731→0.9782</b>，单调且增量递减
+        （+0.65pt / +0.51pt）→ 350 个源样本接近饱和，继续堆数据的边际收益
+        低于换更大输入分辨率。</li>
+    <li><b>冻结视觉层几乎无代价。</b>仅训语言层 0.9790 vs 全层 0.9782，差 0.0008
+        ≈ 3 个字段，属噪声 → 显存紧张时可放心不训视觉塔。</li>
+  </ul>
+
+  <h2>两条面试级细节</h2>
+  <ul>
+    <li><b>两类错误各有各的解法。</b>数据量消除语义误读（17→7→5）；
+        分辨率把它清零并顺带砍掉一半字符误读（74→29→16）。
+        只调其中一个都会留下另一类错误。</li>
+    <li><b>结构层零错误。</b>幻觉 / 漏抽 / 行列错位 / JSON 非法在全部六个配置里都是 0
+        —— 瓶颈纯粹在字符识别精度，不在版面理解。</li>
+  </ul>
+
+  <div class="note">
+    注 1：时长列的 d50（57.1 min / 300 步）与基线（58.7 min / 600 步）接近，是笔记本热节流所致，
+    不是数据量效应 —— d25 当天早些时候为 6.2 s/step，d50 重跑时为 10.8 s/step，
+    事后查 <code>nvidia-smi</code> 见 SW Thermal Slowdown 累计 11.6 小时。<br>
+    注 2：错误字段数由 <code>src/analyze_errors.py</code> 直接统计预测文件得出，可复核；
+    语义误读 = 文本显著误读，不含漏抽/幻觉/行列错位（这些全为 0）。
+  </div>
+</div></body></html>

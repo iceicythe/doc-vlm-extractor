@@ -1,0 +1,58 @@
+# ---------------- 虚拟环境 ----------------
+venv-gld/
+.venv/
+env/
+
+# ---------------- Python ----------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---------------- 训练/编译缓存 ----------------
+unsloth_compiled_cache/
+*.log
+*.deleteme
+
+# ---------------- 模型权重（体积大，从 HF 拉取） ----------------
+*.safetensors
+*.bin
+*.gguf
+
+# ---------------- 数据（大文件，可由脚本重建） ----------------
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/public/*
+!data/public/.gitkeep
+
+# ---------------- 产出（模型 checkpoint 太大，不进库） ----------------
+outputs/*
+!outputs/.gitkeep
+
+# 但交付文档必须进库，否则 README 里的 Demo 图在仓库里是裂的
+!outputs/*.md
+!outputs/*.png
+!outputs/*.html
+!outputs/*summary.json
+!outputs/prompt_*.txt
+!outputs/dspy_optimized_flat.txt
+
+# ---------------- 临时调试产物 ----------------
+*.out
+_*.txt
+
+# ---------------- 本地笔记 / 工作记忆（不进公开仓库） ----------------
+.workbuddy/
+private/
+
+# ---------------- 密钥 ----------------
+.env
+*.key
+
+# ---------------- 编辑器 / 系统 ----------------
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
