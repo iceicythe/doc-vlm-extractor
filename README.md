@@ -1,74 +1,141 @@
-# 图文多模态文档结构化提取系统
+# Doc-VLM-Extractor
 
-面向**工程单据**场景的图文多模态结构化提取，在 **8GB 消费级显卡**上完成
-Qwen3-VL-2B 的 QLoRA 微调与 DPO 后训练，并与商用 API 大模型做同口径多档对比。
+**图文多模态文档结构化提取系统** —— 输入一张**工程材料清单**照片，输出字段级结构化 JSON。
 
-完整技术复盘见 [`docs/retrospective.md`](docs/retrospective.md)。
+在单张 **8GB 消费级笔记本显卡**上完成 Qwen3-VL-2B 的 QLoRA 微调、DPO 后训练、消融实验、
+知识注入与 prompt 自动优化，并与商用 API 大模型做同口径多档对比。
+
+| 指标 | 数值 |
+|---|---|
+| 同域字段级 F1 | **0.982**（n=90）· **0.9782**（消融子集 n=102） |
+| 训练成本 | 600 步 / **58.7 分钟** / 峰值显存 **4.03 GB**（单卡 8GB） |
+| 相对商用 API | 同域 **0.9782 vs 0.9681**（2B 微调略高）；跨域 0.284 vs 0.4408（落后） |
+| 输入分辨率消融 | 384 → 768px：heavy 退化档 **0.9635 → 0.9870** |
+
+**输入 → 输出**（字段结构见 [`docs/schema_v1.md`](docs/schema_v1.md)）：
+
+```json
+{
+  "单据类型": "材料清单",
+  "表头": { "项目名称": "西安某住宅楼主体工程", "供应商": "陕西XX建材有限公司",
+           "单据编号": "CL-20260915-001", "日期": "2026-09-15" },
+  "明细": [
+    { "序号": "1", "名称": "螺纹钢 HRB400", "规格型号": "Φ12", "单位": "吨",
+      "数量": "12.5", "单价": "4200.00", "金额": "52500.00" }
+  ],
+  "合计": { "金额": "107600.00" }
+}
+```
+
+![Demo 静态预览](outputs/demo_preview.png)
+
+> 第 41 条测试样本的三档对照：零样本 F1 0.595 → 知识注入 0.727 → SFT 0.967。
+> 图由 `src/demo.py --render-sample 41 --png` 直接生成（本机 Edge/Chrome 无头截图，
+> 不引入 playwright 这类重依赖），同一份内容的 HTML 见 `outputs/demo_preview.html`。
+
+**文档导航**
+
+| 文档 | 内容 |
+|---|---|
+| [`outputs/results_onepager.md`](outputs/results_onepager.md) | 一页 Results：五档总表 + 结论 + 追问应答 |
+| [`docs/retrospective.md`](docs/retrospective.md) | 全量技术复盘：逐阶段决策 + 60 余条踩坑（症状 → 真因 → 处置） |
+| [`outputs/reports_appendix.md`](outputs/reports_appendix.md) | 九配置错误构成总表 + 分布统计 + 知识注入五配置总表 |
+| [`docs/schema_v1.md`](docs/schema_v1.md) | 数据 schema 与字段定义 |
 
 ---
 
-## 当前进度
+## 结果速览
 
-- [x] **W1 环境就绪**（含冒烟测试验收）
-- [x] 数据管线（schema 设计 → 渲染 → 退化 → GT 生成）
-- [x] SFT 微调（v1：600 步 / 58.7 分钟 / 峰值 4.03GB）
-- [x] 评测框架（合成三档 / 真实收据零样本 vs 微调后）
-- [~] 五档对比表 **4/5** —— ② 2B 零样本 ✓（同域 0.7349 / 跨域 0.319）｜ ③ 2B 微调后 ✓（0.9782 / 0.284）｜ ⑤ 商用 API ✓（`deepseek-flash --no-thinking` 0.9681 / 0.4408）｜ ① 规则基线 ✗ ｜ ④ 8B 零样本 ✗
-- [x] 消融实验 + 失败分析（6 档全跑完，含逐配置失败分析报告）
-- [x] DPO 后训练（偏好数据 143 对 + 自写 DPO 循环 → **负结果，根因已定位**）
-- [x] 知识注入（标准词表 + 保守模糊纠错 → ② 零样本 **+0.0522** 且改坏 0 处；③ SFT 档 ±0）
-- [x] **Demo**（`src/demo.py`，Gradio 四栏对照 + 静态预览；29 项 CPU 自检全绿）
-- [x] **一页 Results + 项目简介**（[`outputs/results_onepager.md`](outputs/results_onepager.md) · [`outputs/resume_minivlm.md`](outputs/resume_minivlm.md)）
-- [x] **DSPy prompt 优化**（`src/optimize_prompt_dspy.py`，跨域 flat 模式）—— 优化成功
-  （val F1 0.5205 → **0.7490**，¥0.46）；三组归因对照证明**收益全部来自「补齐缺失字段」**，
-  GEPA 的措辞规则为负贡献（跨域 F1：手写 3 字段 0.4408 / **手写 8 字段 0.7085** / GEPA 0.6830）→
-  [`outputs/report_dspy_flat.md`](outputs/report_dspy_flat.md)
-- [ ] 评测报告 / 技术博客
+### 五档对比表
+
+| 档 | 实现 | 同域 F1（消融集 n=102） | 跨域 F1（WildReceipt n=100） | 状态 |
+|---|---|---:|---:|---|
+| ① 规则基线 | OCR + 正则抽取 | — | — | 未做（见下） |
+| ② 2B 零样本 | `--adapter` 留空 | **0.7349**（宽容 0.7471） | 0.319 | ✓ |
+| ②+ 知识注入 | 词表纠错（纯 CPU，不需训练） | **0.7870**（+0.0522） | — | ✓ |
+| ③ 2B 微调后 | `outputs/sft_v1/lora` | **0.9782** | 0.284 | ✓ |
+| ③+ 知识注入 | 同上 + 纠错 | 0.9779（±0） | — | ✓ |
+| ④ 8B 零样本 | Qwen3-VL-8B 4bit | — | — | 未做（见下） |
+| ⑤ 商用 API | `deepseek-flash --no-thinking` | **0.9681** | **0.4408** | ✓ |
+| ⑤+ 知识注入 | 同上 + 词表纠错 | **0.9790**（+0.0109） | — | ✓ |
+
+**②→③ 同域差距 0.9782 − 0.7349 = +0.2433**，这是「微调到底买到了什么」的主要证据。
+
+**未做/未完成的三项，以及原因**（不做也不影响结论，如实标出）：
+
+| 项 | 状态 | 原因 |
+|---|---|---|
+| ① OCR + 规则基线 | 未做 | 对「多模态下游」这一目标方向的结论增量低，优先级让给知识注入与 DSPy |
+| ④ 8B 零样本 | 未做 | 8GB 显存下只能 4bit 量化跑，与 2B SFT 的对比混入量化损失，解释力不足 |
+| ⑤ 同源上界（`qwen3-vl-plus`） | 未做 | 缺 `DASHSCOPE_API_KEY`；补上后 VLM 各行才构成单家族缩放曲线（见 §6） |
+
+### 五条主结论
+
+1. **分辨率是主导因素，不是数据量。** 384→512 涨 1.3pt、384→768 涨 1.7pt，且增益全部来自 heavy 退化档；
+   数据量 25%→100% 只有 +1.2pt 且增量递减 ⇒ **350 源样本已接近饱和，堆数据不如加输入分辨率。**
+2. **SFT 的主要收益是 schema 遵从 + 中文字段读写。** 零样本档 97/102 条把 `合计` 输出成标量、
+   JSON 合法率 96.1%；SFT 后这两项**归零**（同档七个配置全部 0/102）。
+3. **知识注入的收益与基座能力成反比**（+0.0522 / +0.0109 / −0.0003）——
+   SFT 后词表纠正几乎无事可做（183 处改动 → 1 处），说明**词表已被内化进权重**。
+4. **DPO 是负结果，但根因被完整定位。** 幻觉率 28% → 28% 未动，三条根因见 §5；
+   关键对照：同一批错误，**加分辨率（768px）消掉 78%，DPO 消掉 0%** ⇒ **瓶颈在感知层，不在决策层。**
+5. **跨域那格上不去，主要是 prompt 缺陷而不是模型能力不足。** 手写 flat prompt 只点名 3 个字段，
+   recall 天花板 **0.4168**，⑤ 档 0.4408 已达天花板的 **75.7%**；补齐 8 字段后 F1 **0.4408 → 0.7085**。
 
 ---
 
-## 环境
+## 快速开始
 
-**硬件**：RTX 4060 Laptop 8GB · Windows 11 · 驱动 616.92（CUDA UMD 13.4）
+```powershell
+git clone https://github.com/iceicythe/doc-vlm-extractor.git
+cd doc-vlm-extractor
 
-**已锁定的版本组合**（改动前请三思，见下方警告）：
+# 1) 环境自检（秒级，不下载模型）
+.\venv-gld\Scripts\python.exe scripts\check_env.py
 
-| 组件 | 版本 | 组件 | 版本 |
-|---|---|---|---|
-| Python | 3.12.6 | unsloth | 2026.9.4 |
-| torch | **2.14.0+cu130** | triton | 3.8.0 |
-| torchvision | 0.29.0+cu130 | bitsandbytes | 0.50.2 |
-| transformers | 5.5.0 | trl | 0.24.0 |
-| peft | 0.20.0 | datasets | 4.3.0 |
-| accelerate | 1.15.0 | dspy | 3.3.1 |
-| qwen-vl-utils | 0.0.14 | pillow | 12.3.0 |
+# 2) 不用 GPU、不用模型，先看 Demo 长什么样（读已落盘预测渲染静态预览）
+.\venv-gld\Scripts\python.exe src\demo.py --render-sample 41 --png
 
-> ⚠️ **装包警告**
-> PyPI 上 Windows 版 torch 默认是 **CPU 版**。任何可能触发 torch 升级的操作
-> （例如 `pip install unsloth`）都必须显式指定官方 CUDA 源，否则 GPU 会失效：
-> ```powershell
-> pip install <pkg> --index-url https://download.pytorch.org/whl/cu130
-> # 已装错时：
-> pip install --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cu130
-> ```
+# 3) 冒烟测试（首次需下载模型约 2.2GB）
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+.\venv-gld\Scripts\python.exe scripts\smoke_test.py
+```
 
-**Windows 平台已知限制**（不影响正确性，仅影响速度）：
-- `FA2 = False` —— flash attention 2 不可用，走 eager / xformers
-- `torch.compile` 对部分 Qwen3-VL 视觉算子编译失败（InductorError），自动降级 eager
+**复现路径说明。** 仓库**不包含**模型权重与 LoRA adapter（1.46GB，超出版本控制合理范围），
+因此 `outputs/` 里的预测与评测结果是**已落盘的历史产物**，可以直接读取、复算、对比，
+但不能直接重跑推理。完整复现链条：
+
+```powershell
+# 1) 重建合成数据（渲染 + 三档退化 + GT）
+.\venv-gld\Scripts\python.exe src\build_dataset.py
+
+# 2) 重训 SFT（约 59 分钟，单卡 8GB）
+.\venv-gld\Scripts\python.exe -u src\train_sft.py
+
+# 3) 评测（同域 / 跨域）
+.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs\sft_v1\lora --tag sft_v1
+.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs\sft_v1\lora --tag sft_wr `
+    --mode flat --data data\processed\wildreceipt_test.jsonl --limit 100
+```
+
+**CPU 单测**（不占显存、不花钱，116 项）：
+
+```powershell
+.\venv-gld\Scripts\python.exe scripts\_test_dpo_math.py        # DPO 数学
+.\venv-gld\Scripts\python.exe scripts\_test_evaluate_api.py    # API 评测（39 项）
+.\venv-gld\Scripts\python.exe scripts\_test_evaluate_args.py   # 两脚本参数对齐（13 项）
+```
 
 ---
 
 ## 目录结构
 
 ```
-MiniVLM/
-├── venv-gld/            虚拟环境（勿提交）
+doc-vlm-extractor/
 ├── scripts/             环境与工具脚本
 │   ├── check_env.py     环境自检
-│   ├── smoke_test.py    冒烟测试（W1 验收）
-│   ├── _test_dpo_math.py          DPO 数学 CPU 单测
-│   └── _test_evaluate_api.py      API 评测 CPU 单测
-│   └── _test_evaluate_args.py     两脚本参数对齐回归（防参数漂移）
+│   ├── smoke_test.py    冒烟测试
+│   ├── _test_*.py       CPU 单测（DPO 数学 / API 评测 / 参数对齐）
 │   └── _analyze_fields.py         逐字段拆解两组评测结果（tp/fp/fn/无中生有）
 ├── src/                 项目源码
 │   ├── render.py        合成数据渲染
@@ -87,36 +154,22 @@ MiniVLM/
 │   ├── build_lexicon.py            标准词表构建（train.jsonl 的 GT 值域）
 │   ├── check_lexicon_coverage.py   知识注入可行性前置检查（哪些字段可救）
 │   ├── inject_knowledge.py         知识注入：词表保守纠错 + 重打分
+│   ├── optimize_prompt_dspy.py     DSPy/GEPA prompt 自动优化
 │   ├── demo.py          Gradio 四栏对照 Demo（含 --check / --smoke / --render-sample）
 │   ├── make_charts.py   图表生成（SVG）
 │   └── prepare_{xfund,wildreceipt}.py  公开数据集准备
 ├── data/
-│   ├── synthetic/       合成图 + Ground Truth
+│   ├── processed/       训练/验证/测试划分 + WildReceipt + DPO 数据（jsonl）
 │   ├── lexicon/         标准词表（v1.json，由 train.jsonl 派生）
-│   └── public/          WildReceipt / CORD / FUNSD
-├── outputs/             模型 checkpoint、评测结果、图表
-├── docs/                方案文档
-└── requirements-backup.txt   初始环境快照（回滚用）
+│   ├── synthetic/       合成图 + Ground Truth（需由脚本重建，未入库）
+│   └── public/          公开数据集原始包（`scripts/download_datasets.py` 下载，未入库）
+├── outputs/             评测结果、报告、图表、Demo 预览
+└── docs/                schema 定义与技术复盘
 ```
 
 ---
 
-## 快速开始
-
-```powershell
-cd C:\MiniVLM
-
-# 1) 环境自检（秒级，不下载模型）
-.\venv-gld\Scripts\python.exe scripts\check_env.py
-
-# 2) 冒烟测试（首次需下载模型约 2.2GB）
-$env:HF_ENDPOINT = "https://hf-mirror.com"
-.\venv-gld\Scripts\python.exe scripts\smoke_test.py
-```
-
----
-
-## 实验结果
+## 详细实验记录
 
 ### 1. SFT 主结果（合成测试集 n=90 · 同分布）
 
@@ -140,6 +193,8 @@ JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
 拆开看召回率只掉 9.5%，下降主要来自精度 —— 属于「少量数据微调放大幻觉倾向」，
 不是灾难性遗忘。这也正是引入 DPO 的动机 —— 而 DPO 未能解决它（见 §5）。
 
+> 该列使用 `evaluate.py` 内置的 3 字段 flat prompt，存在**口径限制**，读法见 §6 与 §9。
+
 ### 3. 消融实验（同一子集 n=102，每档 34，seed=3407）
 
 | 配置 | clean | medium | heavy | **总体 F1** | 训练时长 |
@@ -161,6 +216,7 @@ JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
 > 11.6 小时。如需可比的时间结论，请在冷机状态下重跑。
 
 结论：
+
 1. **输入分辨率是主导因素。** 384→512 涨 1.3 个点、384→768 涨 1.7 个点，
    且增益**全部来自 heavy 档**（0.9635→0.9870），clean 档本来就到顶了。
 2. **数据量在 25% 时才开始显形**（−1.2 个点），且增量单调递减 → 350 源样本接近饱和，
@@ -184,6 +240,7 @@ JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
 | 仅语言层 | 71 | 64 | 7 |
 
 三条可复述的结论：
+
 1. **分辨率和数据量各自消灭一类错误，方向不同。**
    数据量消除「语义误读」（25%→100% 时 17→7→5）；
    分辨率则直接把它清零（5→0）并把字符级误读再砍一半（74→29→16）。
@@ -192,23 +249,20 @@ JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
 3. 幻觉/漏抽/行列错位/JSON 非法在**全部六个配置里都是 0** —— 输出结构稳定，
    瓶颈纯粹在字符识别精度，不在结构理解。
 
-图表：`outputs/chart_ablation.svg`（分档 F1）、`outputs/chart_ablation_err.svg`（错误构成）、
-单页汇总 `outputs/ablation_report.html`、
+图表由 `src/make_charts.py` 生成（`chart_ablation.svg` 分档 F1、`chart_ablation_err.svg` 错误构成），
+单页汇总见 `outputs/ablation_report.html`，
 逐配置明细（九配置错误构成总表 + 逐配置要点 + 代表错例）见
 [`outputs/reports_appendix.md`](outputs/reports_appendix.md) §1。
 
----
-
 ### 5. DPO 后训练：一个被完整定位的负结果
 
-**动机**：跨域评测暴露的问题——微调把幻觉率从 16% 抬到 28%。
-DPO 冲着"让模型自己区分它会犯的错"去。
+**动机**：跨域评测暴露的问题 —— 微调把幻觉率从 16% 抬到 28%。DPO 冲着"让模型自己区分它会犯的错"去。
 
-**结论**：DPO 未生效，但失败原因被完整定位（完整报告 `outputs/report_dpo_negative.md`）。
+**结论**：DPO 未生效，但失败原因被完整定位（完整报告 [`outputs/report_dpo_negative.md`](outputs/report_dpo_negative.md)）。
 
 **偏好数据**：用 SFT 模型对同一张图温度采样 k=4 次，按
 `reward = F1 − 0.10 × 幻觉率`（JSON 非法记 0）打分，最高分做 chosen、最低分做 rejected，
-分差低于阈值则丢弃。默认只采 `heavy` 退化档——`medium` 上模型太稳，k 次采样输出完全相同。
+分差低于阈值则丢弃。默认只采 `heavy` 退化档 —— `medium` 上模型太稳，k 次采样输出完全相同。
 
 四个默认值是实测调出来的，改动前先看 `build_pref_data.py` 顶部的调参备忘：
 
@@ -221,8 +275,7 @@ DPO 冲着"让模型自己区分它会犯的错"去。
 
 效果：**yield 10% → 80%**，平均分差 0.0116 → 0.0485。
 抽 4 对人工核对，差异全部落在消融阶段定位的那两类错误上
-（`252008.58`→`299003.58` 数值误读、`汉中青云`→`汉中鑫云` 文本近似误读、
-供应商整段编错）。
+（`252008.58`→`299003.58` 数值误读、`汉中青云`→`汉中鑫云` 文本近似误读、供应商整段编错）。
 
 **为什么自己写训练循环**：TRL 0.24 的 `DPOTrainer` **没有把 `image_grid_thw` 传给模型**
 （`dpo_trainer.py` 里 vision 只传 `pixel_values`/`pixel_attention_mask`/`image_sizes`），
@@ -255,7 +308,8 @@ $env:HF_HUB_OFFLINE="1"
 
 # 4) 评测（同域 + 跨域，与 SFT 同一套口径，可直接对比）
 .\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs/dpo_v1/lora --tag dpo_v1
-.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs/dpo_v1/lora --tag dpo_wr --mode flat --data data/processed/wildreceipt_test.jsonl --limit 100
+.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs/dpo_v1/lora --tag dpo_wr `
+    --mode flat --data data/processed/wildreceipt_test.jsonl --limit 100
 ```
 
 数学部分有 CPU 单测（位置对齐 / padding 屏蔽 / 分块一致性 / loss 解析解 / 梯度方向）：
@@ -311,23 +365,11 @@ $env:HF_HUB_OFFLINE="1"
 
 **不再投入 DPO 调参**：即使把 chosen 收紧到完全正确的 71 对，
 错误的感知层性质不会变，收益上限很低；精力转向五档对比表与 DSPy 阶段。
+一致性分析的独立报告见 [`outputs/report_error_consistency.md`](outputs/report_error_consistency.md)。
 
----
+### 6. 五档对比表：口径与设计
 
-### 6. 五档对比表（4/5）
-
-| 档 | 实现 | 同域 F1（消融集 n=102） | 跨域 F1（WildReceipt n=100） | 状态 |
-|---|---|---:|---:|---|
-| ① 规则基线 | OCR + 正则抽取 | — | — | ✗ 未做 |
-| ② 2B 零样本 | `--adapter` 留空 | **0.7349**（宽容 0.7471） | 0.319 | ✓ |
-| ②+ 知识注入 | 词表纠错（不需训练） | **0.7870**（+0.0522） | — | ✓ |
-| ③ 2B 微调后 | `outputs/sft_v1/lora` | **0.9782** | 0.284 | ✓ |
-| ③+ 知识注入 | 同上 + 纠错 | 0.9779（±0） | — | ✓ |
-| ④ 8B 零样本 | Qwen3-VL-8B 4bit | — | — | ✗ 未做 |
-| ⑤ 商用 API | `deepseek-flash`（`--no-thinking`） | **0.9681** | **0.4408** | ✓ |
-| ⑤+ 知识注入 | 同上 + 词表纠错 | **0.9790**（+0.0109） | — | ✓ |
-
-**②→③ 同域差距 0.9782 − 0.7349 = +0.2433**，这是「微调到底买到了什么」的主要证据。
+> 总表见上方「结果速览」。本节记录该表的口径限制与档位设计动机。
 
 > ⚠️ **跨域列的口径限制（2026-09-19 补，重要）：** 该列全部使用 `evaluate.py` 内置的
 > `PROMPTS["flat"]`，它只要求抽 **3 个字段**；WildReceipt 真值 100 条共 **643 个字段**、
@@ -337,7 +379,7 @@ $env:HF_HUB_OFFLINE="1"
 > 所以：**跨域列的数字不等于「模型在该域的能力」，至少有一部分是 prompt 缺陷。**
 >
 > 本地 ②/③ 换 8 字段 prompt 的对照**已跑完**：召回同样翻倍（0.230→0.496、0.208→0.418），
-> 但精确率同时塌掉、幻觉率飙到 0.59 / 0.73 —— 它们仍只到天花的板 **50% / 42%**，
+> 但精确率同时塌掉、幻觉率飙到 0.59 / 0.73 —— 它们仍只到天花板的 **50% / 42%**，
 > 而 ⑤ 档稳定在 **73%**。⇒ **prompt 决定天花板高度，模型能力决定能接近多少。**
 >
 > **该列保持同口径（3 字段）可比，不要把 0.7085 或 8 字段的数字直接填进来** ——
@@ -369,7 +411,7 @@ JSON 合法率 96.1% vs SFT 100%；幻觉率 2.0% vs SFT 0.0%。
 
 #### ⑤ 档的设计：同源对照，不是换一个更强的模型
 
-这一档用 **Qwen3-VL-Plus（阿里云百炼）** 而不是随便挑一个商业 API，
+这一档原计划用 **Qwen3-VL-Plus（阿里云百炼）** 而不是随便挑一个商业 API，
 理由是**归因干净**：本地微调的基座就是 Qwen3-VL-2B，用同家族做上界后，
 五档里的 VLM 行构成**一条单家族缩放曲线**（2B 零样本 → 2B SFT → 8B 零样本 → VL-Plus），
 tokenizer / prompt 模板 / 图像预处理完全同源，增益只能归因于规模。
@@ -396,7 +438,7 @@ key 有两种给法：临时环境变量（每次开终端都要重设），或�
 **`.env`**（`src/evaluate_api.py` 启动时自动读取，已在 `.gitignore` 里，不进版本库）：
 
 ```ini
-# C:\MiniVLM\.env
+# .env
 DASHSCOPE_API_KEY=sk-xxxxxxxx
 DEEPSEEK_API_KEY=sk-xxxxxxxx      # 可选
 ```
@@ -548,8 +590,6 @@ CPU 单测（不花 API 钱）：
 > 若当时直接抄下 0.8622，结论会变成「商用 API 全面不如本地小模型」——
 > 一个完全站不住的判断。**指标异常时先查数据管道，再下结论。**
 
----
-
 ### 7. 知识注入（标准词表 + 保守模糊纠错）
 
 **只纠正「真闭集」字段。** 动手前先用 `src/check_lexicon_coverage.py` 量了一件事：
@@ -614,8 +654,6 @@ CPU 单测（不花 API 钱）：
 # 注：--report 会重新生成为独立文件；五个注入配置的汇总见 outputs/reports_appendix.md §2
 ```
 
----
-
 ### 8. Demo（一屏看完三档差异）
 
 `src/demo.py` —— 上传/选图 → 真推理 → 与真值逐字段对照。
@@ -651,16 +689,7 @@ CPU 单测（不花 API 钱）：
 
 # 3) 开界面 → http://127.0.0.1:7860
 .\venv-gld\Scripts\python.exe src\demo.py
-
-# 不用 GPU 也能看效果：用已落盘预测渲一张静态预览（+可选 PNG 截图）
-.\venv-gld\Scripts\python.exe src\demo.py --render-sample 41 --png
 ```
-
-![Demo 静态预览](outputs/demo_preview.png)
-
-（第 41 条测试样本：零样本 F1 0.595 → 注入后 0.727 → SFT 0.967。
-图由 `--render-sample 41 --png` 直接生成，用本机 Edge/Chrome 无头截图，
-不引入 playwright 这类重依赖；`outputs/demo_preview.html` 是同一份的 HTML。）
 
 **三个刻意的工程取舍**（最常被追问的三点）：
 
@@ -684,9 +713,7 @@ CPU 单测（不花 API 钱）：
 > 深色模式，白色卡片配深色外壳很割裂，故用 `launch(head=...)` 注入一段脚本，
 > 摘掉 `<html>` 上的 `dark` 标记并盯住不被加回。
 
----
-
-## 9. DSPy 自动 prompt 优化（`src/optimize_prompt_dspy.py`）
+### 9. DSPy 自动 prompt 优化（`src/optimize_prompt_dspy.py`）
 
 回答的问题：**不改权重、纯靠自动优化 prompt，能走到哪一步？**
 
@@ -787,6 +814,38 @@ B（0.7734）> C（0.7447）—— 两个数据集同向，**过拟合小验证�
 > 只看最后三行会得出「DSPy 优化无效」这个完全反向的结论。
 > 现已在脚本里加两道闸：**preflight**（开跑前确认端点可用）+ **结果自检**
 > （最优指令 == 基线 ⇒ 警告 + 退出码 2）。
+
+---
+
+## 环境
+
+**硬件**：RTX 4060 Laptop 8GB · Windows 11 · 驱动 616.92（CUDA UMD 13.4）
+
+**已锁定的版本组合**（改动前请三思，见下方警告）：
+
+| 组件 | 版本 | 组件 | 版本 |
+|---|---|---|---|
+| Python | 3.12.6 | unsloth | 2026.9.4 |
+| torch | **2.14.0+cu130** | triton | 3.8.0 |
+| torchvision | 0.29.0+cu130 | bitsandbytes | 0.50.2 |
+| transformers | 5.5.0 | trl | 0.24.0 |
+| peft | 0.20.0 | datasets | 4.3.0 |
+| accelerate | 1.15.0 | dspy | 3.3.1 |
+| qwen-vl-utils | 0.0.14 | pillow | 12.3.0 |
+
+> ⚠️ **装包警告**
+> PyPI 上 Windows 版 torch 默认是 **CPU 版**。任何可能触发 torch 升级的操作
+> （例如 `pip install unsloth`）都必须显式指定官方 CUDA 源，否则 GPU 会失效：
+> ```powershell
+> pip install <pkg> --index-url https://download.pytorch.org/whl/cu130
+> # 已装错时：
+> pip install --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cu130
+> ```
+
+**Windows 平台已知限制**（不影响正确性，仅影响速度）：
+
+- `FA2 = False` —— flash attention 2 不可用，走 eager / xformers
+- `torch.compile` 对部分 Qwen3-VL 视觉算子编译失败（InductorError），自动降级 eager
 
 ---
 

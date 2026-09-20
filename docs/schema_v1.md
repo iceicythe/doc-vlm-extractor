@@ -1,7 +1,7 @@
 # 数据 Schema 设计 v1（草案）
 
-> 状态：**待确认** · 定稿后所有渲染、标注、评测都以此为准
-> 关联：`docs/多模态实习项目方案_v2.md` 第五章（数据管线）、第六章（评测设计）
+> 状态：**已定稿** · 所有渲染、标注、评测均以此为准
+> 关联：数据管线见 [`../src/build_dataset.py`](../src/build_dataset.py)，评测设计见 [`retrospective.md`](retrospective.md) 第 4 节
 
 ---
 
