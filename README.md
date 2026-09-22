@@ -1,864 +1,282 @@
 # Doc-VLM-Extractor
 
-**图文多模态文档结构化提取系统** —— 输入一张**工程材料清单**照片，输出字段级结构化 JSON。
+面向工程材料清单的多模态结构化提取实验：输入单据图片，使用 Qwen3-VL-2B 输出包含表头、明细和合计的 JSON。
 
-在单张 **8GB 消费级笔记本显卡**上完成 Qwen3-VL-2B 的 QLoRA 微调、DPO 后训练、消融实验、
-知识注入与 prompt 自动优化，并与商用 API 大模型做同口径多档对比。
+项目包含合成数据构建、QLoRA 微调、分辨率与数据规模对比、真实英文收据跨域评测、词表后处理、DPO 探索和 Gradio 演示。主要训练实验使用单张 RTX 4060 Laptop 8GB 显卡。
 
-| 指标 | 数值 |
-|---|---|
-| 同域字段级 F1 | **0.982**（n=90）· **0.9782**（消融子集 n=102） |
-| 训练成本 | 600 步 / **58.7 分钟** / 峰值显存 **4.03 GB**（单卡 8GB） |
-| 相对商用 API | 同域 **0.9782 vs 0.9681**（2B 微调略高）；跨域 0.284 vs 0.4408（落后） |
-| 输入分辨率消融 | 384 → 768px：heavy 退化档 **0.9635 → 0.9870** |
+> **结果状态（2026-09-22）**：本文保留历史实验记录，但评分代码存在已知的数字归一化问题，尚未修复并复算。因此，下列分数是**旧评分口径下的历史结果**，不能作为已校正的准确性结论。本次更新修正文档表述与运行说明，不代表评分实现、历史报告或 Demo 中的数字已同步修复。
 
-**输入 → 输出**（字段结构见 [`docs/schema_v1.md`](docs/schema_v1.md)）：
+## 输入与输出
+
+```text
+工程材料清单图片 → Qwen3-VL-2B（可加载 SFT LoRA）→ JSON 解析 → 可选词表纠错 → 字段评测 / 展示
+```
+
+目标输出示例（用于说明结构，不是新增实验结果）：
 
 ```json
 {
   "单据类型": "材料清单",
-  "表头": { "项目名称": "西安某住宅楼主体工程", "供应商": "陕西XX建材有限公司",
-           "单据编号": "CL-20260915-001", "日期": "2026-09-15" },
+  "表头": {
+    "项目名称": "某住宅楼主体工程",
+    "供应商": "某建材有限公司",
+    "单据编号": "CL-20260915-001",
+    "日期": "2026-09-15"
+  },
   "明细": [
-    { "序号": "1", "名称": "螺纹钢 HRB400", "规格型号": "Φ12", "单位": "吨",
-      "数量": "12.5", "单价": "4200.00", "金额": "52500.00" }
+    {
+      "序号": "1",
+      "名称": "螺纹钢 HRB400",
+      "规格型号": "Φ12",
+      "单位": "吨",
+      "数量": "12.5",
+      "单价": "4200.00",
+      "金额": "52500.00"
+    }
   ],
-  "合计": { "金额": "107600.00" }
+  "合计": {"金额": "52500.00"}
 }
 ```
 
-![Demo 静态预览](outputs/demo_preview.png)
+字段约定见 [schema 文档](docs/schema_v1.md)。当前实现以固定 schema 的工程材料清单为主要任务；真实票据支持程度由跨域实验单独评估，不宣称通用票据或工程图纸识别能力。
 
-> 第 41 条测试样本的三档对照：零样本 F1 0.595 → 知识注入 0.727 → SFT 0.967。
-> 图由 `src/demo.py --render-sample 41 --png` 直接生成（本机 Edge/Chrome 无头截图，
-> 不引入 playwright 这类重依赖），同一份内容的 HTML 见 `outputs/demo_preview.html`。
+![历史 Demo 静态预览](outputs/demo_preview.png)
 
-**文档导航**
+上图是历史预测的静态展示，图中评分沿用旧口径。无需 GPU 即可查看 [HTML 预览](outputs/demo_preview.html)；重新生成预览需要额外的原图和预测文件，详见复现说明。
 
-| 文档 | 内容 |
-|---|---|
-| [`outputs/results_onepager.md`](outputs/results_onepager.md) | 一页 Results：五档总表 + 结论 + 追问应答 |
-| [`docs/retrospective.md`](docs/retrospective.md) | 全量技术复盘：逐阶段决策 + 60 余条踩坑（症状 → 真因 → 处置） |
-| [`outputs/reports_appendix.md`](outputs/reports_appendix.md) | 九配置错误构成总表 + 分布统计 + 知识注入五配置总表 |
-| [`docs/schema_v1.md`](docs/schema_v1.md) | 数据 schema 与字段定义 |
+## 已实现的工作
 
----
-
-## 结果速览
-
-### 五档对比表
-
-| 档 | 实现 | 同域 F1（消融集 n=102） | 跨域 F1（WildReceipt n=100） | 状态 |
-|---|---|---:|---:|---|
-| ① 规则基线 | OCR + 正则抽取 | — | — | 未做（见下） |
-| ② 2B 零样本 | `--adapter` 留空 | **0.7349**（宽容 0.7471） | 0.319 | ✓ |
-| ②+ 知识注入 | 词表纠错（纯 CPU，不需训练） | **0.7870**（+0.0522） | — | ✓ |
-| ③ 2B 微调后 | `outputs/sft_v1/lora` | **0.9782** | 0.284 | ✓ |
-| ③+ 知识注入 | 同上 + 纠错 | 0.9779（±0） | — | ✓ |
-| ④ 8B 零样本 | Qwen3-VL-8B 4bit | — | — | 未做（见下） |
-| ⑤ 商用 API | `deepseek-flash --no-thinking` | **0.9681** | **0.4408** | ✓ |
-| ⑤+ 知识注入 | 同上 + 词表纠错 | **0.9790**（+0.0109） | — | ✓ |
-
-**②→③ 同域差距 0.9782 − 0.7349 = +0.2433**，这是「微调到底买到了什么」的主要证据。
-
-**未做/未完成的三项，以及原因**（不做也不影响结论，如实标出）：
-
-| 项 | 状态 | 原因 |
+| 模块 | 内容 | 主要代码 |
 |---|---|---|
-| ① OCR + 规则基线 | 未做 | 对「多模态下游」这一目标方向的结论增量低，优先级让给知识注入与 DSPy |
-| ④ 8B 零样本 | 未做 | 8GB 显存下只能 4bit 量化跑，与 2B SFT 的对比混入量化损失，解释力不足 |
-| ⑤ 同源上界（`qwen3-vl-plus`） | 未做 | 缺 `DASHSCOPE_API_KEY`；补上后 VLM 各行才构成单家族缩放曲线（见 §6） |
+| 数据构建 | 材料清单渲染，旋转、模糊、透视、污渍等退化，按源样本划分 | [render.py](src/render.py)、[degrade.py](src/degrade.py)、[build_dataset.py](src/build_dataset.py) |
+| SFT | 4bit 基座上的 LoRA 微调，支持分辨率、数据比例及训练层范围配置 | [train_sft.py](src/train_sft.py) |
+| 对比实验 | 零样本 / SFT、分辨率、训练数据比例、仅语言侧 LoRA | [run_ablation.py](src/run_ablation.py) |
+| 评测 | 本地与 API 推理、JSON 解析、字段配对、增量保存 | [evaluate.py](src/evaluate.py)、[evaluate_api.py](src/evaluate_api.py) |
+| 词表后处理 | 从训练集构建候选值集合，按字符串相似度保守纠错 | [build_lexicon.py](src/build_lexicon.py)、[inject_knowledge.py](src/inject_knowledge.py) |
+| DPO 探索 | 偏好样本构建、自定义训练循环、参考 adapter 检查 | [build_pref_data.py](src/build_pref_data.py)、[train_dpo.py](src/train_dpo.py) |
+| 提示词实验 | 人工完整字段清单与 DSPy/GEPA 优化指令对比 | [optimize_prompt_dspy.py](src/optimize_prompt_dspy.py) |
+| 展示 | 零样本、微调及词表处理结果对照 | [demo.py](src/demo.py) |
 
-### 五条主结论
+OCR＋规则基线、8B 零样本对照尚未完成。它们仍是有价值的后续比较，尤其是 OCR 基线可以帮助判断引入 VLM 的收益与成本。
 
-1. **分辨率是主导因素，不是数据量。** 384→512 涨 1.3pt、384→768 涨 1.7pt，且增益全部来自 heavy 退化档；
-   数据量 25%→100% 只有 +1.2pt 且增量递减 ⇒ **350 源样本已接近饱和，堆数据不如加输入分辨率。**
-2. **SFT 的主要收益是 schema 遵从 + 中文字段读写。** 零样本档 97/102 条把 `合计` 输出成标量、
-   JSON 合法率 96.1%；SFT 后这两项**归零**（同档七个配置全部 0/102）。
-3. **知识注入的收益与基座能力成反比**（+0.0522 / +0.0109 / −0.0003）——
-   SFT 后词表纠正几乎无事可做（183 处改动 → 1 处），说明**词表已被内化进权重**。
-4. **DPO 是负结果，但根因被完整定位。** 幻觉率 28% → 28% 未动，三条根因见 §5；
-   关键对照：同一批错误，**加分辨率（768px）消掉 78%，DPO 消掉 0%** ⇒ **瓶颈在感知层，不在决策层。**
-5. **跨域那格上不去，主要是 prompt 缺陷而不是模型能力不足。** 手写 flat prompt 只点名 3 个字段，
-   recall 天花板 **0.4168**，⑤ 档 0.4408 已达天花板的 **75.7%**；补齐 8 字段后 F1 **0.4408 → 0.7085**。
+## 数据与任务边界
 
----
+### 合成工程材料清单
 
-## 快速开始
+已提交的数据清单包含 1,000 个源样本，每个源样本生成 clean、medium、heavy 三种图像，共 3,000 张。
+
+| 划分 | 源样本数 | 图像数 |
+|---|---:|---:|
+| 训练 | 700 | 2,100 |
+| 验证 | 150 | 450 |
+| 测试 | 150 | 450 |
+
+划分单位是源样本：同一底图的不同退化版本放在同一个集合。已提交清单的训练、验证、测试源样本集合互不重叠。
+
+这些是固定渲染流程生成的不同内容样本，**不是 1,000 种独立版式**。样本隔离避免了底图复用，但不等于已经验证未见版式、未见材料词汇或真实拍摄单据上的泛化。
+
+主要消融使用 `test_ablation.jsonl` 的 102 张图片（三档各 34 张），对应 83 个不同源样本。三档分别抽样，并非完全相同的 34 个源样本；按档位比较时应考虑内容组成差异。历史主实验另报告过 n=90 的子集结果，不与 n=102 的结果混用。
+
+### 真实收据跨域测试
+
+使用 WildReceipt 测试清单前 100 条，任务为扁平字段提取。它与训练任务同时存在语言、版式、字段结构及图像来源差异，因此结果反映多种分布变化的综合影响。
+
+完整提示词要求 8 个字段：`store_name`、`store_addr`、`tel`、`date`、`time`、`subtotal`、`tax`、`total`。提示词见 [prompt_manual_8f.txt](outputs/prompt_manual_8f.txt)。不存在的字段应省略。
+
+历史 DSPy 实验将该测试清单第 101–124 条用于优化、第 125–164 条用于验证，与前 100 条评测样本分开。这是项目自定义划分，不应表述为完整遵循官方训练 / 测试协议的 benchmark 成绩。
+
+## 历史实验结果（待评分修复后复算）
+
+以下数值来自已提交的汇总和报告。公开仓库没有完整的逐样本预测与训练日志，当前无法仅凭仓库内容独立复算所有历史指标。
+
+### 同域对比
+
+评测集：合成材料清单消融子集，n=102；沿用历史字段级 micro-F1。
+
+| 方法 | 历史 F1 |
+|---|---:|
+| Qwen3-VL-2B 零样本 | 0.7349 |
+| 零样本＋词表纠错 | 0.7870 |
+| Qwen3-VL-2B QLoRA SFT，384px | 0.9782 |
+| SFT＋词表纠错 | 0.9779 |
+| 商用 API，历史记录标识 `deepseek-flash`，关闭思考 | 0.9681 |
+| 商用 API＋词表纠错 | 0.9790 |
+
+旧口径下，SFT 在这一固定任务的合成子集上优于本地零样本。与 API 的差异只适用于记录中的输入、提示词和调用配置，不代表通用模型能力排名。API 精确服务版本、运行日期和完整请求配置仍需随原始记录补齐。
+
+词表处理属于输出端的候选值纠错。SFT 后纠错收益很小，说明它在当前闭集数据上的额外价值有限，不能据此证明词表或提示词已经被模型“内化”。测试值不在词表时，也不存在“绝不改坏”的普遍保证。
+
+### 分辨率与训练配置
+
+数据来源：[ablation_summary.json](outputs/ablation_summary.json)。
+
+| 配置 | clean | medium | heavy | 总体历史 F1 |
+|---|---:|---:|---:|---:|
+| 384px，100% 训练数据 | 0.9886 | 0.9843 | 0.9635 | 0.9782 |
+| 384px，50% 训练数据 | 0.9868 | 0.9784 | 0.9562 | 0.9731 |
+| 384px，25% 训练数据 | 0.9850 | 0.9764 | 0.9417 | 0.9666 |
+| 512px，100% 训练数据 | 1.0000 | 0.9971 | 0.9789 | 0.9914 |
+| 768px，100% 训练数据 | 1.0000 | 1.0000 | 0.9870 | 0.9953 |
+| 384px，仅语言侧 LoRA | 0.9894 | 0.9872 | 0.9627 | 0.9790 |
+
+可从历史记录中观察到：
+
+- 提高分辨率后三档均有提升，heavy 档提升最大；不能说收益全部来自 heavy。
+- 分辨率实验同时改变训练和推理分辨率，无法单独归因于推理阶段多看到了像素。
+- 数据比例实验使用 150 / 300 / 600 步，近似保持训练轮数，同时改变了数据量和更新步数；不能据此得出“数据量不重要”或确定的饱和点。
+- 相同训练步数不等于相同计算量。更高分辨率的运行成本需要单独测量。
+- 仅语言侧 LoRA 与另一配置的分数接近，但没有多随机种子和置信区间，不能宣称统计等价，也不能推广到所有视觉任务。
+
+历史 SFT 基线记录为 600 步、58.7 分钟，`torch.cuda.max_memory_allocated()` 峰值约 4.03 GiB。该值是 PyTorch 分配显存的统计，不等于整卡总占用；耗时依赖设备、软件环境和温度，不能作为其他机器的速度保证。
+
+### 跨域对比：完整 8 字段提示词
+
+评测集：WildReceipt 前 100 条，使用同一份人工 8 字段提示词。
+
+| 方法 | 历史 F1 | Precision | Recall |
+|---|---:|---:|---:|
+| 2B 零样本 | 0.4691 | 0.4449 | 0.4961 |
+| 2B SFT | 0.3752 | 0.3401 | 0.4184 |
+| 商用 API | 0.7085 | 0.6973 | 0.7201 |
+
+该设置下，针对合成材料清单的 SFT 没有改善真实英文收据提取。下降可能涉及领域适配、输出习惯、图像感知及其他因素；现有实验不足以排除能力遗忘，也不能唯一归因为“感知层瓶颈”。
+
+早期内置 flat 提示词只要求 3 个字段，却按更多真值字段计分，得到 0.3190 / 0.2842 / 0.4408。它们保留为任务定义不匹配的诊断记录，不作为完整字段提取的主结果。被提示词点名的真值字段占比是覆盖情况，不是模型召回率的严格数学上限；F1 也不能直接除以召回覆盖率来解释“能力达成率”。
+
+### DPO 与提示词优化
+
+- **DPO**：当前配置在同域的历史 F1 为 0.9782 → 0.9773，早期 3 字段跨域设置为 0.2842 → 0.2863，未观察到明确收益。偏好样本的 chosen 部分含错，且偏好数据与跨域目标不匹配，均值得进一步检查。但 chosen 含错不等于偏好方向错误，仍需比较 chosen 与 rejected；不能据此断言“一半梯度方向是反的”。提高分辨率更有效，也不能证明 DPO 原理上无法改善此类任务。
+- **DSPy/GEPA**：API 对照的历史 F1 为三字段提示词 0.4408、人工八字段 0.7085、GEPA 0.6830。补齐字段清单改善了任务覆盖，自动优化指令未超过人工完整基线。验证集与测试集均落后于人工基线，本身不足以证明过拟合；还需分析候选搜索、评价方式与运行波动。
+
+这些负结果用于记录当前实验的边界，不作为对 DPO、自动提示词优化或多模态模型的一般性否定。
+
+## 评分定义与已知问题
+
+当前评分实现在 [evaluate.py](src/evaluate.py)，尚待修复：
+
+1. **数字归一化损失精度。** `normalize()` 对纯数字执行 `float()` 和默认 `g` 格式化。例如 `123456.71` 与 `123456.72` 都变成 `123457`，不同结果可能被判为相同；编号 `00123` 也会与 `123` 合并。应改为按字段类型处理：金额使用精确十进制比较，编号和电话保留字符串意义。影响幅度必须使用原始预测重新计算，当前未知。
+2. **`hallucination_rate` 的命名过宽。** 当前主要统计“至少出现一个真值中没有的评分字段路径”的样本比例，本文称其为“额外字段样本率”。已有字段中填入错误值会影响 F1，却不一定增加该指标。schema 模式还会忽略部分未纳入评分的额外键，因此 0% 不代表没有无依据生成。
+3. **JSON 可解析不等于 schema 合规。** 解析器容忍代码块和前后文本，并提取 JSON 对象。`json_valid_rate` 更准确地说是“解析器成功取得对象的比例”，不能代替原始输出格式检查或字段类型验证。
+4. **字段 F1 不等于整单正确率。** 当前按配对后的字段路径和值计算 TP / FP / FN；schema 模式主要评分表头、明细和合计，并未完整验证所有输出约束。应另报整单全对率、schema 合规率以及关键金额字段的精确匹配结果。
+
+下一次发布校正结果时，需要保存评分版本、输入清单、逐样本原始输出和配置，并同步更新汇总、报告与 Demo。当前不提供“已校正准确率”或“零幻觉”的结论。
+
+## 查看与复现
+
+### 1. 直接查看已发布材料
+
+克隆后可以直接查看代码、JSONL 数据清单、汇总表、Markdown 报告和静态预览。
 
 ```powershell
 git clone https://github.com/iceicythe/doc-vlm-extractor.git
 cd doc-vlm-extractor
+```
 
-# 1) 环境自检（秒级，不下载模型）
+当前仓库不包含模型权重、LoRA adapter、合成原图、公开数据原始包、完整训练日志和逐样本预测。因而不能在刚克隆后直接运行历史预测复算或静态预览再生成。
+
+### 2. 准备环境
+
+历史运行环境为 Windows + NVIDIA GPU。可以先建立脚本约定的环境目录：
+
+```powershell
+python -m venv venv-gld
+```
+
+训练涉及 PyTorch、torchvision、transformers、Unsloth、TRL、PEFT、accelerate、bitsandbytes、datasets、Pillow 等；图像退化还依赖 NumPy，网页演示依赖 Gradio，API 与提示词实验另需相应客户端。
+
+**仓库尚未提供经过验证的依赖锁定文件。** 上面的环境创建命令不会安装这些依赖；需要按设备、CUDA 和所选训练栈准备兼容环境，不能保证直接安装各包最新版可以复现。依赖安装完成后运行：
+
+```powershell
 .\venv-gld\Scripts\python.exe scripts\check_env.py
-
-# 2) 不用 GPU、不用模型，先看 Demo 长什么样（读已落盘预测渲染静态预览）
-.\venv-gld\Scripts\python.exe src\demo.py --render-sample 41 --png
-
-# 3) 冒烟测试（首次需下载模型约 2.2GB）
-$env:HF_ENDPOINT = "https://hf-mirror.com"
-.\venv-gld\Scripts\python.exe scripts\smoke_test.py
 ```
 
-**复现路径说明。** 仓库**不包含**模型权重与 LoRA adapter（1.46GB，超出版本控制合理范围），
-因此 `outputs/` 里的预测与评测结果是**已落盘的历史产物**，可以直接读取、复算、对比，
-但不能直接重跑推理。完整复现链条：
+该脚本用于诊断，不会自动补齐环境。部分调度脚本固定引用 `venv-gld/Scripts/python.exe`，Linux/macOS 使用前需要调整路径。
+
+### 3. 生成合成数据与本机清单
+
+在新克隆中，依次执行渲染、两档退化，再构建划分：
 
 ```powershell
-# 1) 重建合成数据（渲染 + 三档退化 + GT）
-.\venv-gld\Scripts\python.exe src\build_dataset.py
-
-# 2) 重训 SFT（约 59 分钟，单卡 8GB）
-.\venv-gld\Scripts\python.exe -u src\train_sft.py
-
-# 3) 评测（同域 / 跨域）
-.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs\sft_v1\lora --tag sft_v1
-.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs\sft_v1\lora --tag sft_wr `
-    --mode flat --data data\processed\wildreceipt_test.jsonl --limit 100
+.\venv-gld\Scripts\python.exe src\render.py --n 1000 --seed 20260915
+.\venv-gld\Scripts\python.exe src\degrade.py --level medium --seed 20260915
+.\venv-gld\Scripts\python.exe src\degrade.py --level heavy --seed 20260915
+.\venv-gld\Scripts\python.exe src\build_dataset.py --train 0.70 --val 0.15 --seed 20260915
+.\venv-gld\Scripts\python.exe src\run_ablation.py --build-subset
 ```
 
-**CPU 单测**（不占显存、不花钱，116 项）：
+已提交的 JSONL 含历史机器上的绝对路径。上述步骤会生成本机路径，并重写处理后的清单及消融子集；已有本地实验数据时应先保留自己的清单。字体和图像依赖版本可能影响渲染，未提供图像哈希前，不保证重建图片与历史实验逐字节一致。
+
+### 4. 训练与同域评测
+
+显式指定历史主训练配置，避免落入脚本默认的 60 步 smoke 配置：
 
 ```powershell
-.\venv-gld\Scripts\python.exe scripts\_test_dpo_math.py        # DPO 数学
-.\venv-gld\Scripts\python.exe scripts\_test_evaluate_api.py    # API 评测（39 项）
-.\venv-gld\Scripts\python.exe scripts\_test_evaluate_args.py   # 两脚本参数对齐（13 项）
+.\venv-gld\Scripts\python.exe src\train_sft.py --max-steps 600 --tag v1 --image-size 384 --rank 16 --lr 2e-4 --batch 1 --grad-accum 8
+
+.\venv-gld\Scripts\python.exe src\evaluate.py --data data\processed\test_ablation.jsonl --tag zero_abl --image-size 384
+.\venv-gld\Scripts\python.exe src\evaluate.py --data data\processed\test_ablation.jsonl --adapter outputs\sft_v1\lora --tag abl_base --image-size 384
 ```
 
----
+训练输出为 `outputs/sft_v1/lora`。评测生成的分数仍沿用当前有已知问题的评分器，修复前只能用于调通流程。推理脚本支持续跑；改变配置后应使用新 tag，避免混淆实验产物。
 
-## 目录结构
+### 5. 真实收据与完整字段提示词
 
-```
-doc-vlm-extractor/
-├── scripts/             环境与工具脚本
-│   ├── check_env.py     环境自检
-│   ├── smoke_test.py    冒烟测试
-│   ├── _test_*.py       CPU 单测（DPO 数学 / API 评测 / 参数对齐）
-│   └── _analyze_fields.py         逐字段拆解两组评测结果（tp/fp/fn/无中生有）
-├── src/                 项目源码
-│   ├── render.py        合成数据渲染
-│   ├── degrade.py       图像退化管线
-│   ├── build_dataset.py 数据集构建与划分
-│   ├── train_sft.py     SFT 训练
-│   ├── run_ablation.py  消融实验调度
-│   ├── build_pref_data.py  DPO 偏好数据构造（断点续跑）
-│   ├── train_dpo.py     DPO 后训练（自写循环，TRL 不支持 Qwen3-VL）
-│   ├── evaluate.py      本地评测（增量落盘 / 断点续跑 / OOM 自动降批）
-│   ├── evaluate_api.py  API 上界评测（⑤ 档，口径复用 evaluate.py）
-│   ├── analyze_errors.py           失败分析（7 类错误）
-│   ├── analyze_error_consistency.py 系统性错误 vs 随机误差判别
-│   ├── check_amount_consistency.py  金额等式一致性
-│   ├── check_pref_quality.py        偏好数据质量门（chosen 绝对正确率）
-│   ├── build_lexicon.py            标准词表构建（train.jsonl 的 GT 值域）
-│   ├── check_lexicon_coverage.py   知识注入可行性前置检查（哪些字段可救）
-│   ├── inject_knowledge.py         知识注入：词表保守纠错 + 重打分
-│   ├── optimize_prompt_dspy.py     DSPy/GEPA prompt 自动优化
-│   ├── demo.py          Gradio 四栏对照 Demo（含 --check / --smoke / --render-sample）
-│   ├── make_charts.py   图表生成（SVG）
-│   └── prepare_{xfund,wildreceipt}.py  公开数据集准备
-├── data/
-│   ├── processed/       训练/验证/测试划分 + WildReceipt + DPO 数据（jsonl）
-│   ├── lexicon/         标准词表（v1.json，由 train.jsonl 派生）
-│   ├── synthetic/       合成图 + Ground Truth（需由脚本重建，未入库）
-│   └── public/          公开数据集原始包（`scripts/download_datasets.py` 下载，未入库）
-├── outputs/             评测结果、报告、图表、Demo 预览
-└── docs/                schema 定义与技术复盘
-```
-
----
-
-## 详细实验记录
-
-### 1. SFT 主结果（合成测试集 n=90 · 同分布）
-
-| 档位 | 字段级 F1 |
-|---|---:|
-| clean | 0.994 |
-| medium | 0.982 |
-| heavy | 0.961 |
-| **全测试集** | **0.982** |
-
-JSON 合法率 100%；600 步 / 58.7 分钟 / 峰值显存 4.03 GB。
-
-### 2. 跨域泛化（真实英文收据 WildReceipt，n=100）
-
-| 模型 | 字段级 F1 | 幻觉率 |
-|---|---:|---:|
-| 零样本 | 0.319 | 16.0% |
-| SFT 微调后 | 0.284 | 28.0% |
-
-**微调在这个跨语言跨域任务上基本无效，且把幻觉率从 16% 抬到 28%。**
-拆开看召回率只掉 9.5%，下降主要来自精度 —— 属于「少量数据微调放大幻觉倾向」，
-不是灾难性遗忘。这也正是引入 DPO 的动机 —— 而 DPO 未能解决它（见 §5）。
-
-> 该列使用 `evaluate.py` 内置的 3 字段 flat prompt，存在**口径限制**，读法见 §6 与 §9。
-
-### 3. 消融实验（同一子集 n=102，每档 34，seed=3407）
-
-| 配置 | clean | medium | heavy | **总体 F1** | 训练时长 |
-|---|---:|---:|---:|---:|---:|
-| 384px · 数据 100%（基线） | 0.9886 | 0.9843 | 0.9635 | 0.9782 | 58.7 min |
-| 384px · 数据 50% | 0.9868 | 0.9784 | 0.9562 | 0.9731 | 57.1 min |
-| 384px · 数据 25% | 0.9850 | 0.9764 | 0.9417 | 0.9666 | 20.6 min |
-| 512px · 数据 100% | 1.0000 | 0.9971 | 0.9789 | 0.9914 | 57.3 min |
-| 768px · 数据 100% | 1.0000 | 1.0000 | 0.9870 | **0.9953** | 70.6 min |
-| 384px · 仅训语言层 | 0.9894 | 0.9872 | 0.9627 | 0.9790 | 50.5 min |
-
-数据量曲线 25% → 50% → 100% 为 0.9666 → 0.9731 → 0.9782，单调且增量递减
-（+0.65pt / +0.51pt），说明 700 个源样本（×3 档退化 = 2100 张训练图）已接近该任务的饱和点。分辨率曲线则相反，
-越往上收益越实（heavy 档 384px→768px 涨 2.35pt）。
-
-> 时长列的 d50（57.1 min / 300 步）与基线（58.7 min / 600 步）接近，是
-> **笔记本热节流**造成的，不是数据量效应：`d25` 当天早些时候跑在 6.2 s/step，
-> d50 重跑时为 10.8 s/step，事后查 `nvidia-smi` 见 SW Thermal Slowdown 累计
-> 11.6 小时。如需可比的时间结论，请在冷机状态下重跑。
-
-结论：
-
-1. **输入分辨率是主导因素。** 384→512 涨 1.3 个点、384→768 涨 1.7 个点，
-   且增益**全部来自 heavy 档**（0.9635→0.9870），clean 档本来就到顶了。
-2. **数据量在 25% 时才开始显形**（−1.2 个点），且增量单调递减 → 350 源样本接近饱和，
-   继续堆数据的边际收益低于换更大输入分辨率。
-3. **冻结视觉层几乎没有代价。** 仅训语言层 0.9790 vs 全层 0.9782，差 0.0008
-   —— 在这个子集里 1 个字段约合 0.0003 F1，即差异不到 3 个字段，属噪声范围。
-   原因是版面结构固定、字段靠字符识别而非空间推理。
-   意义：**显存紧张时可以放心不训视觉塔**，这就把 2B 模型塞进 8GB 更稳了。
-
-### 4. 错误结构分析（`src/analyze_errors.py`）
-
-3387 个待抽字段，各配置的字段级错误构成：
-
-| 配置 | 错误字段数 | 近似误读（一字之差） | 显著误读（语义混淆） |
-|---|---:|---:|---:|
-| 384px · 数据 25% | 113 | 96 | 17 |
-| 384px · 数据 50% | 91 | 84 | 7 |
-| 384px · 数据 100%（基线） | 74 | 69 | 5 |
-| 512px | 29 | 29 | **0** |
-| 768px | 16 | 16 | **0** |
-| 仅语言层 | 71 | 64 | 7 |
-
-三条可复述的结论：
-
-1. **分辨率和数据量各自消灭一类错误，方向不同。**
-   数据量消除「语义误读」（25%→100% 时 17→7→5）；
-   分辨率则直接把它清零（5→0）并把字符级误读再砍一半（74→29→16）。
-2. **残余错误 100% 落在 heavy 退化档**，且全是一字之差的字符级误读
-   （如 `36195`→`36193`、`Φ25`→`Φ12`），语义混淆为 0。
-3. 幻觉/漏抽/行列错位/JSON 非法在**全部六个配置里都是 0** —— 输出结构稳定，
-   瓶颈纯粹在字符识别精度，不在结构理解。
-
-图表由 `src/make_charts.py` 生成（`chart_ablation.svg` 分档 F1、`chart_ablation_err.svg` 错误构成），
-单页汇总见 `outputs/ablation_report.html`，
-逐配置明细（九配置错误构成总表 + 逐配置要点 + 代表错例）见
-[`outputs/reports_appendix.md`](outputs/reports_appendix.md) §1。
-
-### 5. DPO 后训练：一个被完整定位的负结果
-
-**动机**：跨域评测暴露的问题 —— 微调把幻觉率从 16% 抬到 28%。DPO 冲着"让模型自己区分它会犯的错"去。
-
-**结论**：DPO 未生效，但失败原因被完整定位（完整报告 [`outputs/report_dpo_negative.md`](outputs/report_dpo_negative.md)）。
-
-**偏好数据**：用 SFT 模型对同一张图温度采样 k=4 次，按
-`reward = F1 − 0.10 × 幻觉率`（JSON 非法记 0）打分，最高分做 chosen、最低分做 rejected，
-分差低于阈值则丢弃。默认只采 `heavy` 退化档 —— `medium` 上模型太稳，k 次采样输出完全相同。
-
-四个默认值是实测调出来的，改动前先看 `build_pref_data.py` 顶部的调参备忘：
-
-| 参数 | 原值 → 现值 | 原因 |
-|---|---|---|
-| `temperature` | 0.9 → **1.3** | temp<1 是**锐化**分布；train loss=0.017 时 4 次采样文本完全相同，白采样 |
-| `min-gap` | 0.05 → **0.02** | 每图约 33 字段，错 1 个字段的 F1 差只有 0.030 |
-| `levels` | medium → **heavy** | medium 上"无差异"占 60% |
-| `max_new_tokens` | 640 → **768** | 与 `evaluate.py` 对齐，避免长单据截断 |
-
-效果：**yield 10% → 80%**，平均分差 0.0116 → 0.0485。
-抽 4 对人工核对，差异全部落在消融阶段定位的那两类错误上
-（`252008.58`→`299003.58` 数值误读、`汉中青云`→`汉中鑫云` 文本近似误读、供应商整段编错）。
-
-**为什么自己写训练循环**：TRL 0.24 的 `DPOTrainer` **没有把 `image_grid_thw` 传给模型**
-（`dpo_trainer.py` 里 vision 只传 `pixel_values`/`pixel_attention_mask`/`image_sizes`），
-而 `Qwen3VLModel.forward` 必须有它才能把图像特征 scatter 回视觉 token 位置。
-对照组：TRL 的 GRPO / OnlineDPO 都显式传了（`grpo_trainer.py:722`、
-`online_dpo_trainer.py:1233`），只有离线 DPO 漏了。所以自写循环。
-
-三个实现要点：
-
-1. **参考模型挂第二份 adapter**。`disable_adapter()` 拿到的是 **SFT 之前的 base**，
-   不是策略初始快照，β·log(π_θ/π_ref) 里会混进整个 SFT 阶段的增益。
-   做法是同目录再 `load_adapter(..., "ref", is_trainable=False)`，
-   `set_adapter()` 切换 —— adapter 只有几十 MB，显存代价接近 0。
-2. **低显存 logprob**。不用 `outputs.logits`（(B,1100,152k) 的 float32 单份就 1.3GB），
-   改为取 `hidden_states[-1]` 只对 completion 位置算 lm_head，vocab 维分块做 log_softmax，
-   峰值从 GB 级降到百 MB 级。
-3. **step 0 免费自检**。ref 与 policy 同源时两者逐 token 完全一致 →
-   **loss 必须 = ln2 = 0.6931**。偏离即说明 adapter 冻结/切换有问题。`--check` 就是跑这个。
+安装下载脚本依赖并确保网络可访问后：
 
 ```powershell
-# 1) 造偏好数据（200 图 × k=4，约 1h50m；--resume 可断点续跑）
-$env:HF_HUB_OFFLINE="1"
-.\venv-gld\Scripts\python.exe -u src\build_pref_data.py --resume
+.\venv-gld\Scripts\python.exe scripts\download_datasets.py --only wildreceipt
+.\venv-gld\Scripts\python.exe src\prepare_wildreceipt.py
 
-# 2) 自检一个 batch（验证 ref 对齐 / 形状 / 显存，秒级）
-.\venv-gld\Scripts\python.exe src\train_dpo.py --check
-
-# 3) DPO 训练
-.\venv-gld\Scripts\python.exe -u src\train_dpo.py --epochs 3 --tag v1
-
-# 4) 评测（同域 + 跨域，与 SFT 同一套口径，可直接对比）
-.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs/dpo_v1/lora --tag dpo_v1
-.\venv-gld\Scripts\python.exe src\evaluate.py --adapter outputs/dpo_v1/lora --tag dpo_wr `
-    --mode flat --data data/processed/wildreceipt_test.jsonl --limit 100
+.\venv-gld\Scripts\python.exe src\evaluate.py --mode flat --data data\processed\wildreceipt_test.jsonl --limit 100 --prompt-file outputs\prompt_manual_8f.txt --tag zero_wr_8f
+.\venv-gld\Scripts\python.exe src\evaluate.py --mode flat --data data\processed\wildreceipt_test.jsonl --limit 100 --prompt-file outputs\prompt_manual_8f.txt --adapter outputs\sft_v1\lora --tag sft_wr_8f
 ```
 
-数学部分有 CPU 单测（位置对齐 / padding 屏蔽 / 分块一致性 / loss 解析解 / 梯度方向）：
+API 对照需要额外服务配置和调用额度，参数见 `src/evaluate_api.py --help`。比较时应统一样本、字段清单和评分器，并保存模型标识、图像处理、解码与思考模式等实际配置。
+
+### 6. Demo 与检查
+
+完成环境、数据和 SFT adapter 准备后，可启动交互演示：
 
 ```powershell
-.\venv-gld\Scripts\python.exe scripts\_test_dpo_math.py
-```
-
-#### 结果
-
-| 评测 | SFT 基线 | DPO 后 | 变化 |
-|---|---:|---:|---|
-| 同域 n=102 总体 F1 | 0.9782 | 0.9773 | −0.0009 |
-| 跨域 n=100 F1 | 0.2842 | 0.2863 | +0.0021（tp/fp/fn 各差 1 个字段，单点噪声） |
-| 跨域幻觉率 | 28% | **28%** | **未降低（这正是引入 DPO 的目标）** |
-
-训练本身是健康的：54 步 / 11.6 分钟 / acc 后 10 步 1.00 / loss 0.6931→0.6506。
-权重也确实动了（全局相对变化 0.39%，176/584 层 >1%），**排除"学习率太小没训动"**。
-
-#### 三条根因
-
-1. **偏好对里 50.3% 的 chosen 本身带错**（`src/check_pref_quality.py`）。
-   chosen 是"4 次采样里相对最好的"，不是正确答案；chosen 平均 F1 0.9656。
-   465 个差异字段中只有 **66.9%** 是"chosen 正确"，另 33.1% chosen 也错 →
-   **梯度方向有一半是反的**，且噪声集中在金额(52)/供应商(32)/数量(23)/单价(18)
-   这些核心字段上。
-2. **错误的性质超出 DPO 的能力范围**（`src/analyze_error_consistency.py`）。
-   108 个错误字段里 **38.9% 在四个独立模型上稳定复现**、60% 的多配置错误"错成同一个值"
-   → 它们是"看错了"（感知层），不是"选错了"（决策层）。
-   DPO 只能重分配生成概率，不增加输入信息。同一批残余错误的对照：
-
-   | 手段 | 错误字段 | 变化 |
-   |---|---:|---:|
-   | 基线 384px | 74 | — |
-   | 512px（加信息） | 29 | −61% |
-   | 768px（加信息） | **16** | **−78%** |
-   | DPO（同 384px，调分布） | 77 | **0%** |
-
-   **瓶颈在信息获取，不在决策偏好。**
-3. **偏好数据与目标域完全异分布**。143 对 **143/143 全是同域合成 heavy 档**，
-   而幻觉率的现场在英文收据域（WildReceipt）—— 新的语言、版面、字段集。
-   用同域偏好数据修跨域行为，方法层面不成立。
-
-#### 本次新增的两个诊断工具（可复用）
-
-```powershell
-# 偏好数据质量门：建库后先跑，看 chosen 的绝对正确率
-.\venv-gld\Scripts\python.exe src\check_pref_quality.py
-
-# 系统性错误 vs 随机误差：多配置对齐同一批字段
-.\venv-gld\Scripts\python.exe src\analyze_error_consistency.py
-```
-
-**不再投入 DPO 调参**：即使把 chosen 收紧到完全正确的 71 对，
-错误的感知层性质不会变，收益上限很低；精力转向五档对比表与 DSPy 阶段。
-一致性分析的独立报告见 [`outputs/report_error_consistency.md`](outputs/report_error_consistency.md)。
-
-### 6. 五档对比表：口径与设计
-
-> 总表见上方「结果速览」。本节记录该表的口径限制与档位设计动机。
-
-> ⚠️ **跨域列的口径限制（2026-09-19 补，重要）：** 该列全部使用 `evaluate.py` 内置的
-> `PROMPTS["flat"]`，它只要求抽 **3 个字段**；WildReceipt 真值 100 条共 **643 个字段**、
-> 平均 6.43 个，其中只有 **268** 个被点名 ⇒ **recall 天花板 = 268/643 = 0.4168**。
-> ⑤ 档的 0.4408（recall 0.3157）是该天花板的 **75.7%**（不是"贴着"，还有 24pt 空间）。
-> DSPy 那一轮把字段清单补到 8 个（天花板抬到 **0.9907**）后：⑤ 档 **0.4408 → 0.7085**（见 §9）。
-> 所以：**跨域列的数字不等于「模型在该域的能力」，至少有一部分是 prompt 缺陷。**
->
-> 本地 ②/③ 换 8 字段 prompt 的对照**已跑完**：召回同样翻倍（0.230→0.496、0.208→0.418），
-> 但精确率同时塌掉、幻觉率飙到 0.59 / 0.73 —— 它们仍只到天花板的 **50% / 42%**，
-> 而 ⑤ 档稳定在 **73%**。⇒ **prompt 决定天花板高度，模型能力决定能接近多少。**
->
-> **该列保持同口径（3 字段）可比，不要把 0.7085 或 8 字段的数字直接填进来** ——
-> 混着填就成了反向的苹果比橘子，这些数字单独写在 §9。
-
-#### ② 档的两个口径：严格 / 宽容
-
-2B 零样本有 **97/102** 条把 `合计` 输出成标量（`"合计": "51330.24"`），
-而 schema 要求的是 `{"金额": "51330.24"}`；另有 4 条输出超长被 768 token 截断
-（JSON 合法率 96.1%）。SFT 之后这两个问题**归零**（同档七个配置全部 0/102）。
-
-因此 `evaluate.py` 同时输出两套口径（顶层键保持严格口径，历史档位口径不变）：
-
-| 口径 | 定义 | 零样本 F1 |
-|---|---|---:|
-| **严格** | 必须完全符合 schema，`合计` 是标量算没抽到 | **0.7349** |
-| **宽容** | 把 `合计` 标量提升为 `{"金额": v}` 后再比 | 0.7471 |
-
-两者只差 1.2 个点 → 差距**主要不是格式问题，是内容真的抽错了**
-（例：GT `53330.24` → 零样本 `51330.24`，数字换位）。
-同时这也说明 SFT 的一项隐性收益是 **schema 遵从率**，而不只是字段准确率。
-
-分档位（严格 / 宽容）：clean 0.7921 / 0.8035 ｜ medium 0.7751 / 0.7879 ｜ heavy 0.6462 / 0.6587
-—— 零样本在 heavy（重度退化）上掉得比 SFT 更狠（SFT heavy = 0.9635）。
-JSON 合法率 96.1% vs SFT 100%；幻觉率 2.0% vs SFT 0.0%。
-
-> 复算命令（预测已落盘，**不重跑推理**）：
-> `.\venv-gld\Scripts\python.exe src\evaluate.py --tag zero_abl --data data\processed\test_ablation.jsonl --score-only`
-
-#### ⑤ 档的设计：同源对照，不是换一个更强的模型
-
-这一档原计划用 **Qwen3-VL-Plus（阿里云百炼）** 而不是随便挑一个商业 API，
-理由是**归因干净**：本地微调的基座就是 Qwen3-VL-2B，用同家族做上界后，
-五档里的 VLM 行构成**一条单家族缩放曲线**（2B 零样本 → 2B SFT → 8B 零样本 → VL-Plus），
-tokenizer / prompt 模板 / 图像预处理完全同源，增益只能归因于规模。
-换成另一个家族就混进了「prompt 格式不匹配」这个解释，实验做不干净。
-
-辅助理由：Qwen3-VL 有文档解析/OCR 的专项能力（32 语种、复杂版面结构化提取）；
-分辨率上界也更高 —— DashScope 上 `max_pixels` 默认 2,621,440（≈1620²）、
-上限 16,777,216（4096²），而本地最好的一档是 768px。
-计费公式 `(边长/32)²+2`：1024px → 1026 tok，默认封顶 1600px → 2502 tok。
-
-> 对照项：DeepSeek 也可跑（`--provider deepseek`），更便宜，但每图硬上限
-> **1024 tok**（≈等效 1300²），且是不同家族。只作为第二数据点，不作为主对照。
-> 注意 **`deepseek-v4-pro` 传图直接 400**，只有 `deepseek-flash` 支持视觉。
-
-> **实际落地（2026-09-19）**：⑤ 档最终是用 **`deepseek-flash`** 跑完的
-> （key 就绪、更便宜，同域一轮约 ¥0.12）。**`qwen3-vl-plus` 这条同源对照尚未跑**
-> （缺 `DASHSCOPE_API_KEY`）—— 补上之后 VLM 行才真正构成单家族缩放曲线，
-> 那是五档表最后一块拼图。所以现在表里的 ⑤ 是**跨家族上界**而非同源上界，
-> 引用时别把归因说满。
-
-#### 用法
-
-key 有两种给法：临时环境变量（每次开终端都要重设），或写进项目根的
-**`.env`**（`src/evaluate_api.py` 启动时自动读取，已在 `.gitignore` 里，不进版本库）：
-
-```ini
-# .env
-DASHSCOPE_API_KEY=sk-xxxxxxxx
-DEEPSEEK_API_KEY=sk-xxxxxxxx      # 可选
-```
-
-环境变量优先级高于 `.env`，两者都没有才报错。
-
-```powershell
-$env:DASHSCOPE_API_KEY="sk-..."        # 百炼（若已用 .env 可跳过）
-$env:DEEPSEEK_API_KEY="sk-..."         # 或 DeepSeek
-
-# 自检：发 1 张图，打印原始返回 / 用量 / 预估花费（几秒钟，几乎不花钱）
-.\venv-gld\Scripts\python.exe src\evaluate_api.py --provider qwen --check
-
-# 同域 102 子集（对比 SFT 基线 F1 0.9782）
-.\venv-gld\Scripts\python.exe src\evaluate_api.py --provider qwen --tag api_qw_abl `
-    --data data/processed/test_ablation.jsonl
-
-# 跨域 WildReceipt n=100（对比 SFT 的 F1 0.2842 / 幻觉 28%；零样本 0.319 / 16%）
-.\venv-gld\Scripts\python.exe src\evaluate_api.py --provider qwen --tag api_qw_wr `
-    --mode flat --data data/processed/wildreceipt_test.jsonl --limit 100
-```
-
-**⑤ 档实际用的命令（DeepSeek，2026-09-19 实测）**：
-
-```powershell
-# 同域 n=102 → F1 0.9681
-.\venv-gld\Scripts\python.exe src\evaluate_api.py --provider deepseek `
-    --tag api_ds_abl --data data\processed\test_ablation.jsonl `
-    --max-new-tokens 4096 --no-thinking
-
-# 跨域 n=100 → F1 0.4408 / 幻觉 9%
-.\venv-gld\Scripts\python.exe src\evaluate_api.py --provider deepseek `
-    --tag api_ds_wr --mode flat --data data\processed\wildreceipt_test.jsonl `
-    --limit 100 --max-new-tokens 4096 --no-thinking
-```
-
-> ⚠️ **DeepSeek 必须显式加 `--no-thinking`**：它**默认开启思考模式**，
-> 而思考在这个任务上是负收益（两格分数都更低、成本高约 7 倍）——
-> 详见下文「跑这一档踩到并修好的三个坑」第 3 条。
-
-> ⚠️ **跑 API 必须显式放宽 `--max-new-tokens`。** 脚本默认 768 是跟着本地
-> 8GB 显存定的（`evaluate.py` 同值），API 侧没有这个约束。实测一张 3–4 行明细的
-> 工程清单要 **1369 completion token** —— 用 768 会在 JSON 中途截断，
-> `json_valid=False`，整条按「全没抽到」计分，F1 直接塌掉（首次自检就这么翻的车）。
-> 用 `--max-new-tokens 4096`。
->
-> 另一个只在 `.env` 路径上出现的坑：`load_dotenv()` 曾**定义了但没在 `main()` 里调用**，
-> 表现为「明明把 key 填进 `.env` 了，却仍报环境变量未设置」。已在 `main()` 顶部接线，
-> 并加了接线回归测试（`scripts/_test_evaluate_api.py` 第 5 节）。
-
-**续跑指纹用 md5，不是内置 `hash()`。** 内置 `hash(str)` 受 `PYTHONHASHSEED`
-随机化影响，跨进程必然不等 —— 每次重跑都会判「配置漂移」，旧版直接 `unlink()`
-删缓存，等于**整批 API 重新付费**。现在指纹不稳定时把旧文件改名成 `.partial.bak.jsonl`
-保留而非删除（`scripts/_test_evaluate_api.py` 里有换种子复现该差异的回归测试）。
-
-**打分口径复用 `evaluate.py`**（同一份 `score_one` / `prf` / `flatten`，用 importlib
-按路径加载），产物也是同构的三件套 `eval_{tag}.json` / `_cases.txt` / `_preds.jsonl`，
-所以 `analyze_errors.py`、`check_amount_consistency.py` 可直接吃，能与本地各档并列进同一张表。
-
-**默认送原图**（`--image-size 0`）。本地最好的一档是 768px，"上界对照"的含义就是
-让 API 拿到它想要的分辨率；要做分辨率对齐的严格对照就显式传 `--image-size 384` 或 `768`。
-顺带一个实测结论：合成图是干净线条，1000×1000 原图 PNG 压得比 384 缩放版**更好**
-（51.8KB vs 68.9KB base64）—— 缩放引入的抗锯齿渐变反而让 PNG 变大。
-所以送原图既更清晰、payload 也更小。
-
-CPU 单测（不花 API 钱）：
-- `.\venv-gld\Scripts\python.exe scripts\_test_evaluate_api.py` —— **39 项**，
-  覆盖图片编码无损性、`extra_body` 被端点拒绝时的自动降级、429 退避重试、
-  端到端 F1 校准（假 client 回吐 GT 必须得 1.0）、`.env` 接线回归，
-  以及**思考模式参数的端点方言**（DashScope `enable_thinking` vs
-  DeepSeek `thinking:{"type":"disabled"}`）。
-- `.\venv-gld\Scripts\python.exe scripts\_test_evaluate_args.py` —— **13 项**，
-  钉住**本地与 API 两个同族评测脚本的参数漂移**（本轮踩到：`--prompt-file` 只加在了
-  API 侧，给用户的本地命令直接 `unrecognized arguments`）。除逐条断言关键参数两边都在，
-  还覆盖 `--prompt`/`--prompt-file` 互斥、文件不存在、运行头「来源=文件」、
-  缺省回落内置 prompt，以及「内置 flat prompt 仍是 3 字段」这条**口径防误改**断言。
-
-**`--prompt-file`**：长 prompt 走文件而不是命令行，供优化器产出的指令回流评测：
-`--prompt-file outputs/dspy_optimized_flat.txt`。**本地 `evaluate.py` 与 `evaluate_api.py`
-两边都支持**。启动日志会打印 prompt 来源与字符数，
-且续跑指纹取自 prompt 的 md5 —— 换了 prompt 必然重新推理，不会误用旧缓存。
-
-#### ⑤ 档实测结果（2026-09-19，`deepseek-flash --no-thinking`，全程约 ¥1.9）
-
-| 评测 | ⑤ 商用 API | 本地 2B 微调 | 本地 2B 零样本 |
-|---|---:|---:|---:|
-| 同域 F1（n=102） | 0.9681 | **0.9782** | 0.7349 |
-| 同域 JSON 合法率 | 100% | 100% | 96.1% |
-| 跨域 F1（n=100） | **0.4408** | 0.284 | 0.319 |
-| 跨域幻觉率 | **9%** | 28% | 16% |
-| 边际成本 | ≈¥0.001/张 | ~0（本地） | ~0（本地） |
-
-三个结论：
-
-1. **同域：本地微调的 2B 与商用大模型打平**（0.9782 vs 0.9681，差 1.0pt）。
-   这个任务是 **闭集字段 + 固定版式**，微调把版面结构和词表都内化了；
-   商用模型再强，也不带这 700 个源样本的领域先验 —— 而 2B 也并没有因为体量小就落后。
-2. **跨域反过来，但两边都还远不能用于生产**：0.4408（API）> 0.319（零样本）
-   > 0.284（微调后）。跨语言跨域是大模型的主场，幻觉率也只有 9%。
-   合起来说明：**这个任务的瓶颈是领域适配，不是模型规模。**
-3. **知识注入的收益与基座能力成反比 —— 三个档位连成一条干净的曲线：**
-
-   | 档位 | 注入前 | 注入后 | ΔF1 |
-   |---|---:|---:|---:|
-   | ② 2B 零样本 | 0.7349 | 0.7870 | **+0.0522** |
-   | ⑤ deepseek-flash | 0.9681 | **0.9790** | +0.0109 |
-   | ③ 2B SFT | 0.9782 | 0.9779 | −0.0003 |
-
-   ⑤+注入 0.9790 与 ③ 0.9782 已经**追平**（差 0.0008，在噪声内 —— 只敢说追平，不说反超）
-   —— 即**「词表约束」这一层纯 CPU 后处理，能把商用模型顶到专门微调的水平**。
-   ⚠️ 这条递减的是**收益**而不是绝对水平：⑤ 档基线本就更高，可改进空间自然更小。
-
-失败结构（[`outputs/reports_appendix.md`](outputs/reports_appendix.md) §1.4 ⑧，159 个错误字段）：
-
-- **「文本显著误读」占 37.1%**（本地 SFT 的 74 个错误里只有 5 个）。本地微调的错误
-  几乎全是「一字之差」；DeepSeek 则大量在**项目名称、供应商这类工程专名上编词**，
-  与零样本档的失败模式同源。
-- **11 处漏抽 100% 落在 `合计.金额`**，且全在 clean 档 —— 被本地 SFT 归零的
-  「`合计` 形状遵从」问题，在 API 档上又出现了。
-- 按字段错误率：项目名称 32.4% > 供应商 23.5% > 日期 20.6%，全是**没有版式锚点、
-  要靠领域先验**的字段。
-
-#### 跑这一档踩到并修好的三个坑
-
-1. **`load_dotenv()` 定义了但没在 `main()` 里调用** → 现象是「明明把 key 填进 `.env`，
-   仍报环境变量未设置」。已在 `main()` 顶部接线并加回归测试。
-2. **空响应被静默当成有效结果**：`content or ""` 既不看内容也不看 `finish_reason`。
-   102 条里 **16 条**栽在这里（9 条空串 + 7 条断在 JSON 值中间），
-   落盘成 `json_valid=False` → 整条按「全没抽到」计分 →
-   **把 F1 从 0.9546 悄悄压到 0.8622，全程不报任何错**。现在空响应与
-   `finish_reason=length` 都会退避重试，续跑缓存也不再接纳空响应
-   （否则瞬时故障会被永久固化，重跑一百遍也补不回来）。
-3. **`--no-thinking` 对 DeepSeek 是个空操作**。该开关原先只做
-   `pop("enable_thinking")`，而那是 **DashScope 的方言**；DeepSeek 用的是
-   `thinking: {"type": "disabled"}`，且**默认就是开着的**（不传 ≠ 关闭）。
-   也就是说上面那组数字原本是**带思考**跑出来的。关掉后重测：
-
-   | 配置 | 同域 F1 | 跨域 F1 | 幻觉率 | 耗时 | 花费 |
-   |---|---:|---:|---:|---:|---:|
-   | `thinking` 开（原口径） | 0.9546 | 0.4217 | 8% | 慢 | ~¥1.7 |
-   | **`thinking` 关（现行）** | **0.9681** | **0.4408** | 9% | 0.2–0.3s/条 | **¥0.24** |
-
-   ⇒ **思考模式在这个任务上是负收益**：两格都更低，成本高约 7 倍。合理 ——
-   结构化抽取是「感知 + 格式化」，不需要推理；思考反而诱发对图面内容的过度解释。
-   已抽成纯函数 `build_extra()` 并补 6 项回归断言（单测 **39 项**全绿）。
-   **`--no-thinking` 是 ⑤ 档的推荐配法。**
-
-> 值得单独记一笔：**这些缺陷都不报错、不崩溃，只是安静地让指标变难看。**
-> 若当时直接抄下 0.8622，结论会变成「商用 API 全面不如本地小模型」——
-> 一个完全站不住的判断。**指标异常时先查数据管道，再下结论。**
-
-### 7. 知识注入（标准词表 + 保守模糊纠错）
-
-**只纠正「真闭集」字段。** 动手前先用 `src/check_lexicon_coverage.py` 量了一件事：
-**错误率最高的字段，不一定可救。**
-
-| 字段 | 词表不同值 | 测试集命中率 | 零样本错误率 | 是否纠正 |
-|---|---:|---:|---:|---|
-| 供应商 | 692（随机） | 1.0% | **87.8%** | ✗ 正确值根本不在词表里 |
-| 单据编号 | 698（随机） | 0.0% | **79.6%** | ✗ 同上 |
-| 名称 | 20 | 100% | 21.9% | ✓ |
-| 规格型号 | 37 | 100% | 31.1% | ✓ |
-| 单位 | 5 | 100% | 9.7% | ✓ |
-| 项目名称 | 231 | 98.0% | 80.6% | ✓ |
-| 日期 | 259 | 91.2% | 43.9% | 可选（默认关，见下） |
-
-供应商与单据编号是**逐条随机生成**的（2100 条里有 692 / 698 个不同值），
-测试集的正确值不在词表里 —— 强行纠正只会把本来对的改错。
-
-三级规则，保守优先（宁可不改，不可改坏）：
-
-1. 归一化后**精确命中**词表 → 采纳规范写法（**不改变分数**，只统一写法）
-2. 否则模糊匹配：top1 相似度 ≥ 0.50 且与次优差 ≥ 0.05 → 替换
-3. 否则**原样保留**
-
-> **`broke`（改前对 → 改后错）恒为 0 是结构性保证，不是调参调出来的**：
-> 模型输出正确 ⇒ 该值等于 GT ⇒ GT 在词表内 ⇒ 精确命中 ⇒ 走规则 1、不改。
-> 只有「GT 本身不在词表里」的样本才可能被改坏 —— 本数据集 1260 个可比实例中仅 2 个。
-
-结果（同域 n=102，严格口径）：
-
-| 档位 | 可比实例 | 改动 | 仅统一写法 | fixed | broke | F1 前 | F1 后 | ΔF1 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| ② 2B 零样本 | 1260 | 183 | 70 | 169 | **0** | 0.7349 | **0.7870** | **+0.0522** |
-| ③ 2B SFT 384px | 1335 | **1** | 203 | 0 | 1 | 0.9782 | 0.9779 | −0.0003 |
-
-**这张表的价值主要在第二行**：SFT 之后词表纠正几乎无事可做（183 处改动 → 1 处），
-因为 **SFT 已经把词表内化进权重了**。⇒ 知识注入的收益与基座能力成反比，
-与「SFT 买到的是读写中文字段」这条主线相互印证。
-
-阈值不是随手定的（完整扫描见 [`outputs/report_inject_sweep.md`](outputs/report_inject_sweep.md)）：
-
-- `min_sim = 0.50` 取自**边际有效率的拐点** —— 0.60→0.50 时新增改动 **92%** 有效，
-  0.50→0.40 掉到 **43%**（多改 14 处只赚 6 个）。
-- **`min_gap` 必须保留。** 放宽到 0 只多 +0.0003 F1，却多改 41 处；含日期时 `broke` 从 0 涨到 8。
-  原因：同模板字段彼此极像（一批 `X市政道路改造工程`），去掉 gap 就无法判断该改成哪一个。
-
-开启日期可再 **+0.0065**（0.7870 → 0.7935，`broke` 仍为 0），但**默认关闭**：
-日期收益依赖「日期池有限」这一数据特性，真实场景里是连续值，
-`2026-06-26` 与 `2026-06-25` 相似度约 0.91，模糊匹配会混淆相邻日期。
-要用时显式加 `--include-date`。
-
-```powershell
-# 1) 建词表（训练集 GT 值域 → data/lexicon/v1.json）
-.\venv-gld\Scripts\python.exe src\build_lexicon.py
-
-# 2) 注入 + 重打分（纯 CPU：读已有预测，不加载模型、不花钱）
-.\venv-gld\Scripts\python.exe src\inject_knowledge.py `
-    --preds outputs\eval_zero_abl_preds.jsonl --tag zero_abl_inj `
-    --report outputs\report_inject_zero_abl.md
-
-# 变体：--min-sim 0.40 / --min-gap 0.00 / --include-date / --no-fuzzy（只精确命中）
-# 注：--report 会重新生成为独立文件；五个注入配置的汇总见 outputs/reports_appendix.md §2
-```
-
-### 8. Demo（一屏看完三档差异）
-
-`src/demo.py` —— 上传/选图 → 真推理 → 与真值逐字段对照。
-
-**同模型、同输入、同 prompt，唯一变量是 LoRA 适配器。** 基座常驻显存，
-零样本用 `disable_adapter()` 临时摘掉适配器 —— 所以 ② 与 ③ 的差异
-只能归因于微调，而不是「两次跑的输入不一样」。
-
-| 列 | 内容 |
-|---|---|
-| ② 2B 零样本 | 头部徽章 F1 · 耗时 · P/R |
-| ② + 知识注入 | 改动 N 处（纠正 X / 改坏 Y）· F1 |
-| ③ 2B SFT | 头部徽章 F1 · 耗时 · P/R |
-| ③ SFT + 知识注入 | 改动 N 处（通常 0，词表已被微调内化） |
-| 结果总览 | 置顶：本样本各档 F1 条（含 Δ）+ 全局五档表 |
-| GT 真值 | 单独一行，同一套颜色规则 |
-
-<span style="color:#1a7f37">绿=正确</span> ·
-<span style="color:#cf222e">红=读错（划掉的是模型输出，`→` 后是真值）</span> ·
-<span style="color:#9a6700">黄=漏抽 / `合计` 形状不符</span> ·
-<span style="color:#8250df">紫=多余（GT 空、模型填了）</span> ·
-<span style="color:#0969da">蓝=词表纠正（划掉→改后）</span>
-
-错行统一读作 **`模型输出 → 真值`**，左侧色条与行底色同色，扫一眼就能定位
-「哪几个字段错了」，不必逐行读数字。
-
-```powershell
-# 1) 纯 CPU 自检（29 项，不加载模型，先跑这个）
-.\venv-gld\Scripts\python.exe src\demo.py --check
-
-# 2) 真机检查：同一张图跑两档，验证 adapter 切换确实生效（约 1 分钟）
-.\venv-gld\Scripts\python.exe src\demo.py --smoke 41
-
-# 3) 开界面 → http://127.0.0.1:7860
 .\venv-gld\Scripts\python.exe src\demo.py
 ```
 
-**三个刻意的工程取舍**（最常被追问的三点）：
+`demo.py --render-sample 41 --png` 还依赖相应原图、`outputs/eval_zero_abl_preds.jsonl` 与 `outputs/eval_abl_base_preds.jsonl` 等预测产物；PNG 导出需要可用的浏览器。这些条件未满足时，请直接查看已提交的静态预览。
 
-1. **不重写打分逻辑。** 差异比对复用 `evaluate.flatten/align_rows`，
-   知识注入复用 `inject_knowledge.correct_record`。`--check` 里有一项专门验证
-   「展示层摊平 vs 官方 flatten」在 **1120 条历史预测上逐路径全等** ——
-   否则屏幕上显示的红绿和报告里的 F1 会变成两套账。
-2. **不做结果预烤。** 每次点按钮都是真推理（384px 约十几秒/档）。预烤能秒出，
-   但那就不叫 demo 了。静态预览只是渲染层快照，页面上也标了「历史落盘结果」。
-3. **`--smoke` 专治最坏的失败模式。** `disable_adapter()` 若未生效，界面会
-   安静地显示四份相同结果而**不报任何错**。`--smoke` 直接断言两档输出不同。
+已有检查脚本包括：
 
-体现设计层的一条：**颜色只有一个来源**。状态→颜色写在 `STATE_COLOR` 里，
-表头图例的色点、表格行的色条、F1 条的填充全部由它派生；`--check` 会断言
-三者同源（`图例色点与状态表同源`），改配色时不会漏改图例。
+```powershell
+.\venv-gld\Scripts\python.exe scripts\_test_evaluate_scoring.py
+.\venv-gld\Scripts\python.exe scripts\_test_evaluate_args.py
+.\venv-gld\Scripts\python.exe scripts\_test_dpo_math.py
+.\venv-gld\Scripts\python.exe scripts\_test_evaluate_api.py
+```
 
-> ⚠️ Gradio 6 把 `theme` / `css` 从 `Blocks(...)` 移到了 `launch(...)`。
-> 传给 `Blocks` 不报错、也不生效，只打一行 warning。本 Demo 走 `launch`。
-> 同一处还有两个坑：`theme=gr.themes.Soft(...)` 的类名随版本变化，写死会让
-> 界面直接起不来（故有 `make_theme()` 兜底到 `Base`）；Gradio 会跟随系统
-> 深色模式，白色卡片配深色外壳很割裂，故用 `launch(head=...)` 注入一段脚本，
-> 摘掉 `<html>` 上的 `dark` 标记并盯住不被加回。
+各脚本仍需对应依赖。现有测试覆盖部分评分与训练辅助逻辑，不能证明上述数字归一化漏洞已修复，也不替代 GPU 训练 / 推理验证。
 
-### 9. DSPy 自动 prompt 优化（`src/optimize_prompt_dspy.py`）
+## 后续优先级
 
-回答的问题：**不改权重、纯靠自动优化 prompt，能走到哪一步？**
+- [ ] 修复按字段类型的数字归一化，增加精度与编号回归测试。
+- [ ] 明确额外字段、字段值错误、schema 合规和整单全对指标。
+- [ ] 发布逐样本预测、实验配置及可复算命令，重新生成历史对比表。
+- [ ] 锁定依赖版本，移除数据清单对个人绝对路径的依赖。
+- [ ] 补 OCR＋规则基线，并统一完整字段提示词。
+- [ ] 增加未见版式、未见词汇和真实单据测试；在验证集上选择后处理参数，再进行独立测试。
+- [ ] 对小幅差异增加重复实验或按源样本分组的不确定性估计。
 
-只对**没微调过**的档有意义 —— ③ SFT 的 prompt 已被权重内化（硬证据：知识注入对 ③ 只改动 1 处），
-改推理 prompt 反而制造训练/推理不匹配。
+## 代码与历史记录导航
 
-**口径**（三条，都别改）：
-
-| | 做法 |
+| 路径 | 内容 |
 |---|---|
-| 数据切分 | 评测集 = 前 100 条（与 ⑤ 档同）；trainset/valset 从**第 101 条起** → 优化过程从未见过评测集 |
-| 优化范围 | 只改 signature 的 instruction，**不塞带图 demo**（VLM 塞 demo 会让 token 爆炸） |
-| 正式数字 | 一律由 `evaluate_api.py` 产出 —— dspy 发给模型的是 instruction + 字段名 + 格式要求，≠ instruction 原文 |
+| `src/` | 数据、训练、推理、评测和演示源码 |
+| `scripts/` | 环境检查、数据下载及辅助测试 |
+| `data/processed/` | 已提交的数据清单，图片需另行准备 |
+| `data/lexicon/` | 训练集派生词表 |
+| `outputs/ablation_summary.json` | 历史消融汇总 |
+| [技术复盘](docs/retrospective.md) | 实现过程与调试记录 |
+| [历史 Results](outputs/results_onepager.md) | 旧版结果整理 |
+| [DPO 记录](outputs/report_dpo_negative.md) | 当前配置下的负结果分析 |
+| [提示词实验记录](outputs/report_dspy_flat.md) | 人工与自动指令优化对照 |
+| [报告附录](outputs/reports_appendix.md) | 错误分类及后处理统计 |
 
-**优化结果**（valset 40 条，budget 200）：手写 baseline **0.5205** → GEPA **0.7490**（+0.2286）。
-80 秒、326 次 VLM 调用、**¥0.46**；第 2 轮即命中全局最优，之后反思器不再产出新候选（已收敛）。
-
-**⭐ 三组归因对照（核心）：收益全部来自「补字段」，措辞优化是负贡献。**
-
-留出 100 条评测集（优化过程从未见过），唯一变量是 prompt：
-
-| 组 | prompt | F1 | P | R | 幻觉率 |
-|---|---|---:|---:|---:|---:|
-| A | 手写 3 字段（原 baseline） | 0.4408 | 0.7302 | 0.3157 | 0.090 |
-| **B** | **手写 8 字段**（机械补清单，其余一字不动） | **0.7085** | 0.6973 | **0.7201** | **0.210** |
-| C | GEPA 优化版 | 0.6830 | 0.6712 | 0.6952 | 0.250 |
-
-⇒ **补字段 +26.8pt；GEPA 的措辞规则 −2.6pt。** 在它自己选候选的 40 条 valset 上也是
-B（0.7734）> C（0.7447）—— 两个数据集同向，**过拟合小验证集坐实**。
-
-**⚠️ 版本更正（别记错）**：GEPA **迭代 1 的中间候选**确实写过坏规则 —— 把值"规范化"成去空格、
-要 `store_name` 转全大写去标点、还多塞了只有 6% 样本存在的 `tips`；但**迭代 2 它自己把这些全删了**。
-导出的 `outputs/dspy_optimized_flat.txt` 里明写「字段值必须严格保留图片中的原始写法，**包括空格**」，
-字段清单也回到 8 个、无 `tips`。（翻 `outputs/dspy_full.log` 逐轮比对可核实。）
-
-**那 C 为什么还输给 B？** 按字段拆开看，损失**均匀分布、无单点崩溃**，最大一块是 `tel`
-（−7 tp / +10 fp，FP 合计 201 → 219）。原因是它替换上来的那条**激进召回规则**：
-「必须逐项检查顶部/底部/页脚/边角」「只要图中出现，就应提取」——
-**同一条规则在"漏抽 4 个字段"时是解药，字段补齐之后就过量了。**
-
-**⇒ 这条结论改写了「跨域不能用」的口径：**
-
-| | 数值 |
-|---|---:|
-| 手写 flat prompt 点名的字段 | 3 |
-| 真值字段总数（100 条） | **643**（平均 6.43） |
-| 其中被点名 | **268** |
-| ⇒ recall 天花板 | **268 / 643 = 0.4168** |
-| ⑤ 档原跨域 F1 / recall | 0.4408 / **0.3157** = 天花板的 **75.7%** |
-| 补齐 8 字段后 | 天花板 **0.9907**；实得 **0.7085 / 0.7201** = 72.7% |
-
-**⑤ 档跨域那格上不去，主因不是「模型看不清」，而是「prompt 压根没让它抽那些字段」。**
-⇒ 推论：metric 的反馈**必须具体到字段**（漏了哪几个），否则反思器无从下手。
-
-**⚠️ 但不要外推到本地 ②/③ 档 —— 这个对照已经跑完了（¥0，本地推理）：**
-
-| 档 | prompt | F1 | P | R | 幻觉率 |
-|---|---|---:|---:|---:|---:|
-| ② 2B 零样本 | 3 → 8 字段 | 0.3190 → **0.4691** | 0.5193 → 0.4449 | 0.2302 → **0.4961** | 0.16 → **0.59** |
-| ③ 2B SFT | 3 → 8 字段 | 0.2842 → **0.3752** | 0.4467 → 0.3401 | 0.2084 → **0.4184** | 0.28 → **0.73** |
-| ⑤ API | 3 → 8 字段 | 0.4408 → 0.7085 | 0.7302 → 0.6973 | 0.3157 → 0.7201 | 0.09 → 0.21 |
-
-本地档**召回同样翻倍**（约 2.1×，说明天花板对它们也存在），但**精确率同时塌掉、幻觉率飙到 0.59/0.73**。
-机制很清楚：本地 2B 把「找不到的字段可省略」彻底忽略，照着 8 个字段名逐条填空，抽不出来就编 ——
-③ 平均每张吐 **8.0 个键**，而真值平均只有 6.43 个；`subtotal` 在 23 张本不存在的收据上编了 **23 次（100%）**。
-
-**再往下追一步：把「抽不到就省略」写成强指令，压得住幻觉吗？—— 压不住（这个也跑完了，¥0）：**
-
-| 档 | prompt | F1 | P | R | 幻觉率 |
-|---|---|---:|---:|---:|---:|
-| ② 2B 零样本 | 8 字段 ＋强指令 | 0.4691 → **0.4556** | 0.4449 → 0.4344 | 0.4961 → 0.4790 | 0.59 → **0.54** |
-| ③ 2B SFT | 8 字段 ＋强指令 | 0.3752 → **0.3654** | 0.3401 → 0.3333 | 0.4184 → 0.4044 | 0.73 → **0.71** |
-
-做法：8 字段 prompt 里把「找不到的字段可省略」换成强规则段（不存在就完全不输出该键 /
-不要 null、空串或占位符 / 严禁按常理推测编造），**字段清单句与输出格式句一字未动**（161 → 272 字符，严格单变量）。
-
-幻觉率只降 2–5 个点，F1 反掉 1 个点以上：**tp 掉 9–11 而 fp 几乎不动**（398→401 / 522→520），
-③ 的 `tax` 甚至多编了一个 ⇒ **强指令没删掉编造字段，只劝退了本来抽对的字段。**
-
-⇒ 模型**不是「知道该省却硬编」，而是真心认为那些字段就在图上** —— 所以「不存在就别输出」这句话对它无从触发。
-**这和 DPO 的归因指向同一个结论：瓶颈在感知层，不在 prompt / 决策层。**
-
-⇒ **正确的读法是「天花板达成率」：**
-
-| 档 | 3 字段（天花板 0.4168） | 8 字段（天花板 0.9907） |
-|---|---:|---:|
-| ② 2B 零样本 | 55.2% | 50.1% |
-| ③ 2B SFT | 50.0% | 42.2% |
-| ⑤ API | 75.7% | 72.7% |
-
-**prompt 只决定天花板高度；能接近多少由模型能力决定** —— 同档换 prompt 达成率几乎不动，
-而 50% vs 73% 这个跨档差距才是真差距。**对 API 是 prompt 缺陷，对本地小模型主要是感知能力。**
-
-全部细节（含 4 条踩坑）见 [`outputs/report_dspy_flat.md`](outputs/report_dspy_flat.md)。
-
-> 这一轮还暴露了一个**致命的失败模式**：余额耗尽后 GEPA 照样空转完 200 轮，
-> 把 baseline 原文当「最优指令」写盘，**退出码 0、Δ=0、不报任何错** ——
-> 只看最后三行会得出「DSPy 优化无效」这个完全反向的结论。
-> 现已在脚本里加两道闸：**preflight**（开跑前确认端点可用）+ **结果自检**
-> （最优指令 == 基线 ⇒ 警告 + 退出码 2）。
-
----
-
-## 环境
-
-**硬件**：RTX 4060 Laptop 8GB · Windows 11 · 驱动 616.92（CUDA UMD 13.4）
-
-**已锁定的版本组合**（改动前请三思，见下方警告）：
-
-| 组件 | 版本 | 组件 | 版本 |
-|---|---|---|---|
-| Python | 3.12.6 | unsloth | 2026.9.4 |
-| torch | **2.14.0+cu130** | triton | 3.8.0 |
-| torchvision | 0.29.0+cu130 | bitsandbytes | 0.50.2 |
-| transformers | 5.5.0 | trl | 0.24.0 |
-| peft | 0.20.0 | datasets | 4.3.0 |
-| accelerate | 1.15.0 | dspy | 3.3.1 |
-| qwen-vl-utils | 0.0.14 | pillow | 12.3.0 |
-
-> ⚠️ **装包警告**
-> PyPI 上 Windows 版 torch 默认是 **CPU 版**。任何可能触发 torch 升级的操作
-> （例如 `pip install unsloth`）都必须显式指定官方 CUDA 源，否则 GPU 会失效：
-> ```powershell
-> pip install <pkg> --index-url https://download.pytorch.org/whl/cu130
-> # 已装错时：
-> pip install --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cu130
-> ```
-
-**Windows 平台已知限制**（不影响正确性，仅影响速度）：
-
-- `FA2 = False` —— flash attention 2 不可用，走 eager / xformers
-- `torch.compile` 对部分 Qwen3-VL 视觉算子编译失败（InductorError），自动降级 eager
-
----
-
-## 验收基线
-
-冒烟测试（`scripts/smoke_test.py`）通过结果，作为后续实验的对照起点：
-
-| 项 | 数值 |
-|---|---|
-| 模型加载 | Qwen3-VL-2B-Instruct (4bit, QLoRA) |
-| 推理耗时 | 8.9 s / 张（384px，eager 模式） |
-| **峰值显存** | **3.35 GB**（余量 4.64 GB） |
-| 训练步 | 前向 + 反向通过 |
-
-**零样本失败模式**（微调的靶子）：字段名误判（名称→材料、单位→规格）、
-整字段丢失（数量）、输出被 ```json 包裹。
+历史文档保留实验过程，其中的强因果表述、“幻觉率”和旧评分结论尚未逐份修订。解释项目当前状态时，以本 README 的指标边界和复现限制为准。
