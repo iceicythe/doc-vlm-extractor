@@ -1,0 +1,15 @@
+{
+  "model": "unsloth/Qwen3-VL-2B-Instruct-unsloth-bnb-4bit",
+  "data_file": "data\\benchmarks\\layout_train_v1\\train.jsonl",
+  "data_sha256": "4a540adcb17825ea97658039967fadfbde587551929ab1fcfda70d37594eaf0e",
+  "init_adapter": "outputs\\sft_v1\\lora",
+  "init_adapter_sha256": "60ac5289f83dcf8cce84bd3ee0f96122f2aa9e0fb28c8a7ee9b7c56acfe149db",
+  "max_steps": 120,
+  "learning_rate": 5e-05,
+  "batch": 1,
+  "gradient_accumulation_steps": 8,
+  "image_size": 384,
+  "max_seq_length": 2048,
+  "data_ratio": 1.0,
+  "continued_training": true
+}

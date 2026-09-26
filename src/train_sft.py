@@ -15,6 +15,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import os
 import sys
 from pathlib import Path
@@ -54,6 +56,10 @@ def main() -> int:
                     help="训练数据比例 0-1，按源样本抽样（三档同进同出，防泄漏）")
     ap.add_argument("--no-save", action="store_true",
                     help="不保存 LoRA（仅测速度/显存时用）")
+    ap.add_argument("--data-file", default=str(PROCESSED / "train.jsonl"),
+                    help="训练 JSONL；相对路径按项目根目录解析")
+    ap.add_argument("--init-adapter", default=None,
+                    help="从已有 LoRA 继续训练；相对路径按项目根目录解析")
     args = ap.parse_args()
 
     # ---------------- 延迟导入，确保 unsloth 最先 ----------------
@@ -72,9 +78,18 @@ def main() -> int:
     print(f"  显存       : {torch.cuda.get_device_properties(0).total_memory/1024**3:.1f} GB")
     print(f"  输入尺寸   : {args.image_size}px   数据比例: {args.data_ratio:.0%}")
 
-    train_file = PROCESSED / "train.jsonl"
+    train_file = Path(args.data_file)
+    if not train_file.is_absolute():
+        train_file = ROOT / train_file
     if not train_file.exists():
-        print(f"[FATAL] 缺少 {train_file}，请先运行 src/build_dataset.py")
+        print(f"[FATAL] 缺少 {train_file}")
+        return 1
+
+    init_adapter = Path(args.init_adapter) if args.init_adapter else None
+    if init_adapter is not None and not init_adapter.is_absolute():
+        init_adapter = ROOT / init_adapter
+    if init_adapter is not None and not (init_adapter / "adapter_model.safetensors").exists():
+        print(f"[FATAL] 适配器不存在或不完整：{init_adapter}")
         return 1
 
     # ---------------- 模型 ----------------
@@ -86,21 +101,27 @@ def main() -> int:
         use_gradient_checkpointing="unsloth",
     )
 
-    print(f"[2/4] 挂 LoRA（r={args.rank}，"
-          f"{'仅语言层' if args.no_vision_lora else '视觉+语言全层'}）")
-    model = FastVisionModel.get_peft_model(
-        model,
-        finetune_vision_layers=not args.no_vision_lora,
-        finetune_language_layers=True,
-        finetune_attention_modules=True,
-        finetune_mlp_modules=True,
-        r=args.rank,
-        lora_alpha=args.rank,
-        lora_dropout=0.0,
-        bias="none",
-        random_state=3407,
-        use_gradient_checkpointing="unsloth",
-    )
+    if init_adapter is not None:
+        from peft import PeftModel
+        print(f"[2/4] 加载已有 LoRA 继续训练：{init_adapter}")
+        model = PeftModel.from_pretrained(model, str(init_adapter), is_trainable=True)
+        FastVisionModel.for_training(model)
+    else:
+        print(f"[2/4] 挂 LoRA（r={args.rank}，"
+              f"{'仅语言层' if args.no_vision_lora else '视觉+语言全层'}）")
+        model = FastVisionModel.get_peft_model(
+            model,
+            finetune_vision_layers=not args.no_vision_lora,
+            finetune_language_layers=True,
+            finetune_attention_modules=True,
+            finetune_mlp_modules=True,
+            r=args.rank,
+            lora_alpha=args.rank,
+            lora_dropout=0.0,
+            bias="none",
+            random_state=3407,
+            use_gradient_checkpointing="unsloth",
+        )
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total = sum(p.numel() for p in model.parameters())
     print(f"      可训练 {trainable:,} / {total:,} ({100*trainable/total:.3f}%)")
@@ -145,6 +166,27 @@ def main() -> int:
     # ---------------- 训练 ----------------
     out_dir = OUTPUTS / f"sft_{args.tag}"
     out_dir.mkdir(parents=True, exist_ok=True)
+    sha256 = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+    run_config = {
+        "model": MODEL_NAME,
+        "data_file": str(train_file.relative_to(ROOT)) if train_file.is_relative_to(ROOT) else str(train_file),
+        "data_sha256": sha256(train_file),
+        "init_adapter": str(init_adapter.relative_to(ROOT)) if init_adapter and init_adapter.is_relative_to(ROOT) else (str(init_adapter) if init_adapter else None),
+        "init_adapter_sha256": sha256(init_adapter / "adapter_model.safetensors") if init_adapter else None,
+        "max_steps": args.max_steps,
+        "learning_rate": args.lr,
+        "batch": args.batch,
+        "gradient_accumulation_steps": args.grad_accum,
+        "image_size": args.image_size,
+        "max_seq_length": MAX_SEQ_LEN,
+        "data_ratio": args.data_ratio,
+        "continued_training": init_adapter is not None,
+    }
+    config_path = out_dir / "run_config.json"
+    if config_path.exists() and json.loads(config_path.read_text(encoding="utf-8")) != run_config:
+        print(f"[FATAL] {config_path} 已存在且配置不同，拒绝混写")
+        return 1
+    config_path.write_text(json.dumps(run_config, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"[4/4] 训练（max_steps={args.max_steps}）")
     trainer = SFTTrainer(
@@ -182,6 +224,17 @@ def main() -> int:
     )
 
     stats = trainer.train()
+    training_result = {
+        "train_runtime_seconds": stats.metrics.get("train_runtime"),
+        "train_loss": stats.metrics.get("train_loss"),
+        "train_samples_per_second": stats.metrics.get("train_samples_per_second"),
+        "train_steps_per_second": stats.metrics.get("train_steps_per_second"),
+        "epoch": stats.metrics.get("epoch"),
+        "peak_memory_allocated_bytes": torch.cuda.max_memory_allocated(),
+    }
+    (out_dir / "training_result.json").write_text(
+        json.dumps(training_result, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     print()
     print(f"  训练完成  用时 {stats.metrics.get('train_runtime', 0):.0f}s")
     print(f"  最终 loss {stats.metrics.get('train_loss', float('nan')):.4f}")
@@ -194,6 +247,11 @@ def main() -> int:
     adapter_dir = out_dir / "lora"
     model.save_pretrained(str(adapter_dir))
     processor.save_pretrained(str(adapter_dir))
+    training_result["adapter_model_sha256"] = sha256(adapter_dir / "adapter_model.safetensors")
+    training_result["adapter_config_sha256"] = sha256(adapter_dir / "adapter_config.json")
+    (out_dir / "training_result.json").write_text(
+        json.dumps(training_result, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     print(f"  LoRA 已保存: {adapter_dir}")
     return 0
 

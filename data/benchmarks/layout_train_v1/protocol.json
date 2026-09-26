@@ -1,0 +1,15 @@
+{
+  "seed": 2026092602,
+  "new_source_count": 200,
+  "replay_source_count": 200,
+  "row_count": 600,
+  "template_counts": {
+    "A_replay": 200,
+    "B": 200,
+    "C": 200
+  },
+  "content_overlap_with_val_test_or_D_holdout": 0,
+  "data_sha256": "4a540adcb17825ea97658039967fadfbde587551929ab1fcfda70d37594eaf0e",
+  "generator_sha256": "175ab5e465cfe0370353c58fe6d1a79a543fdd6566215f00849a4a24f2b56fcf",
+  "policy": "B/C plus fixed A replay for training; D holdout images and errors are never read by the renderer or training data builder"
+}

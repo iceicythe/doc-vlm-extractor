@@ -1,0 +1,749 @@
+{
+  "original_test": [
+    {
+      "image": "synth_000041.png",
+      "old_error_count": 2,
+      "new_error_count": 1,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[4].单价",
+          "gt": "163.47",
+          "pred": "163.67"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "铜川诚恒工程材料有限公司",
+          "pred": "铜川恒通工程材料有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "铜川诚恒工程材料有限公司",
+          "pred": "铜川恒通工程材料有限公司"
+        }
+      ]
+    },
+    {
+      "image": "synth_000125_heavy.jpg",
+      "old_error_count": 4,
+      "new_error_count": 5,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[0].单价",
+          "gt": "393.82",
+          "pred": "391.82"
+        },
+        {
+          "path": "明细[1].单价",
+          "gt": "19.75",
+          "pred": "117.55"
+        },
+        {
+          "path": "明细[1].金额",
+          "gt": "30652",
+          "pred": "30522"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "长安信宇商贸有限公司",
+          "pred": "长安恒宇商贸有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[0].单价",
+          "gt": "393.82",
+          "pred": "397.82"
+        },
+        {
+          "path": "明细[1].单价",
+          "gt": "19.75",
+          "pred": "117.55"
+        },
+        {
+          "path": "明细[1].金额",
+          "gt": "30652",
+          "pred": "18052"
+        },
+        {
+          "path": "明细[5].金额",
+          "gt": "67741.6",
+          "pred": "70741.6"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "长安信宇商贸有限公司",
+          "pred": "长安恒宇商贸有限公司"
+        }
+      ]
+    },
+    {
+      "image": "synth_000158_heavy.jpg",
+      "old_error_count": 0,
+      "new_error_count": 1,
+      "old_document_correct": true,
+      "new_document_correct": false,
+      "old_errors": [],
+      "new_errors": [
+        {
+          "path": "表头.项目名称",
+          "gt": "沣西地下管廊工程",
+          "pred": "沣东地下管廊工程"
+        }
+      ]
+    },
+    {
+      "image": "synth_000161_heavy.jpg",
+      "old_error_count": 2,
+      "new_error_count": 3,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[3].金额",
+          "gt": "55524.91",
+          "pred": "55224.91"
+        },
+        {
+          "path": "明细[4].规格型号",
+          "gt": "Φ48×3.5",
+          "pred": "Φ48×3.0"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[3].金额",
+          "gt": "55524.91",
+          "pred": "55224.91"
+        },
+        {
+          "path": "明细[4].规格型号",
+          "gt": "Φ48×3.5",
+          "pred": "Φ48×3.0"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "鄠邑地下管廊工程",
+          "pred": "莲湖地下管廊工程"
+        }
+      ]
+    },
+    {
+      "image": "synth_000164.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "陕西润安商贸有限公司",
+          "pred": "陕西黄河商贸有限公司"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "image": "synth_000164_medium.jpg",
+      "old_error_count": 3,
+      "new_error_count": 2,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[4].金额",
+          "gt": "28812.64",
+          "pred": "28912.64"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "陕西润安商贸有限公司",
+          "pred": "陕西润安物资有限公司"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "鄠邑医院综合楼工程",
+          "pred": "雁塔医院综合楼工程"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[4].金额",
+          "gt": "28812.64",
+          "pred": "28912.64"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "鄠邑医院综合楼工程",
+          "pred": "雁塔医院综合楼工程"
+        }
+      ]
+    },
+    {
+      "image": "synth_000260_heavy.jpg",
+      "old_error_count": 3,
+      "new_error_count": 2,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[3].单价",
+          "gt": "4341.14",
+          "pred": "4431.14"
+        },
+        {
+          "path": "明细[3].金额",
+          "gt": "56434.82",
+          "pred": "58434.82"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "西安中盛物资有限公司",
+          "pred": "西安华通供应链有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[3].金额",
+          "gt": "56434.82",
+          "pred": "58434.82"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "西安中盛物资有限公司",
+          "pred": "西安华通供应链有限公司"
+        }
+      ]
+    },
+    {
+      "image": "synth_000307.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "陕西信材工程材料有限公司",
+          "pred": "陕西鑫材工程材料有限公司"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "image": "synth_000309.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "合计.金额",
+          "gt": "200124.83",
+          "pred": "200214.83"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "image": "synth_000506.png",
+      "old_error_count": 0,
+      "new_error_count": 2,
+      "old_document_correct": true,
+      "new_document_correct": false,
+      "old_errors": [],
+      "new_errors": [
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260909-510",
+          "pred": "CL-20260809-510"
+        },
+        {
+          "path": "表头.日期",
+          "gt": "2026-09-09",
+          "pred": "2026-08-09"
+        }
+      ]
+    },
+    {
+      "image": "synth_000569_heavy.jpg",
+      "old_error_count": 8,
+      "new_error_count": 9,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "合计.金额",
+          "gt": "192372.01",
+          "pred": "182372.01"
+        },
+        {
+          "path": "明细[0].单价",
+          "gt": "522.21",
+          "pred": "52221"
+        },
+        {
+          "path": "明细[0].数量",
+          "gt": "100",
+          "pred": "22.21"
+        },
+        {
+          "path": "明细[0].金额",
+          "gt": "52221",
+          "pred": "115444.44"
+        },
+        {
+          "path": "明细[1].单价",
+          "gt": "4167.44",
+          "pred": "4474.44"
+        },
+        {
+          "path": "明细[1].数量",
+          "gt": "33.63",
+          "pred": "12.47"
+        },
+        {
+          "path": "明细[1].金额",
+          "gt": "140151.01",
+          "pred": "56151.01"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "长安鑫泰建材有限公司",
+          "pred": "长安鑫通建材有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "合计.金额",
+          "gt": "192372.01",
+          "pred": "192272.01"
+        },
+        {
+          "path": "明细[0].单价",
+          "gt": "522.21",
+          "pred": "5221"
+        },
+        {
+          "path": "明细[0].数量",
+          "gt": "100",
+          "pred": "22.21"
+        },
+        {
+          "path": "明细[0].金额",
+          "gt": "52221",
+          "pred": "115221"
+        },
+        {
+          "path": "明细[1].单价",
+          "gt": "4167.44",
+          "pred": "16051.01"
+        },
+        {
+          "path": "明细[1].数量",
+          "gt": "33.63",
+          "pred": "14.47"
+        },
+        {
+          "path": "明细[1].金额",
+          "gt": "140151.01",
+          "pred": "110237.01"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "长安鑫泰建材有限公司",
+          "pred": "长安鑫通建材有限公司"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "高新住宅楼主体工程",
+          "pred": "长安医院综合楼工程"
+        }
+      ]
+    },
+    {
+      "image": "synth_000571_heavy.jpg",
+      "old_error_count": 2,
+      "new_error_count": 1,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[0].金额",
+          "gt": "25885.9",
+          "pred": "25865.9"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "铜川鑫泰建材有限公司",
+          "pred": "铜川四海建材有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260610-898",
+          "pred": "CL-20260610-598"
+        }
+      ]
+    },
+    {
+      "image": "synth_000632_medium.jpg",
+      "old_error_count": 1,
+      "new_error_count": 3,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "兴平信宇商贸有限公司",
+          "pred": "兴平亨宇商贸有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[7].单价",
+          "gt": "13.52",
+          "pred": "15.52"
+        },
+        {
+          "path": "表头.供应商",
+          "gt": "兴平信宇商贸有限公司",
+          "pred": "兴平亨宇商贸有限公司"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "沣西产业园区一期工程",
+          "pred": "沣东产业园区一期工程"
+        }
+      ]
+    },
+    {
+      "image": "synth_000665.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "西安华信供应链管理有限公司",
+          "pred": "西安华昌供应链管理有限公司"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "image": "synth_000772_medium.jpg",
+      "old_error_count": 2,
+      "new_error_count": 1,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "鄠邑泽材建材科技有限公司",
+          "pred": "鄠邑泽源建材科技有限公司"
+        },
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260220-836",
+          "pred": "CL-20260220-036"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260220-836",
+          "pred": "CL-20260220-036"
+        }
+      ]
+    },
+    {
+      "image": "synth_000802_heavy.jpg",
+      "old_error_count": 2,
+      "new_error_count": 1,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "明细[4].金额",
+          "gt": "16545.55",
+          "pred": "16545.53"
+        },
+        {
+          "path": "明细[5].金额",
+          "gt": "79732.36",
+          "pred": "79722.36"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[5].金额",
+          "gt": "79732.36",
+          "pred": "79722.36"
+        }
+      ]
+    },
+    {
+      "image": "synth_000961_heavy.jpg",
+      "old_error_count": 2,
+      "new_error_count": 3,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "宝鸡环宇建材有限公司",
+          "pred": "宝鸡亨宇建材有限公司"
+        },
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260306-361",
+          "pred": "CL-20260306-381"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "宝鸡环宇建材有限公司",
+          "pred": "宝鸡亨宇建材有限公司"
+        },
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260306-361",
+          "pred": "CL-20260308-381"
+        },
+        {
+          "path": "表头.日期",
+          "gt": "2026-03-06",
+          "pred": "2026-03-08"
+        }
+      ]
+    },
+    {
+      "image": "synth_000992.png",
+      "old_error_count": 2,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260525-112",
+          "pred": "CL-20260325-112"
+        },
+        {
+          "path": "表头.日期",
+          "gt": "2026-05-25",
+          "pred": "2026-03-25"
+        }
+      ],
+      "new_errors": []
+    }
+  ],
+  "layout_holdout": [
+    {
+      "template": "A",
+      "image": "layout_002_A.png",
+      "old_error_count": 0,
+      "new_error_count": 1,
+      "old_document_correct": true,
+      "new_document_correct": false,
+      "old_errors": [],
+      "new_errors": [
+        {
+          "path": "明细[2].金额",
+          "gt": "153418.32",
+          "pred": "154318.32"
+        }
+      ]
+    },
+    {
+      "template": "A",
+      "image": "layout_003_A.png",
+      "old_error_count": 1,
+      "new_error_count": 2,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260716-590",
+          "pred": "CL-20260716-530"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "明细[3].数量",
+          "gt": "76963",
+          "pred": "76933"
+        },
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260716-590",
+          "pred": "CL-20260716-530"
+        }
+      ]
+    },
+    {
+      "template": "A",
+      "image": "layout_008_A.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "合计.金额",
+          "gt": "119096.74",
+          "pred": "119066.74"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "template": "D",
+      "image": "layout_002_D.png",
+      "old_error_count": 3,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "兴平润安建材有限公司",
+          "pred": "沣西鹏龙户政工程"
+        },
+        {
+          "path": "表头.单据编号",
+          "gt": "CL-20260409-889",
+          "pred": "CL-20260409-899"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "沣西棚户区改造工程",
+          "pred": "兴平润安建材有限公司"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "template": "D",
+      "image": "layout_003_D.png",
+      "old_error_count": 0,
+      "new_error_count": 1,
+      "old_document_correct": true,
+      "new_document_correct": false,
+      "old_errors": [],
+      "new_errors": [
+        {
+          "path": "明细[1].金额",
+          "gt": "5821.46",
+          "pred": "58214.46"
+        }
+      ]
+    },
+    {
+      "template": "D",
+      "image": "layout_006_D.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "明细[1].金额",
+          "gt": "228599.46",
+          "pred": "22859.46"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "template": "D",
+      "image": "layout_009_D.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "陕西兴宇工程材料有限公司",
+          "pred": "陕西兴兴工程材料有限公司"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "template": "D",
+      "image": "layout_010_D.png",
+      "old_error_count": 1,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "表头.项目名称",
+          "gt": "临潼医院综合楼工程",
+          "pred": "临潼轨道交通综合楼工程"
+        }
+      ],
+      "new_errors": []
+    },
+    {
+      "template": "D",
+      "image": "layout_011_D.png",
+      "old_error_count": 2,
+      "new_error_count": 1,
+      "old_document_correct": false,
+      "new_document_correct": false,
+      "old_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "安康兴达商贸有限公司",
+          "pred": "高陵地下管廊工程"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "高陵地下管廊工程",
+          "pred": "安康兴达贸易有限公司"
+        }
+      ],
+      "new_errors": [
+        {
+          "path": "表头.供应商",
+          "gt": "安康兴达商贸有限公司",
+          "pred": "安康兴达贸易有限公司"
+        }
+      ]
+    },
+    {
+      "template": "D",
+      "image": "layout_012_D.png",
+      "old_error_count": 2,
+      "new_error_count": 0,
+      "old_document_correct": false,
+      "new_document_correct": true,
+      "old_errors": [
+        {
+          "path": "明细[3].金额",
+          "gt": "47078.45",
+          "pred": "47087.45"
+        },
+        {
+          "path": "表头.项目名称",
+          "gt": "沣东文化馆建设工程",
+          "pred": "沣西文化馆建设工程"
+        }
+      ],
+      "new_errors": []
+    }
+  ]
+}

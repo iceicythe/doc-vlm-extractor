@@ -1,0 +1,1081 @@
+[
+  {
+    "image": "synth_000158.png",
+    "level": "clean",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "沣西地下管廊工程",
+        "供应商": "商洛创辉物资贸易有限公司",
+        "单据编号": "CL-20260127-153",
+        "日期": "2026-01-27"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "安全网",
+          "规格型号": "密目式 1.8×6m",
+          "单位": "m2",
+          "数量": "829",
+          "单价": "8.08",
+          "金额": "6698.32"
+        },
+        {
+          "序号": "2",
+          "名称": "防水卷材",
+          "规格型号": "APP 3mm",
+          "单位": "m2",
+          "数量": "2228",
+          "单价": "33.14",
+          "金额": "73835.77"
+        }
+      ],
+      "合计": {
+        "金额": "80534.09"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "津西地下管廊工程",
+        "供应商": "商洛创辉物资贸易有限公司",
+        "单据编号": ":CL-20260127-153",
+        "日期": "2026-01-27"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "安全网",
+          "规格型号": "密目式1.8x6m",
+          "单位": "m2",
+          "数量": "829",
+          "单价": "8.08",
+          "金额": "6698.32"
+        },
+        {
+          "序号": "2",
+          "名称": "防水卷材",
+          "规格型号": "APP3mm",
+          "单位": "m2",
+          "数量": "2228",
+          "单价": "33.14",
+          "金额": "73835.77"
+        }
+      ],
+      "合计": {
+        "金额": "80534.09"
+      }
+    },
+    "schema_errors": [],
+    "field_errors_with_evidence": [
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目式1.8x6m",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                277.0,
+                146.0
+              ],
+              [
+                390.0,
+                146.0
+              ],
+              [
+                390.0,
+                163.0
+              ],
+              [
+                277.0,
+                163.0
+              ]
+            ],
+            "text": "密目式1.8x6m",
+            "confidence": 0.9469340973430209
+          }
+        ]
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "APP 3mm",
+        "pred": "APP3mm",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                277.0,
+                175.0
+              ],
+              [
+                352.0,
+                176.0
+              ],
+              [
+                352.0,
+                193.0
+              ],
+              [
+                277.0,
+                192.0
+              ]
+            ],
+            "text": "APP3mm",
+            "confidence": 0.9908623099327087
+          }
+        ]
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260127-153",
+        "pred": ":CL-20260127-153",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                569.0,
+                85.0
+              ],
+              [
+                607.0,
+                85.0
+              ],
+              [
+                607.0,
+                99.0
+              ],
+              [
+                569.0,
+                99.0
+              ]
+            ],
+            "text": "编号：",
+            "confidence": 0.9992761413256327
+          },
+          {
+            "box": [
+              [
+                600.0,
+                85.0
+              ],
+              [
+                730.0,
+                85.0
+              ],
+              [
+                730.0,
+                98.0
+              ],
+              [
+                600.0,
+                98.0
+              ]
+            ],
+            "text": "：CL-20260127-153",
+            "confidence": 0.9701963774859905
+          }
+        ]
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西地下管廊工程",
+        "pred": "津西地下管廊工程",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                30.0,
+                65.0
+              ],
+              [
+                213.0,
+                65.0
+              ],
+              [
+                213.0,
+                79.0
+              ],
+              [
+                30.0,
+                79.0
+              ]
+            ],
+            "text": "项目名称：津西地下管廊工程",
+            "confidence": 0.9635477295288672
+          }
+        ]
+      }
+    ],
+    "warnings": [],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  },
+  {
+    "image": "synth_000506.png",
+    "level": "clean",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "沣西产业园区一期工程",
+        "供应商": "杨凌红叶物资有限公司",
+        "单据编号": "CL-20260909-510",
+        "日期": "2026-09-09"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "PPR 给水管",
+          "规格型号": "DN25",
+          "单位": "米",
+          "数量": "1613",
+          "单价": "13.30",
+          "金额": "21453.77"
+        }
+      ],
+      "合计": {
+        "金额": "21453.77"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "洋西产业园区一期工程",
+        "供应商": "杨凌红叶物资有限公司",
+        "单据编号": "CL-20260909-510",
+        "日期": "2026-09-09"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "PPR给水管",
+          "规格型号": "DN25",
+          "单位": "米",
+          "数量": "1613",
+          "单价": "13.30",
+          "金额": "21453.77"
+        }
+      ],
+      "合计": {
+        "金额": "21453.77"
+      }
+    },
+    "schema_errors": [],
+    "field_errors_with_evidence": [
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                83.0,
+                144.0
+              ],
+              [
+                168.0,
+                146.0
+              ],
+              [
+                167.0,
+                165.0
+              ],
+              [
+                83.0,
+                164.0
+              ]
+            ],
+            "text": "PPR给水管",
+            "confidence": 0.9982694486776987
+          }
+        ]
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西产业园区一期工程",
+        "pred": "洋西产业园区一期工程",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                30.0,
+                66.0
+              ],
+              [
+                240.0,
+                66.0
+              ],
+              [
+                240.0,
+                79.0
+              ],
+              [
+                30.0,
+                79.0
+              ]
+            ],
+            "text": "项目名称：洋西产业园区一期工程",
+            "confidence": 0.9693085074424743
+          }
+        ]
+      }
+    ],
+    "warnings": [],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  },
+  {
+    "image": "synth_000374_medium.jpg",
+    "level": "medium",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "阎良体育中心工程",
+        "供应商": "杨凌中远建材有限公司",
+        "单据编号": "CL-20260119-459",
+        "日期": "2026-01-19"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "水泥",
+          "规格型号": "P.O 42.5",
+          "单位": "吨",
+          "数量": "115.8",
+          "单价": "416.28",
+          "金额": "48205.22"
+        },
+        {
+          "序号": "2",
+          "名称": "蒸压加气块",
+          "规格型号": "600×200×200",
+          "单位": "m3",
+          "数量": "56.84",
+          "单价": "266.85",
+          "金额": "15167.75"
+        },
+        {
+          "序号": "3",
+          "名称": "碎石",
+          "规格型号": "5-25mm",
+          "单位": "m3",
+          "数量": "280.2",
+          "单价": "130.32",
+          "金额": "36515.66"
+        },
+        {
+          "序号": "4",
+          "名称": "安全网",
+          "规格型号": "密目式 1.8×6m",
+          "单位": "m2",
+          "数量": "594",
+          "单价": "10.63",
+          "金额": "6314.22"
+        }
+      ],
+      "合计": {
+        "金额": "106202.85"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "间典体简中心工程",
+        "供应商": "",
+        "单据编号": "CL-20260119-459",
+        "日期": ""
+      },
+      "明细": [],
+      "合计": {
+        "金额": "106202.85"
+      }
+    },
+    "schema_errors": [
+      "表头.供应商: empty required value",
+      "表头.日期: empty required value",
+      "明细: expected 1..8 rows"
+    ],
+    "field_errors_with_evidence": [
+      {
+        "path": "明细[0].单价",
+        "gt": "416.28",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "吨",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "水泥",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "115.8",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "48205.22",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "266.85",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "m3",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "蒸压加气块",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "56.84",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      }
+    ],
+    "warnings": [
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "unassigned_text_line",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "unassigned_text_line",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "unassigned_text_line",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "unassigned_text_line"
+    ],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  },
+  {
+    "image": "synth_000342_medium.jpg",
+    "level": "medium",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "鄠邑地下管廊工程",
+        "供应商": "三原中天供应链管理有限公司",
+        "单据编号": "CL-20260713-930",
+        "日期": "2026-07-13"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "木模板",
+          "规格型号": "1830×915×15",
+          "单位": "m2",
+          "数量": "131",
+          "单价": "59.74",
+          "金额": "7825.94"
+        },
+        {
+          "序号": "2",
+          "名称": "标准砖",
+          "规格型号": "240×115×53",
+          "单位": "个",
+          "数量": "19880",
+          "单价": "0.46",
+          "金额": "9144.80"
+        }
+      ],
+      "合计": {
+        "金额": "16970.74"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "都邑地下管工程",
+        "供应商": "三原中天供应链管理有限公司",
+        "单据编号": "CL-20260713-930",
+        "日期": "2026-07-13"
+      },
+      "明细": [
+        {
+          "序号": "2",
+          "名称": "标准砖",
+          "规格型号": "240×115×53",
+          "单位": "个",
+          "数量": "19880",
+          "单价": "",
+          "金额": ""
+        }
+      ],
+      "合计": {
+        "金额": "16970.74"
+      }
+    },
+    "schema_errors": [
+      "明细[0].单价: empty required value",
+      "明细[0].金额: empty required value"
+    ],
+    "field_errors_with_evidence": [
+      {
+        "path": "明细[0].单价",
+        "gt": "59.74",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "m2",
+        "pred": "个",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                416.0,
+                187.0
+              ],
+              [
+                434.0,
+                187.0
+              ],
+              [
+                434.0,
+                204.0
+              ],
+              [
+                416.0,
+                204.0
+              ]
+            ],
+            "text": "个",
+            "confidence": 0.9991598129272461
+          }
+        ]
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "木模板",
+        "pred": "标准砖",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                88.0,
+                197.0
+              ],
+              [
+                140.0,
+                195.0
+              ],
+              [
+                140.0,
+                216.0
+              ],
+              [
+                88.0,
+                218.0
+              ]
+            ],
+            "text": "标准砖",
+            "confidence": 0.9959731896718343
+          }
+        ]
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": "2",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                55.0,
+                200.0
+              ],
+              [
+                67.0,
+                200.0
+              ],
+              [
+                67.0,
+                217.0
+              ],
+              [
+                55.0,
+                217.0
+              ]
+            ],
+            "text": "2",
+            "confidence": 0.9992741942405701
+          }
+        ]
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "131",
+        "pred": "19880",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                470.0,
+                185.0
+              ],
+              [
+                519.0,
+                182.0
+              ],
+              [
+                520.0,
+                201.0
+              ],
+              [
+                470.0,
+                203.0
+              ]
+            ],
+            "text": "19880",
+            "confidence": 0.9990158557891846
+          }
+        ]
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "1830×915×15",
+        "pred": "240×115×53",
+        "assigned_ocr_blocks": [
+          {
+            "box": [
+              [
+                282.0,
+                191.0
+              ],
+              [
+                382.0,
+                188.0
+              ],
+              [
+                383.0,
+                205.0
+              ],
+              [
+                283.0,
+                209.0
+              ]
+            ],
+            "text": "240×115×53",
+            "confidence": 0.9110829770565033
+          }
+        ]
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "7825.94",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "0.46",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "个",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "标准砖",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "19880",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      }
+    ],
+    "warnings": [
+      "token_in_unmapped_column",
+      "token_in_unmapped_column",
+      "unassigned_text_line",
+      "token_in_unmapped_column",
+      "token_in_unmapped_column"
+    ],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  },
+  {
+    "image": "synth_000961_heavy.jpg",
+    "level": "heavy",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "曲江学校教学楼工程",
+        "供应商": "宝鸡环宇建材有限公司",
+        "单据编号": "CL-20260306-361",
+        "日期": "2026-03-06"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "标准砖",
+          "规格型号": "240×115×53",
+          "单位": "个",
+          "数量": "61507",
+          "单价": "0.42",
+          "金额": "25832.94"
+        },
+        {
+          "序号": "2",
+          "名称": "保温砂浆",
+          "规格型号": "I 型",
+          "单位": "吨",
+          "数量": "23.45",
+          "单价": "659.21",
+          "金额": "15458.47"
+        },
+        {
+          "序号": "3",
+          "名称": "圆钢 HPB300",
+          "规格型号": "Φ10",
+          "单位": "吨",
+          "数量": "6.76",
+          "单价": "4422.16",
+          "金额": "29893.80"
+        },
+        {
+          "序号": "4",
+          "名称": "PPR 给水管",
+          "规格型号": "DN25",
+          "单位": "米",
+          "数量": "1005",
+          "单价": "10.25",
+          "金额": "10301.25"
+        },
+        {
+          "序号": "5",
+          "名称": "中砂",
+          "规格型号": "中粗",
+          "单位": "m3",
+          "数量": "47",
+          "单价": "157.61",
+          "金额": "7407.67"
+        },
+        {
+          "序号": "6",
+          "名称": "安全网",
+          "规格型号": "密目式 1.8×6m",
+          "单位": "m2",
+          "数量": "1471",
+          "单价": "12.73",
+          "金额": "18725.83"
+        }
+      ],
+      "合计": {
+        "金额": "107619.96"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "",
+        "供应商": "",
+        "单据编号": "",
+        "日期": ""
+      },
+      "明细": [],
+      "合计": {
+        "金额": ""
+      }
+    },
+    "schema_errors": [
+      "表头.项目名称: empty required value",
+      "表头.供应商: empty required value",
+      "表头.单据编号: empty required value",
+      "表头.日期: empty required value",
+      "合计.金额: empty required value",
+      "明细: expected 1..8 rows"
+    ],
+    "field_errors_with_evidence": [
+      {
+        "path": "合计.金额",
+        "gt": "107619.96",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "0.42",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "个",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "标准砖",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "61507",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "240×115×53",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "25832.94",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "659.21",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "吨",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "保温砂浆",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      }
+    ],
+    "warnings": [
+      "fewer_than_four_column_headings"
+    ],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  },
+  {
+    "image": "synth_000106_heavy.jpg",
+    "level": "heavy",
+    "gt": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "未央文化馆建设工程",
+        "供应商": "商洛泽昌商贸有限公司",
+        "单据编号": "CL-20260313-491",
+        "日期": "2026-03-13"
+      },
+      "明细": [
+        {
+          "序号": "1",
+          "名称": "脚手架钢管",
+          "规格型号": "Φ48×3.0",
+          "单位": "米",
+          "数量": "1009",
+          "单价": "21.16",
+          "金额": "21350.44"
+        },
+        {
+          "序号": "2",
+          "名称": "土工布",
+          "规格型号": "200g/m2",
+          "单位": "m2",
+          "数量": "2379",
+          "单价": "5.79",
+          "金额": "13774.41"
+        },
+        {
+          "序号": "3",
+          "名称": "碎石",
+          "规格型号": "10-30mm",
+          "单位": "m3",
+          "数量": "275.3",
+          "单价": "131.07",
+          "金额": "36083.57"
+        }
+      ],
+      "合计": {
+        "金额": "71208.42"
+      }
+    },
+    "prediction": {
+      "单据类型": "材料清单",
+      "表头": {
+        "项目名称": "",
+        "供应商": "",
+        "单据编号": "",
+        "日期": ""
+      },
+      "明细": [],
+      "合计": {
+        "金额": ""
+      }
+    },
+    "schema_errors": [
+      "表头.项目名称: empty required value",
+      "表头.供应商: empty required value",
+      "表头.单据编号: empty required value",
+      "表头.日期: empty required value",
+      "合计.金额: empty required value",
+      "明细: expected 1..8 rows"
+    ],
+    "field_errors_with_evidence": [
+      {
+        "path": "合计.金额",
+        "gt": "71208.42",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "21.16",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "米",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "脚手架钢管",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "1009",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ48×3.0",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "21350.44",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "5.79",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "m2",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "土工布",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null,
+        "assigned_ocr_blocks": []
+      }
+    ],
+    "warnings": [
+      "fewer_than_four_column_headings"
+    ],
+    "note": "Automatic trace, not an independently image-audited causal label"
+  }
+]

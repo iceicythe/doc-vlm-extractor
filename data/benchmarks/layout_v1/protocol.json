@@ -1,0 +1,15 @@
+{
+  "seed": 2026092601,
+  "source_count": 12,
+  "image_count": 24,
+  "generator_sha256": "3b55c9332ca579e07aa3ad8b36f48be1b4d69996a351107f910fec1c0b41d984",
+  "original_renderer_sha256": "a441ced3ab8b1e03d70d5a8aeb897624bd407d178e979b9b8486832f4f39e5e2",
+  "manifest_sha256": "80601b855852413e46992e551f20086039076e11e0abe357aaac673363674b9b",
+  "prompt_sha256": "f844654b9992c9d7def6533d9b18841d7f96032a24f1f62b2eff38cad5bcb9f7",
+  "source_content_overlap_with_existing_splits": 0,
+  "layout_A": "original renderer, bottom padded 40px",
+  "layout_D": "serial column moved to end; header positions changed; total above table; weak horizontal rules without vertical lines; footer remark",
+  "controls": "paired identical GT and shown values, font family/sizes, canvas size; no degradation; all inputs resized to 384x384 for VLM",
+  "limits": "12 synthetic source documents; bundled layout changes cannot isolate a single layout factor; no real-document claim",
+  "policy": "freeze before inference; do not tune prompt/rules/model on this holdout"
+}

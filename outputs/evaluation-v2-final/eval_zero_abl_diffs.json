@@ -1,0 +1,8852 @@
+[
+  {
+    "sample_id": "synth_000877_medium.jpg",
+    "old": {
+      "tp": 7,
+      "fp": 0,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 7,
+      "fp": 0,
+      "fn": 5
+    },
+    "new": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.19838056680161942,
+    "schema_errors": [
+      "表头: required",
+      "供应商: extra field",
+      "单据编号: extra field",
+      "日期: extra field",
+      "项目名称: extra field",
+      "单据类型: expected 材料清单",
+      "表头: expected object",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "供应商",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"鄂州恒华工程材料有限公司\""
+      },
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "单据编号",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"CL-20260111-645\""
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "111559.98",
+        "pred": null
+      },
+      {
+        "path": "日期",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"2026年1月11日\""
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑恒华工程材料有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260111-645",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-01-11",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "长安轨道交通站点工程",
+        "pred": null
+      },
+      {
+        "path": "项目名称",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"长安轨道交通站点工程\""
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000506.png",
+    "old": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.15719063545150502,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "21453.77",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌红叶物资有限公司",
+        "pred": "杨凌红叶物流有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260909-510",
+        "pred": "CL-20280909-510"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西产业园区一期工程",
+        "pred": "洋河产业园区一新工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000506_medium.jpg",
+    "old": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.15719063545150502,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "21453.77",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260909-510",
+        "pred": "CL-202080909-510"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-09-09",
+        "pred": "2022-09-09"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西产业园区一期工程",
+        "pred": "洋西产业园区一期工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000665.png",
+    "old": {
+      "tp": 8,
+      "fp": 4,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 4,
+      "fn": 4
+    },
+    "new": {
+      "tp": 7,
+      "fp": 7,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.14814814814814803,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object",
+      "明细[1].序号: empty required value",
+      "明细[1].名称: empty required value",
+      "明细[1].单位: empty required value",
+      "明细[1].数量: empty required value",
+      "明细[1].单价: empty required value"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "9452.16",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目式,1.8×6m"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": null,
+        "pred": "9452.16"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "西安华信供应链管理有限公司",
+        "pred": "西安华岗位路管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260721-575",
+        "pred": "CL-20280721-575"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵产业园区一期工程",
+        "pred": "高铁产业园区一新工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000849.png",
+    "old": {
+      "tp": 25,
+      "fp": 3,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 3,
+      "fn": 8
+    },
+    "new": {
+      "tp": 24,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.11378977820636449,
+    "schema_errors": [
+      "表头: required",
+      "供应商: extra field",
+      "单据编号: extra field",
+      "日期: extra field",
+      "项目名称: extra field",
+      "单据类型: expected 材料清单",
+      "表头: expected object",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "供应商",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"鄂州华建科技有限公司\""
+      },
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "单据编号",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"CL-2020202-403\""
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "187554.7",
+        "pred": null
+      },
+      {
+        "path": "日期",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"20200202\""
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "4492.18",
+        "pred": "44.92"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ10",
+        "pred": "HP300"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目式,1.8×6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑华宇建材科技有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260202-403",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-02",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "周至轨道交通站点工程",
+        "pred": null
+      },
+      {
+        "path": "项目名称",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"周至轨道交通站点工程\""
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000200_heavy.jpg",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.10675675675675667,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "19351.93",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "7777.84",
+        "pred": "7778.84"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川白云工程材料有限公司",
+        "pred": "银川白云工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260721-282",
+        "pred": "CL-20200721-282"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-07-21",
+        "pred": "\u0000invalid:20200721"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000059_medium.jpg",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.10675675675675667,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "39447.96",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢圈 HPB300"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "Φ10",
+        "pred": "中10"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原金华供应链管理有限公司",
+        "pred": "亚鼎金华华远硅管管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260317-335",
+        "pred": "CL-20200317-335"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000978_heavy.jpg",
+    "old": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 12,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.10270270270270276,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "42351.79",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "15638.53",
+        "pred": "15038.53"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "延安润泰工程材料有限公司",
+        "pred": "西安鸿胜工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260303-842",
+        "pred": "CL-20200303-442"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-03-03",
+        "pred": "\u0000invalid:20200303"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "周至体育中心工程",
+        "pred": "项目名称:周至体育中心工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000104_medium.jpg",
+    "old": {
+      "tp": 10,
+      "fp": 1,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 10,
+      "fp": 1,
+      "fn": 2
+    },
+    "new": {
+      "tp": 10,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": -0.10033444816053505,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "2168.64",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "西安中冶物资有限公司",
+        "pred": "西安中怡商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000569_medium.jpg",
+    "old": {
+      "tp": 11,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 11,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 10,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.09459459459459463,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "192372.01",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "522.21",
+        "pred": "52.21"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "52221",
+        "pred": "5222.1"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢HRB400"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "140151.01",
+        "pred": "14015.01"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "长安鑫泰建材有限公司",
+        "pred": "长安赛福建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260403-753",
+        "pred": "CL-202060403-753"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-03",
+        "pred": "2022-04-03"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高新住宅楼主体工程",
+        "pred": "高新位电热能体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000926_medium.jpg",
+    "old": {
+      "tp": 9,
+      "fp": 2,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 9,
+      "fp": 2,
+      "fn": 3
+    },
+    "new": {
+      "tp": 9,
+      "fp": 4,
+      "fn": 4
+    },
+    "old_new_f1_delta": -0.09030100334448155,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "8392.39",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "延安泽建贸易有限公司",
+        "pred": "西安洋健贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260103-893",
+        "pred": "CL-202060103-893"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000027.png",
+    "old": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 21,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.08496732026143783,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "53330.24",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "24054",
+        "pred": "2405"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目式,1.8×6m"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260626-029",
+        "pred": "CL-2026026-029"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西市政道路改造工程",
+        "pred": "洋市市政道路改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000680_medium.jpg",
+    "old": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 21,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.08496732026143783,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "49662.15",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260422-535",
+        "pred": "CL-20200422-535"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-22",
+        "pred": "2020-04-22"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林市政道路改造工程",
+        "pred": "陵城市成道院改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000754_medium.jpg",
+    "old": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 22,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 21,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.08496732026143783,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "71734.28",
+        "pred": null
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "临潼铜城商贸有限公司",
+        "pred": "临潼明诚环保有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-08-07",
+        "pred": "\u0000invalid:20260807"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "周至污水处理厂工程",
+        "pred": "周至水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000680.png",
+    "old": {
+      "tp": 21,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 21,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.08278867102396514,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "49662.15",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "13324.16",
+        "pred": "1332.16"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西骏马供应链管理有限公司",
+        "pred": "陕西镁马供应链管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260422-535",
+        "pred": "CL-202080422-535"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林市政道路改造工程",
+        "pred": "深圳市市政道路改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000553_heavy.jpg",
+    "old": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.08026755852842804,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "41294.32",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "1549",
+        "pred": "15.49"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "41294.32",
+        "pred": "4129.32"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林市政道路改造工程",
+        "pred": "园林市政道路改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000182_medium.jpg",
+    "old": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.08026755852842804,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "38822.65",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南玉龙物资有限公司",
+        "pred": "湖南五龙物资有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260121-960",
+        "pred": "CL-20200121-960"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵市政道路改造工程",
+        "pred": "市政道路改造改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000478_medium.jpg",
+    "old": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.08026755852842804,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "11501.73",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑瑞泽贸易有限公司",
+        "pred": "蜀国瑞泽贸易有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-08-19",
+        "pred": "\u0000invalid:20260819"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "浐灞产业园区一期工程",
+        "pred": "沪源产业园区一标工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000668.png",
+    "old": {
+      "tp": 7,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 7,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.07023411371237465,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "18661.61",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "蓝田鑫泰工程材料有限公司",
+        "pred": "富田泰工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20261002-908",
+        "pred": "CL-20281002-908"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵地下管廊工程",
+        "pred": "局部地下管架工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000317_heavy.jpg",
+    "old": {
+      "tp": 7,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 7,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 7,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.07023411371237465,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "31229.72",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "碎石",
+        "pred": "砖石"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南兴隆建材有限公司",
+        "pred": "河南小峰建材有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-08-27",
+        "pred": "2026-08-22"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "经开住宅楼主体工程",
+        "pred": "经升佳生态主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000564.png",
+    "old": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 8,
+      "fp": 5,
+      "fn": 4
+    },
+    "new": {
+      "tp": 8,
+      "fp": 7,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.0685714285714285,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object",
+      "明细[1].名称: empty required value",
+      "明细[1].单位: empty required value",
+      "明细[1].数量: empty required value",
+      "明细[1].单价: empty required value"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "25333.81",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "25333.81",
+        "pred": "2533.81"
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": null,
+        "pred": "2"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": null,
+        "pred": "2533.81"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南金达供应链管理有限公司",
+        "pred": "济南金达供位硅管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260522-206",
+        "pred": "CL-20280522-206"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000737_heavy.jpg",
+    "old": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 26,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.06606334841628958,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "308443.21",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "203497.09",
+        "pred": "20349.09"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南南方物资贸易有限公司",
+        "pred": "湖南南方物资贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260503-627",
+        "pred": "CL-20200509-627"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-03",
+        "pred": "2020-05-03"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000342_medium.jpg",
+    "old": {
+      "tp": 16,
+      "fp": 2,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 16,
+      "fp": 2,
+      "fn": 3
+    },
+    "new": {
+      "tp": 16,
+      "fp": 4,
+      "fn": 4
+    },
+    "old_new_f1_delta": -0.06486486486486476,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "16970.74",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原中天供应链管理有限公司",
+        "pred": "三洲中天供应链管理有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑地下管廊工程",
+        "pred": "智慧地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000188.png",
+    "old": {
+      "tp": 15,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 15,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 15,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.060810810810810856,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "159198.93",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "防水卷材",
+        "pred": "防水材料"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵兴泰物资有限公司",
+        "pred": "周至兴泰物资有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260417-323",
+        "pred": "CL-202080417-323"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000342.png",
+    "old": {
+      "tp": 15,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 15,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 15,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.060810810810810856,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "16970.74",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原中天供应链管理有限公司",
+        "pred": "三周中天供热安装管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260713-930",
+        "pred": "CL-20200713-930"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑地下管廊工程",
+        "pred": "郭居地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000668_heavy.jpg",
+    "old": {
+      "tp": 6,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 6,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 6,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.06020066889632103,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "18661.61",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "18661.61",
+        "pred": "18861.61"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "蓝田鑫泰工程材料有限公司",
+        "pred": "金田顺泰工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20261002-908",
+        "pred": "CL:20201002-908"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵地下管廊工程",
+        "pred": "工程材料清单"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000989_heavy.jpg",
+    "old": {
+      "tp": 6,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 6,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 6,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.06020066889632103,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object",
+      "明细[0].单价: invalid number"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "102804.07",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "4230.62",
+        "pred": "\u0000invalid:42.30.62"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ8",
+        "pred": "HPB300"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "周至信建物资贸易有限公司",
+        "pred": "周至佰建物资贸易有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "航天基地住宅楼主体工程",
+        "pred": "航天基地住宅主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000164_medium.jpg",
+    "old": {
+      "tp": 35,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 35,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 34,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.05680765668416188,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "312131.34",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "防水卷材",
+        "pred": "防水板材"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "28812.64",
+        "pred": "28912.64"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西润安商贸有限公司",
+        "pred": "陕西润宏物资有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑医院综合楼工程",
+        "pred": "螺纹钢HRB400"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000158.png",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "80534.09",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式 1.8×6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "商洛创辉物资贸易有限公司",
+        "pred": "商贸创辉物资贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260127-153",
+        "pred": "CL-20280127-153"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西地下管廊工程",
+        "pred": "泽西地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000445.png",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "66786.15",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "28318.16",
+        "pred": "2831.16"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "38467.99",
+        "pred": "3846.99"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑润源工程材料有限公司",
+        "pred": "鄂州润澳工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260817-147",
+        "pred": "CL-20280817-147"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000503.png",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "71787.92",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "防水卷材",
+        "pred": "防水材料"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌兴隆供应链管理有限公司",
+        "pred": "极凌兴隆供应站管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260414-496",
+        "pred": "CL-20280414-496"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣东地下管廊工程",
+        "pred": "洋东地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000127_medium.jpg",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "226781.66",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "220322.65",
+        "pred": "22032.65"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "榆林兴泰贸易有限公司",
+        "pred": "柏林兴泰贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260928-786",
+        "pred": "CL-2020928-786"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林污水处理厂工程",
+        "pred": "螺林污水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000918_medium.jpg",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "119051.26",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "兴平泽通商贸有限公司",
+        "pred": "兴平荣通商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260509-621",
+        "pred": "CL-202060509-621"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖污水处理厂工程",
+        "pred": "遮阳污水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000935_medium.jpg",
+    "old": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 14,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 14,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.05675675675675673,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "72053.13",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌兴盛物资贸易有限公司",
+        "pred": "杨凌兴物物资贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260203-283",
+        "pred": "CL-20202023-283"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "临潼地下管廊工程",
+        "pred": "临潭地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000164_heavy.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 31,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.05402902130287113,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "312131.34",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ16",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YVv 4×25"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西润安商贸有限公司",
+        "pred": "陕西鸿安商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260515-416",
+        "pred": "CL-202060515-416"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-15",
+        "pred": "2024-05-15"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑医院综合楼工程",
+        "pred": "螺纹钢-综合综合工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000619_heavy.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 31,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.05402902130287113,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "103302.58",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "DN32",
+        "pred": "DK32"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "保温砂浆",
+        "pred": "保温纱网"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "I 型",
+        "pred": "1型"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目式1.8-6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南泰山物资贸易有限公司",
+        "pred": "湖南山通贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260729-059",
+        "pred": "CL-20200729-059"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林轨道交通站点工程",
+        "pred": "工程材料清单"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000011_heavy.jpg",
+    "old": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.05270270270270272,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "35220.65",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "国标HPB300"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原兴昌贸易有限公司",
+        "pred": "三展兴贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260906-653",
+        "pred": "CL-202080906-653"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-09-06",
+        "pred": "2024-09-06"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "曲江地下管廊工程",
+        "pred": "曲江地下管道工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000158_heavy.jpg",
+    "old": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.05270270270270272,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "80534.09",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式,1.8×6m"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "73835.77",
+        "pred": "7385.77"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "商洛创辉物资贸易有限公司",
+        "pred": "南京创伟投资发展有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260127-153",
+        "pred": "CL-20200127-153"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西地下管廊工程",
+        "pred": "济南地下管线工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000164.png",
+    "old": {
+      "tp": 30,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 30,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 29,
+      "fp": 12,
+      "fn": 12
+    },
+    "old_new_f1_delta": -0.05217659771534444,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "312131.34",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ16",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YJV 4*25"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "40530.6",
+        "pred": "40503.6"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "28812.64",
+        "pred": "28872.64"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西润安商贸有限公司",
+        "pred": "陕西安博商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260515-416",
+        "pred": "CL-20208015-416"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-15",
+        "pred": "2025-05-15"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑医院综合楼工程",
+        "pred": "厨房综合检修工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000589_heavy.jpg",
+    "old": {
+      "tp": 29,
+      "fp": 10,
+      "fn": 11
+    },
+    "precision_only": {
+      "tp": 29,
+      "fp": 10,
+      "fn": 11
+    },
+    "new": {
+      "tp": 28,
+      "fp": 13,
+      "fn": 13
+    },
+    "old_new_f1_delta": -0.0512503859215806,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "290203.78",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "33683.87",
+        "pred": "3368.87"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "25480.87",
+        "pred": "2540.87"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋普筋"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "4475.63",
+        "pred": "447.63"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢HRB400"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "170073.94",
+        "pred": "17070.94"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "榆林广盛工程材料有限公司",
+        "pred": "格林广工建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260707-365",
+        "pred": "CL-202060707-365"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-07-07",
+        "pred": "\u0000invalid:20220707"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖轨道交通站点工程",
+        "pred": "深圳轨道交通站成工工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000951_medium.jpg",
+    "old": {
+      "tp": 23,
+      "fp": 2,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 23,
+      "fp": 2,
+      "fn": 3
+    },
+    "new": {
+      "tp": 23,
+      "fp": 4,
+      "fn": 4
+    },
+    "old_new_f1_delta": -0.050108932461873756,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "35353.62",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "22406.72",
+        "pred": "22040.72"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵鑫建供应链管理有限公司",
+        "pred": "同济健康新建管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000107.png",
+    "old": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 12,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.048648648648648596,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "110163.41",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "防水卷材",
+        "pred": "防水材料"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "126.17",
+        "pred": "126.7"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "临潼中鑫供应链管理有限公司",
+        "pred": "临潼中鑫位位砖管管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260628-797",
+        "pred": "CL-20200628-797"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-06-28",
+        "pred": "2020-06-28"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "经开地下管廊工程",
+        "pred": "经开地下管网工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000127.png",
+    "old": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 12,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.048648648648648596,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "226781.66",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "56.1",
+        "pred": "56.3"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "220322.65",
+        "pred": "22032.65"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "榆林兴泰贸易有限公司",
+        "pred": "格林兴赛贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260928-786",
+        "pred": "CL-20200928-786"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-09-28",
+        "pred": "2020-09-28"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林污水处理厂工程",
+        "pred": "园林污水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000772_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 12,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.048648648648648596,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "82483.34",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "44213.35",
+        "pred": "4421.35"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "38269.99",
+        "pred": "36269.99"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑泽材建材科技有限公司",
+        "pred": "韶关泽建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260220-836",
+        "pred": "CL-20200220-036"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-20",
+        "pred": "2024-02-20"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高新商业综合体项目",
+        "pred": "阿特斯综合合体项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000307.png",
+    "old": {
+      "tp": 41,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 41,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 40,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.048387096774193505,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "138122.84",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢脚 HP3B00"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "42433.13",
+        "pred": "4243.13"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西信材工程材料有限公司",
+        "pred": "陕西建材工程材料有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "蓝田体育中心工程",
+        "pred": "项目名称:蓝田体育中心工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000663.png",
+    "old": {
+      "tp": 39,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 38,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.04704301075268824,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "245089.02",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "挤塑板",
+        "pred": "抗压板"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "1220×2440×12",
+        "pred": "1200×2440×12"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YV 4×50"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川鑫辉商贸有限公司",
+        "pred": "锦川商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260521-790",
+        "pred": "CL-20206521-790"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-21",
+        "pred": "2025-05-21"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖轨道交通站点工程",
+        "pred": "道路交通涵洞站点工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000569_heavy.jpg",
+    "old": {
+      "tp": 5,
+      "fp": 9,
+      "fn": 14
+    },
+    "precision_only": {
+      "tp": 5,
+      "fp": 9,
+      "fn": 14
+    },
+    "new": {
+      "tp": 5,
+      "fp": 14,
+      "fn": 15
+    },
+    "old_new_f1_delta": -0.046620046620046596,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头: expected object",
+      "合计: expected object",
+      "明细[0].合计: extra field",
+      "明细[1].合计: extra field"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "192372.01",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "522.21",
+        "pred": "47.44"
+      },
+      {
+        "path": "明细[0].合计",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"10221.00\""
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "混凝土",
+        "pred": "钢筋"
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "100",
+        "pred": "2.21"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "52221",
+        "pred": "10221"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "4167.44",
+        "pred": "47.44"
+      },
+      {
+        "path": "明细[1].合计",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"10221.00\""
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "33.63",
+        "pred": "1.6"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "Φ16",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "140151.01",
+        "pred": "10221"
+      },
+      {
+        "path": "表头",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "长安鑫泰建材有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260403-753",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-03",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高新住宅楼主体工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000782_medium.jpg",
+    "old": {
+      "tp": 21,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 21,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 21,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.04575163398692805,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "215755.93",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "安康广建建材科技有限公司",
+        "pred": "安徽广建建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260716-384",
+        "pred": "CL-20206716-384"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-07-16",
+        "pred": "\u0000invalid:20260716"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林轨道交通站点工程",
+        "pred": "漯河轨道交通站场工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000405.png",
+    "old": {
+      "tp": 37,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 36,
+      "fp": 12,
+      "fn": 12
+    },
+    "old_new_f1_delta": -0.04569892473118298,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "161707.21",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ8",
+        "pred": "HPB300"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "4433.68",
+        "pred": "4436.68"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "挤塑板",
+        "pred": "抗剪板"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YV 4×25"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "60.43",
+        "pred": "56.03"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "34203.38",
+        "pred": "32403.38"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "宝鸡兴建供应链管理有限公司",
+        "pred": "宝鸿兴建设管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260816-074",
+        "pred": "CL-20200616-074"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000872_heavy.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 36,
+      "fp": 12,
+      "fn": 12
+    },
+    "old_new_f1_delta": -0.04569892473118298,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "195283.36",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "吨",
+        "pred": "个"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "钢筋HRB400"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "132265.73",
+        "pred": "13265.73"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "个",
+        "pred": "米"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋箍筋"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑信泰贸易有限公司",
+        "pred": "邯郸市宏胜建筑有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-04",
+        "pred": "\u0000invalid:20260204"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "未央住宅楼主体工程",
+        "pred": "水泥"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000683.png",
+    "old": {
+      "tp": 36,
+      "fp": 10,
+      "fn": 11
+    },
+    "precision_only": {
+      "tp": 36,
+      "fp": 10,
+      "fn": 11
+    },
+    "new": {
+      "tp": 35,
+      "fp": 13,
+      "fn": 13
+    },
+    "old_new_f1_delta": -0.045026881720430234,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "243402.23",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "1858",
+        "pred": "1838"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式 1.8m×6m"
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "51.2",
+        "pred": "512"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "5.14",
+        "pred": "51.54"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "3233.06",
+        "pred": "32330.6"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "兴平恒建物资有限公司",
+        "pred": "兴平恒建物有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260212-902",
+        "pred": "CL-202020212-902"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-12",
+        "pred": "2022-10-12"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "雁塔地下管廊工程",
+        "pred": "幕墙下管厂家工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000435.png",
+    "old": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.04357298474945537,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "82194.33",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "9504.18",
+        "pred": "950.18"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "38763.4",
+        "pred": "37873.4"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260502-672",
+        "pred": "CL-202080502-672"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-02",
+        "pred": "2020-05-02"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "临潼棚户区改造工程",
+        "pred": "临潼城区改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000523.png",
+    "old": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.04357298474945537,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "81729.45",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式 1.8×6m"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YV4×25"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "周至永利建材科技有限公司",
+        "pred": "周至梦利建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260807-750",
+        "pred": "CL-20208007-750"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "经开地下管廊工程",
+        "pred": "经地下智家工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000809.png",
+    "old": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.04357298474945537,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "132591.8",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式 1.8×6m"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YV4×25"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260926-700",
+        "pred": "CL-20200926-700"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-09-26",
+        "pred": "2026-10-26"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "灞桥棚户区改造工程",
+        "pred": "鹏辉辖区区改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000657_heavy.jpg",
+    "old": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.04357298474945537,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "167924.18",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YJV 4*50"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢圈 HP300"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "56437.42",
+        "pred": "56347.42"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "商洛盛世建材有限公司",
+        "pred": "高盛世建建材有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "浐灞学校教学楼工程",
+        "pred": "产学研教学学徒工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000027_medium.jpg",
+    "old": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 20,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 20,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.04357298474945537,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "53330.24",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "24054",
+        "pred": "2405"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式,1.8×6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "汉中盛世建材有限公司",
+        "pred": "汉中恒建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260626-029",
+        "pred": "CL-20200626-029"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西市政道路改造工程",
+        "pred": "洋市道路改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000790.png",
+    "old": {
+      "tp": 48,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 48,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 47,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.04265080713678848,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "274957.32",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "23711.85",
+        "pred": "22711.85"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "9177.96",
+        "pred": "917.96"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "126323.45",
+        "pred": "126233.45"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260826-965",
+        "pred": "CL-20208026-965"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣东文化馆建设工程",
+        "pred": "洋东文化建设项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000790_medium.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 45,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.041631265930331396,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "274957.32",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "34187.71",
+        "pred": "3417.71"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "1830×915×15",
+        "pred": "1830*<9*15*15"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "SBS 4mm",
+        "pred": "SBS-4mm"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "9177.96",
+        "pred": "917.96"
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "116.3",
+        "pred": "1163"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YV4*4*25"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260826-965",
+        "pred": "CL-20200826-965"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000611.png",
+    "old": {
+      "tp": 44,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 44,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 43,
+      "fp": 12,
+      "fn": 12
+    },
+    "old_new_f1_delta": -0.04061172472387431,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "275793.58",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "833.57",
+        "pred": "83.57"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "36677.08",
+        "pred": "3667.08"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目数:1.8-6m"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "30713.56",
+        "pred": "3071.35"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢圈 HP300"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "碎石",
+        "pred": "砖石"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260627-755",
+        "pred": "CL-20206027-755"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-06-27",
+        "pred": "2020-06-27"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高新住宅楼主体工程",
+        "pred": "高层住宅主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000992.png",
+    "old": {
+      "tp": 40,
+      "fp": 13,
+      "fn": 14
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 13,
+      "fn": 14
+    },
+    "new": {
+      "tp": 39,
+      "fp": 16,
+      "fn": 16
+    },
+    "old_new_f1_delta": -0.03857264231096014,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "229837.6",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "蒸压加气块",
+        "pred": "高压气块"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "44366.11",
+        "pred": "4436.11"
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "米",
+        "pred": "m"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR给水管"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "27922.94",
+        "pred": "2792.94"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "15202.07",
+        "pred": "1520.07"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "5705.92",
+        "pred": "570.92"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "63316.11",
+        "pred": "6331.61"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "碎石",
+        "pred": "砖石"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南信源建材有限公司",
+        "pred": "湖南源建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260525-112",
+        "pred": "CL-20206035-112"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-25",
+        "pred": "2020-06-25"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "阎良体育中心工程",
+        "pred": "网络体育中心工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000309.png",
+    "old": {
+      "tp": 28,
+      "fp": 4,
+      "fn": 5
+    },
+    "precision_only": {
+      "tp": 28,
+      "fp": 4,
+      "fn": 5
+    },
+    "new": {
+      "tp": 28,
+      "fp": 6,
+      "fn": 6
+    },
+    "old_new_f1_delta": -0.03800904977375563,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "200124.83",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YV4×25"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "标准砖",
+        "pred": "标桩砖"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵盛世建材科技有限公司",
+        "pred": "阿陵盖世建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260624-351",
+        "pred": "CL-20200624-351"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000305_medium.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 16,
+      "fn": 17
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 16,
+      "fn": 17
+    },
+    "new": {
+      "tp": 36,
+      "fp": 19,
+      "fn": 19
+    },
+    "old_new_f1_delta": -0.037043330501274396,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "369812.9",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "155.28",
+        "pred": "15.28"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "中粗",
+        "pred": "中组"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "43012.56",
+        "pred": "4301.25"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "133.05",
+        "pred": "13.05"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "25811.7",
+        "pred": "2581.7"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "脚手架钢管",
+        "pred": "钢筋架管"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "31288.72",
+        "pred": "3128.72"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "822.89",
+        "pred": "82.89"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "保温砂浆",
+        "pred": "保温纱毡"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "镀锌钢 HRB400"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "170847",
+        "pred": "17047"
+      },
+      {
+        "path": "明细[6].单价",
+        "gt": "4.07",
+        "pred": "40.07"
+      },
+      {
+        "path": "明细[6].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋桁架"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "6206.75",
+        "pred": "6026.75"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西中远商贸有限公司",
+        "pred": "陕西中远经贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000309_heavy.jpg",
+    "old": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 27,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.03665158371040733,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "200124.83",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "VV4×25"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "标准砖",
+        "pred": "保温板"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵盛世建材科技有限公司",
+        "pred": "河南盛世建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260624-351",
+        "pred": "CL-20200624-351"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖地下管廊工程",
+        "pred": "莲湖地下管网工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000322_medium.jpg",
+    "old": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 27,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 27,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.03665158371040733,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "86081.32",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "6.12",
+        "pred": "61.2"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌兴华贸易有限公司",
+        "pred": "株洲兴华贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260415-364",
+        "pred": "CL-20200415-364"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "新城商业综合体项目",
+        "pred": "新城业综合结合项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000571_heavy.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 26,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.03529411764705881,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "104581.36",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "251.1",
+        "pred": "25.1"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "25885.9",
+        "pred": "25865.9"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "VIV 4×25"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "碎石",
+        "pred": "砖石"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川鑫泰建材有限公司",
+        "pred": "铜川鑫建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260610-898",
+        "pred": "CL-2026010-598"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000374_medium.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 26,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.03529411764705881,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "106202.85",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "蒸压加气块",
+        "pred": "高压加气块"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目格式,1.8×6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌中远建材有限公司",
+        "pred": "杭州中创材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260119-459",
+        "pred": "CL-20200119-459"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "阎良体育中心工程",
+        "pred": "岗亭体育中心工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000014_medium.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 2,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 2,
+      "fn": 3
+    },
+    "new": {
+      "tp": 37,
+      "fp": 4,
+      "fn": 4
+    },
+    "old_new_f1_delta": -0.03426983636924974,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "105457.01",
+        "pred": null
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "安康金昌供应链管理有限公司",
+        "pred": "安徽金仕供应链管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000568.png",
+    "old": {
+      "tp": 25,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 25,
+      "fp": 9,
+      "fn": 9
+    },
+    "old_new_f1_delta": -0.033936651583710176,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "245567.42",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "吨",
+        "pred": "Φ12"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ12",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式,1.8×6m"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南信达贸易有限公司",
+        "pred": "河南申达贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260625-517",
+        "pred": "CL-20200625-517"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "碑林污水处理厂工程",
+        "pred": "螺杆污水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000490_medium.jpg",
+    "old": {
+      "tp": 36,
+      "fp": 3,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 36,
+      "fp": 3,
+      "fn": 4
+    },
+    "new": {
+      "tp": 36,
+      "fp": 5,
+      "fn": 5
+    },
+    "old_new_f1_delta": -0.03334362457548623,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "120808.04",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "渭南鑫辉工程材料有限公司",
+        "pred": "湖南湘辉工程材料有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-10-01",
+        "pred": "\u0000invalid:20261001"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000849_medium.jpg",
+    "old": {
+      "tp": 24,
+      "fp": 8,
+      "fn": 9
+    },
+    "precision_only": {
+      "tp": 24,
+      "fp": 8,
+      "fn": 9
+    },
+    "new": {
+      "tp": 24,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.032579185520361875,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "187554.7",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "吨",
+        "pred": "Φ10"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ10",
+        "pred": "HP3300"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "密目网"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "蒸压加气块",
+        "pred": "压顶加气块"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑华宇建材科技有限公司",
+        "pred": "鹏思华诚科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260202-403",
+        "pred": "CL-2020202-403"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-02",
+        "pred": "\u0000invalid:2020202"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000246_heavy.jpg",
+    "old": {
+      "tp": 34,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 34,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 34,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.03149120098795932,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "341137.64",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西恒盛物资贸易有限公司",
+        "pred": "陕西恒物投资发展有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260313-402",
+        "pred": "CL-20200313-402"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-03-13",
+        "pred": "2020-03-13"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西地下管廊工程",
+        "pred": "沣西涧下商贸工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000154.png",
+    "old": {
+      "tp": 33,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 33,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.030564989194195813,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "246615.65",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "挤塑板",
+        "pred": "抗拉板"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "43602.16",
+        "pred": "43062.16"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "17676.25",
+        "pred": "17762.25"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260201-350",
+        "pred": "CL-20200201-350"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-01",
+        "pred": "2022-02-01"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖住宅楼主体工程",
+        "pred": "连墙件主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000310.png",
+    "old": {
+      "tp": 33,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 33,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.030564989194195813,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "135963.01",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "DN50",
+        "pred": "DNS50"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "19954.8",
+        "pred": "1995.48"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YV4×50"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "周至泰岳物资有限公司",
+        "pred": "周至县岳物有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "浐灞学校教学楼工程",
+        "pred": "沪南学校教学学校工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000041.png",
+    "old": {
+      "tp": 36,
+      "fp": 24,
+      "fn": 25
+    },
+    "precision_only": {
+      "tp": 36,
+      "fp": 24,
+      "fn": 25
+    },
+    "new": {
+      "tp": 35,
+      "fp": 27,
+      "fn": 27
+    },
+    "old_new_f1_delta": -0.030525193281791485,
+    "schema_errors": [
+      "合计: required",
+      "合计金额: extra field",
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "362674.78",
+        "pred": null
+      },
+      {
+        "path": "合计金额",
+        "gt": null,
+        "pred": "\u0000invalid:extra:\"362674.78\""
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR,给水管"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "431.96",
+        "pred": "43.96"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "56154.8",
+        "pred": "5615.8"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "脚手架钢管",
+        "pred": "钢架钢筋管"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "39027.9",
+        "pred": "3902.7"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "452.25",
+        "pred": "45.25"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "34868.47",
+        "pred": "3486.47"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "163.47",
+        "pred": "183.55"
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "42.7",
+        "pred": "46.4"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "6980.17",
+        "pred": "8933.32"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "3952.55",
+        "pred": "40.4"
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "吨",
+        "pred": "个"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "镀锌铁 HRB400"
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "46.4",
+        "pred": "27803"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "Φ12",
+        "pred": "240×115×5"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "183398.32",
+        "pred": "11121.2"
+      },
+      {
+        "path": "明细[6].单价",
+        "gt": "0.4",
+        "pred": "32.02"
+      },
+      {
+        "path": "明细[6].单位",
+        "gt": "个",
+        "pred": "m3"
+      },
+      {
+        "path": "明细[6].数量",
+        "gt": "27803",
+        "pred": "73.39"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "240×115×53",
+        "pred": "600×200×200"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "11121.2",
+        "pred": "23706.44"
+      },
+      {
+        "path": "明细[7].单价",
+        "gt": "323.02",
+        "pred": "32.02"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川诚恒工程材料有限公司",
+        "pred": "圳川恒工程材料有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "浐灞文化馆建设工程",
+        "pred": "沪晶文化建设项目工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000611_heavy.jpg",
+    "old": {
+      "tp": 24,
+      "fp": 29,
+      "fn": 30
+    },
+    "precision_only": {
+      "tp": 24,
+      "fp": 29,
+      "fn": 30
+    },
+    "new": {
+      "tp": 23,
+      "fp": 32,
+      "fn": 32
+    },
+    "old_new_f1_delta": -0.030416312659303335,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "275793.58",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "833.57",
+        "pred": "83.57"
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "吨",
+        "pred": "m"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "保温砂浆",
+        "pred": "保温管"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "I型"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "36677.08",
+        "pred": "3667.08"
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "m2",
+        "pred": "个"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "定型式 1.8×6m"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "30713.56",
+        "pred": "3071.56"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "4.81",
+        "pred": "427.5"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "个",
+        "pred": "m3"
+      },
+      {
+        "path": "明细[3].数量",
+        "gt": "4415",
+        "pred": "21"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "对接",
+        "pred": "10-30mm"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "21236.15",
+        "pred": "8974.5"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "4273.5",
+        "pred": "18.64"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "吨",
+        "pred": "米"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢丝"
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "21",
+        "pred": "2597"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "Φ8",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "89743.5",
+        "pred": "46469.06"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "143.31",
+        "pred": "18.64"
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "m3",
+        "pred": "米"
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "297.6",
+        "pred": "2597"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "10-30mm",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "42649.06",
+        "pred": "46469.06"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "Φ4×3.5"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "48408.08",
+        "pred": "46469.06"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "兴平永利贸易有限公司",
+        "pred": "河南仕利商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260627-755",
+        "pred": "CL-20200627-755"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-06-27",
+        "pred": "\u0000invalid:20200627"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高新住宅楼主体工程",
+        "pred": "材料名称"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000378_medium.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 7,
+      "fn": 8
+    },
+    "new": {
+      "tp": 32,
+      "fp": 9,
+      "fn": 9
+    },
+    "old_new_f1_delta": -0.029638777400432192,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "192916.8",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢圈 HPB300"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "69841",
+        "pred": "6984"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "咸阳亨通工程材料有限公司",
+        "pred": "咸阳宇通工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260111-742",
+        "pred": "CL-20200111-742"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-01-11",
+        "pred": "2022-06-11"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "航天基地医院综合楼工程",
+        "pred": "航天基地消防综合工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000589.png",
+    "old": {
+      "tp": 31,
+      "fp": 8,
+      "fn": 9
+    },
+    "precision_only": {
+      "tp": 31,
+      "fp": 8,
+      "fn": 9
+    },
+    "new": {
+      "tp": 31,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.028712565606668683,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "290203.78",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋笼"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "4475.63",
+        "pred": "447.53"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "170073.94",
+        "pred": "17007.93"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "48249.54",
+        "pred": "46295.54"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "榆林广盛工程材料有限公司",
+        "pred": "榆林广工建筑材料有限公司"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-07-07",
+        "pred": "\u0000invalid:20260707"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖轨道交通站点工程",
+        "pred": "连通轨道交通站点工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000950_medium.jpg",
+    "old": {
+      "tp": 31,
+      "fp": 8,
+      "fn": 9
+    },
+    "precision_only": {
+      "tp": 31,
+      "fp": 8,
+      "fn": 9
+    },
+    "new": {
+      "tp": 31,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.028712565606668683,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "202535.62",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "蒸压加气块",
+        "pred": "高压加气块"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "86499.87",
+        "pred": "8649.87"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "18922.98",
+        "pred": "1892.98"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "57137.21",
+        "pred": "5717.21"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵恒达物资有限公司",
+        "pred": "湖南恒达投资有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260106-351",
+        "pred": "CL-2020106-1"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "长安商业综合体项目",
+        "pred": "长沙营业综合项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000882_heavy.jpg",
+    "old": {
+      "tp": 30,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 30,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 30,
+      "fp": 11,
+      "fn": 11
+    },
+    "old_new_f1_delta": -0.027786353812905396,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头.日期: invalid date",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "175665.3",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "325.48",
+        "pred": "32.54"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "蒸压加气块",
+        "pred": "压力加气块"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "159.62",
+        "pred": "15.62"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "中粗",
+        "pred": "中砂"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "2423",
+        "pred": "24.23"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "21012.48",
+        "pred": "20121.48"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "高陵亨通贸易有限公司",
+        "pred": "高邮市通兴贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260109-003",
+        "pred": "CL-20206109-003"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-01-09",
+        "pred": "\u0000invalid:20260109"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000119_heavy.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 12,
+      "fn": 21
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 12,
+      "fn": 21
+    },
+    "new": {
+      "tp": 12,
+      "fp": 15,
+      "fn": 22
+    },
+    "old_new_f1_delta": -0.027610008628127736,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头: expected object",
+      "合计: expected object",
+      "明细[3].单位: empty required value",
+      "明细[3].数量: empty required value",
+      "明细[3].单价: empty required value"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "65970.11",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "保温砂浆",
+        "pred": "保温纱管"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "I 型",
+        "pred": "Φ20"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "4.72",
+        "pred": "472"
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "个",
+        "pred": "m2"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋管箍"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "Φ20",
+        "pred": "XPS 50mm"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "19.04",
+        "pred": "61.25"
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "m2",
+        "pred": "米"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "498",
+        "pred": "501"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "XPS 50mm",
+        "pred": "DN80"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "9481.92",
+        "pred": "30686.25"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "61.25",
+        "pred": null
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "米",
+        "pred": null
+      },
+      {
+        "path": "明细[3].数量",
+        "gt": "501",
+        "pred": null
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "DN80",
+        "pred": null
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "30686.25",
+        "pred": "65970.11"
+      },
+      {
+        "path": "表头",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "临潼中盛物资贸易有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260129-805",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-01-29",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "经开文化馆建设工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000282.png",
+    "old": {
+      "tp": 41,
+      "fp": 5,
+      "fn": 6
+    },
+    "precision_only": {
+      "tp": 41,
+      "fp": 5,
+      "fn": 6
+    },
+    "new": {
+      "tp": 41,
+      "fp": 7,
+      "fn": 7
+    },
+    "old_new_f1_delta": -0.027553763440860246,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "276694.67",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "35076.46",
+        "pred": "35070.46"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "挤塑板",
+        "pred": "抗拉板"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260316-242",
+        "pred": "CL-20200316-242"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "临潼产业园区一期工程",
+        "pred": "临潼产业园区一班工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000133_medium.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 40,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.026881720430107503,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "284512.46",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式, 1.8×6m"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "18933.25",
+        "pred": "18992.25"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "8.22",
+        "pred": "82.25"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌泽昌商贸有限公司",
+        "pred": "杨凌泽商贸有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "航天基地商业综合体项目",
+        "pred": "航天基地商贸综合体项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000821_medium.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 6,
+      "fn": 7
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 6,
+      "fn": 7
+    },
+    "new": {
+      "tp": 40,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": -0.026881720430107503,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "154259.56",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "4326.36",
+        "pred": "43.2636"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "70952.3",
+        "pred": "7095.23"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "旋转",
+        "pred": "起转"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "木模板",
+        "pred": "木挡板"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260724-219",
+        "pred": "CL-20200724-219"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "经开住宅楼主体工程",
+        "pred": "经延屯床主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000154_heavy.jpg",
+    "old": {
+      "tp": 29,
+      "fp": 10,
+      "fn": 11
+    },
+    "precision_only": {
+      "tp": 29,
+      "fp": 10,
+      "fn": 11
+    },
+    "new": {
+      "tp": 29,
+      "fp": 12,
+      "fn": 12
+    },
+    "old_new_f1_delta": -0.026860142019141664,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "246615.65",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "挤塑板",
+        "pred": "抗裂板"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "XPS 30mm",
+        "pred": "P5 9mm"
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "吨",
+        "pred": "t"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ25",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "123.87",
+        "pred": "1238.7"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "17676.25",
+        "pred": "17762.25"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "周至众联工程材料有限公司",
+        "pred": "国电佳华工程建筑工"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260201-350",
+        "pred": "CL-20200601-150"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-01",
+        "pred": "2020-06-01"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "莲湖住宅楼主体工程",
+        "pred": "项目名称:国电佳华工程建筑工"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000961_heavy.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 16,
+      "fn": 21
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 16,
+      "fn": 21
+    },
+    "new": {
+      "tp": 26,
+      "fp": 19,
+      "fn": 22
+    },
+    "old_new_f1_delta": -0.025129877975111903,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "表头: expected object",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "107619.96",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "标准砖",
+        "pred": "橡胶棒"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "240×115×53",
+        "pred": "240×115=53"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "659.21",
+        "pred": "60.22"
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "吨",
+        "pred": "个"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "保温砂浆",
+        "pred": "保温杯架"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "I 型",
+        "pred": "1型"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "15458.47",
+        "pred": "14545.47"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "4422.16",
+        "pred": "442.16"
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "吨",
+        "pred": "个"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "米",
+        "pred": "个"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR 也水器"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "DN25",
+        "pred": "DA25"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "m3",
+        "pred": "个"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "中粗",
+        "pred": "中砂"
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "m2",
+        "pred": "个"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "定型 120×60=60"
+      },
+      {
+        "path": "表头",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "宝鸡环宇建材有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260306-361",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-03-06",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "曲江学校教学楼工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000802_heavy.jpg",
+    "old": {
+      "tp": 35,
+      "fp": 11,
+      "fn": 12
+    },
+    "precision_only": {
+      "tp": 35,
+      "fp": 11,
+      "fn": 12
+    },
+    "new": {
+      "tp": 35,
+      "fp": 13,
+      "fn": 13
+    },
+    "old_new_f1_delta": -0.023521505376344343,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "217299.02",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "127.7",
+        "pred": "12.77"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "34701.83",
+        "pred": "37407.83"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "80.71",
+        "pred": "80.77"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YJV 4*50"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "16545.55",
+        "pred": "16454.35"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢圈 HPB300"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "79732.36",
+        "pred": "7972.36"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原四海建材科技有限公司",
+        "pred": "三凤园新材料科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260205-720",
+        "pred": "CL-202020205-720"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "灞桥地下管廊工程",
+        "pred": "湖南地下管廊工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000898_medium.jpg",
+    "old": {
+      "tp": 35,
+      "fp": 11,
+      "fn": 12
+    },
+    "precision_only": {
+      "tp": 35,
+      "fp": 11,
+      "fn": 12
+    },
+    "new": {
+      "tp": 35,
+      "fp": 13,
+      "fn": 13
+    },
+    "old_new_f1_delta": -0.023521505376344343,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "203842.47",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "土工布",
+        "pred": "工布"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "中砂",
+        "pred": "中粗"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "电力电缆",
+        "pred": "电火电缆"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "543",
+        "pred": "54.3"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "VV 4*50"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "70188.18",
+        "pred": "7002.27"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "蓝田金鼎建材科技有限公司",
+        "pred": "范田金科建筑科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260228-202",
+        "pred": "CL-20200228-202"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-28",
+        "pred": "2022-02-28"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "阎良医院综合楼工程",
+        "pred": "同凤屋综合检修工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000786.png",
+    "old": {
+      "tp": 45,
+      "fp": 8,
+      "fn": 9
+    },
+    "precision_only": {
+      "tp": 45,
+      "fp": 8,
+      "fn": 9
+    },
+    "new": {
+      "tp": 45,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.022939677145284554,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "364293.74",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YV 4×50"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "106.4",
+        "pred": "1064"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "6.55",
+        "pred": "4.55"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "2672.4",
+        "pred": "1887.6"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "4088.79",
+        "pred": "408.79"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "延安晟泰供应链管理有限公司",
+        "pred": "延安路供电有限责任公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260130-097",
+        "pred": "CL-20206130-097"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "新城市政道路改造工程",
+        "pred": "市政道路改造工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000171.png",
+    "old": {
+      "tp": 44,
+      "fp": 9,
+      "fn": 10
+    },
+    "precision_only": {
+      "tp": 44,
+      "fp": 9,
+      "fn": 10
+    },
+    "new": {
+      "tp": 44,
+      "fp": 11,
+      "fn": 11
+    },
+    "old_new_f1_delta": -0.02242990654205601,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "160567.61",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目式 1.8×6m"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "5472.81",
+        "pred": "5747.81"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YV4×50"
+      },
+      {
+        "path": "明细[6].单价",
+        "gt": "431.07",
+        "pred": "33.5"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "14440.84",
+        "pred": "10440.84"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "汉中锦程商贸有限公司",
+        "pred": "汉中明程商贸有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260803-563",
+        "pred": "CL-20208003-563"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "周至污水处理厂工程",
+        "pred": "项目名称:周至污水处理厂工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000014_heavy.jpg",
+    "old": {
+      "tp": 24,
+      "fp": 15,
+      "fn": 16
+    },
+    "precision_only": {
+      "tp": 24,
+      "fp": 15,
+      "fn": 16
+    },
+    "new": {
+      "tp": 24,
+      "fp": 17,
+      "fn": 17
+    },
+    "old_new_f1_delta": -0.022229083050324228,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "105457.01",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "碎石",
+        "pred": "砂石"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "11188.91",
+        "pred": "1118.91"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "扣件",
+        "pred": "挡板"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "4577",
+        "pred": "45.77"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "20779.58",
+        "pred": "2077.58"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "21878",
+        "pred": "21.878"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "蒸压加气块",
+        "pred": "高压气块"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "36195",
+        "pred": "35910"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "470.49",
+        "pred": "470.4"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "23947.94",
+        "pred": "23793.94"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "安康金昌供应链管理有限公司",
+        "pred": "安徽金州食品监督管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260415-771",
+        "pred": "CL-20200415-771"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-15",
+        "pred": "2024-04-15"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "航天基地地下管廊工程",
+        "pred": "航天基地地下管网工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000934_heavy.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 13,
+      "fn": 15
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 13,
+      "fn": 15
+    },
+    "new": {
+      "tp": 32,
+      "fp": 15,
+      "fn": 16
+    },
+    "old_new_f1_delta": -0.021967963386727796,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "236213.9",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "圆钢"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ10",
+        "pred": "HPB300"
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "2800",
+        "pred": "2880"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "旋转",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "13358.46",
+        "pred": "13335.46"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "60.03",
+        "pred": "8.54"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "m2",
+        "pred": "个"
+      },
+      {
+        "path": "明细[3].数量",
+        "gt": "778",
+        "pred": "1064"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "46703.34",
+        "pred": "9086.56"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "钢筋套筒",
+        "pred": "钢筋高高"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "延安泽宇商贸有限公司",
+        "pred": "延安实业贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260310-926",
+        "pred": "CL-20200310-926"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "浐灞文化馆建设工程",
+        "pred": "沪城文化建设工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000786_heavy.jpg",
+    "old": {
+      "tp": 41,
+      "fp": 12,
+      "fn": 13
+    },
+    "precision_only": {
+      "tp": 41,
+      "fp": 12,
+      "fn": 13
+    },
+    "new": {
+      "tp": 41,
+      "fp": 14,
+      "fn": 14
+    },
+    "old_new_f1_delta": -0.02090059473237038,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "364293.74",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "YJV 4×50",
+        "pred": "YV 4*50"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "106.4",
+        "pred": "1064"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "中粗",
+        "pred": "中砂"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "6.55",
+        "pred": "40.5"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "2672.4",
+        "pred": "16285.2"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "40.01",
+        "pred": "55"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "27285.21",
+        "pred": "37310"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "600×200×200",
+        "pred": "600*200*200"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "16423.01",
+        "pred": "16243"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "1220×2440×12",
+        "pred": "12*20*440*12"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "6556.77",
+        "pred": "65567.7"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "延安晟泰供应链管理有限公司",
+        "pred": "延安环保系统管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000660_heavy.jpg",
+    "old": {
+      "tp": 52,
+      "fp": 8,
+      "fn": 9
+    },
+    "precision_only": {
+      "tp": 52,
+      "fp": 8,
+      "fn": 9
+    },
+    "new": {
+      "tp": 52,
+      "fp": 10,
+      "fn": 10
+    },
+    "old_new_f1_delta": -0.02079445481205,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "203314.84",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YVY 4×25"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目检式 1.8×6m"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "4203.42",
+        "pred": "4203.24"
+      },
+      {
+        "path": "明细[6].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "面层 HPB300"
+      },
+      {
+        "path": "明细[7].名称",
+        "gt": "PPR 给水管",
+        "pred": "PPR 他水管"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "安康白云工程材料有限公司",
+        "pred": "安徽白云元工程材料有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260301-511",
+        "pred": "CL-20200301-511"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西市政道路改造工程",
+        "pred": "材料名称"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000632_medium.jpg",
+    "old": {
+      "tp": 47,
+      "fp": 13,
+      "fn": 14
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 13,
+      "fn": 14
+    },
+    "new": {
+      "tp": 47,
+      "fp": 15,
+      "fn": 15
+    },
+    "old_new_f1_delta": -0.01879498800319912,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "207307.68",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "蒸压加气块",
+        "pred": "液压加气块"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "200g/m2",
+        "pred": "200g×2m"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "吨",
+        "pred": "m"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "62179.04",
+        "pred": "6179.04"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "吨",
+        "pred": "m"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "14097.6",
+        "pred": "14090.6"
+      },
+      {
+        "path": "明细[7].单价",
+        "gt": "13.52",
+        "pred": "15.52"
+      },
+      {
+        "path": "明细[7].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "卷式 1.8×6m"
+      },
+      {
+        "path": "明细[7].金额",
+        "gt": "18049.2",
+        "pred": "20703"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "兴平信宇商贸有限公司",
+        "pred": "兴平宇博贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260824-122",
+        "pred": "CL-20208024-122"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西产业园区一期工程",
+        "pred": "项目名称:沣西产业园区一标工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000286_heavy.jpg",
+    "old": {
+      "tp": 22,
+      "fp": 17,
+      "fn": 25
+    },
+    "precision_only": {
+      "tp": 22,
+      "fp": 17,
+      "fn": 25
+    },
+    "new": {
+      "tp": 22,
+      "fp": 19,
+      "fn": 26
+    },
+    "old_new_f1_delta": -0.017245884504834053,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "365896.26",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢筋HPB300"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "5.59",
+        "pred": "55.85"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "土工布",
+        "pred": "木材板"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "10347.09",
+        "pred": "10340.09"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "55.85",
+        "pred": "55.79"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "m2",
+        "pred": "米"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "木模板",
+        "pred": "电力电缆"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "1830×915×15",
+        "pred": "YJV 4*25"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "134.79",
+        "pred": "3810.61"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "米",
+        "pred": "吨"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "电力电缆",
+        "pred": "螺纹钢HRB400"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "Φ25"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "66721.05",
+        "pred": "177193.75"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "3810.61",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": null
+      },
+      {
+        "path": "明细[5].序号",
+        "gt": "6",
+        "pred": null
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "46.5",
+        "pred": null
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "Φ25",
+        "pred": null
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "177193.37",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑西域商贸有限公司",
+        "pred": "同安梧桐区改造工程"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260610-587",
+        "pred": "CL-20206010-587"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵棚户区改造工程",
+        "pred": "材料名称"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000161_heavy.jpg",
+    "old": {
+      "tp": 36,
+      "fp": 24,
+      "fn": 25
+    },
+    "precision_only": {
+      "tp": 36,
+      "fp": 24,
+      "fn": 25
+    },
+    "new": {
+      "tp": 36,
+      "fp": 26,
+      "fn": 26
+    },
+    "old_new_f1_delta": -0.014396161023726983,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "368629.14",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "密目式 1.8×6m",
+        "pred": "目格式1.8×6m"
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "吨",
+        "pred": "块"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "水泥",
+        "pred": "水沟"
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.C 32.5",
+        "pred": "PC 32.5"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "23608.28",
+        "pred": "2300.33"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "10710.7",
+        "pred": "10717"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "118.39",
+        "pred": "118.89"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "YJV 4×25",
+        "pred": "YJV-2.5"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "55524.91",
+        "pred": "5524.91"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "脚手架钢管",
+        "pred": "断手架钢管"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "4128.75",
+        "pred": "412.75"
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "吨",
+        "pred": "m3"
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "螺纹钢"
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "44.8",
+        "pred": "448"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "Φ16",
+        "pred": "HRB400"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "184968",
+        "pred": "18496"
+      },
+      {
+        "path": "明细[6].名称",
+        "gt": "中砂",
+        "pred": "中桩"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "中粗",
+        "pred": "中桩"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "32178.23",
+        "pred": "32718.23"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "咸阳华信供应链管理有限公司",
+        "pred": "成都华信供应链管理有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260805-610",
+        "pred": "CL-20200805-610"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-08-05",
+        "pred": "2020-08-05"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑地下管廊工程",
+        "pred": "蓉城地下隧道工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000260_heavy.jpg",
+    "old": {
+      "tp": 24,
+      "fp": 29,
+      "fn": 37
+    },
+    "precision_only": {
+      "tp": 24,
+      "fp": 29,
+      "fn": 37
+    },
+    "new": {
+      "tp": 24,
+      "fp": 31,
+      "fn": 38
+    },
+    "old_new_f1_delta": -0.010796221322537103,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "282040.52",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "814",
+        "pred": "59.29"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "48262.06",
+        "pred": "3462.06"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "513.3",
+        "pred": "51.3"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "86326.79",
+        "pred": "8632.6"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "4341.14",
+        "pred": "13180"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "吨",
+        "pred": "m"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "圆钢 HPB300",
+        "pred": "钢筋 HPB300"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "56434.82",
+        "pred": "16334"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "0.66",
+        "pred": "40.87"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "个",
+        "pred": "m2"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "标准砖",
+        "pred": "砂混凝土"
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "13180",
+        "pred": "942"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "240×115×53",
+        "pred": "APP 3mm"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "8698.8",
+        "pred": "38499.54"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "40.87",
+        "pred": "16.36"
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "m2",
+        "pred": "米"
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "942",
+        "pred": "1536"
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "APP 3mm",
+        "pred": "DN25"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "38499.54",
+        "pred": "25395.56"
+      },
+      {
+        "path": "明细[6].单价",
+        "gt": "14.71",
+        "pred": "5.33"
+      },
+      {
+        "path": "明细[6].单位",
+        "gt": "米",
+        "pred": "个"
+      },
+      {
+        "path": "明细[6].名称",
+        "gt": "PPR 给水管",
+        "pred": "钢筋笼"
+      },
+      {
+        "path": "明细[6].数量",
+        "gt": "1536",
+        "pred": "16.36"
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "DN25",
+        "pred": "Q20"
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "22594.56",
+        "pred": "8719.88"
+      },
+      {
+        "path": "明细[7].单价",
+        "gt": "5.33",
+        "pred": null
+      },
+      {
+        "path": "明细[7].单位",
+        "gt": "个",
+        "pred": null
+      },
+      {
+        "path": "明细[7].名称",
+        "gt": "钢筋套筒",
+        "pred": null
+      },
+      {
+        "path": "明细[7].序号",
+        "gt": "8",
+        "pred": null
+      },
+      {
+        "path": "明细[7].数量",
+        "gt": "1636",
+        "pred": null
+      },
+      {
+        "path": "明细[7].规格型号",
+        "gt": "Φ20",
+        "pred": null
+      },
+      {
+        "path": "明细[7].金额",
+        "gt": "8719.88",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "西安中盛物资有限公司",
+        "pred": "伊西集团"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260428-306",
+        "pred": "CL-20200428-106"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-28",
+        "pred": "2021-04-28"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "雁塔产业园区一期工程",
+        "pred": "材料名称"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000125_heavy.jpg",
+    "old": {
+      "tp": 13,
+      "fp": 26,
+      "fn": 34
+    },
+    "precision_only": {
+      "tp": 13,
+      "fp": 26,
+      "fn": 34
+    },
+    "new": {
+      "tp": 13,
+      "fp": 28,
+      "fn": 35
+    },
+    "old_new_f1_delta": -0.01019074993467467,
+    "schema_errors": [
+      "单据类型: expected 材料清单",
+      "合计: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": "工程材料清单"
+      },
+      {
+        "path": "合计",
+        "gt": null,
+        "pred": "\u0000invalid:object"
+      },
+      {
+        "path": "合计.金额",
+        "gt": "342536.18",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "393.82",
+        "pred": "39.82"
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "水泥",
+        "pred": "水箱"
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "P.O 42.5",
+        "pred": "PO 42.5"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "41469.25",
+        "pred": "3969.25"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "19.75",
+        "pred": "11.75"
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "挤塑板",
+        "pred": "保温箱"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "30652",
+        "pred": "10052"
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "836.57",
+        "pred": "834.57"
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "吨",
+        "pred": "个"
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "保温砂浆",
+        "pred": "软垫"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "I 型",
+        "pred": "240×115×53"
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "5019.42",
+        "pred": "5004.42"
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "0.49",
+        "pred": "4.09"
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "个",
+        "pred": "吨"
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "标准砖",
+        "pred": "螺纹钢 HRB400"
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "240×115×53",
+        "pred": "Φ20"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "4168.3",
+        "pred": "49.38"
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "吨",
+        "pred": "m2"
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "螺纹钢 HRB400",
+        "pred": "防水卷材"
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "42",
+        "pred": "2312"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "Φ20",
+        "pred": "APP 3mm"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "175068.6",
+        "pred": "11708.6"
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "29.3",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "m2",
+        "pred": null
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "防水卷材",
+        "pred": null
+      },
+      {
+        "path": "明细[5].序号",
+        "gt": "6",
+        "pred": null
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "2312",
+        "pred": null
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "APP 3mm",
+        "pred": null
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "67741.6",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "长安信宇商贸有限公司",
+        "pred": "长安汽车贸易有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260811-866",
+        "pred": "CL-20200811-446"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-08-11",
+        "pred": "2024-08-11"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "未央商业综合体项目",
+        "pred": "项目名称:中央电网综合供热项目"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000106_heavy.jpg",
+    "old": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 26
+    },
+    "precision_only": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 26
+    },
+    "new": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 27
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [
+      "$: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": null
+      },
+      {
+        "path": "合计.金额",
+        "gt": "71208.42",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "21.16",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "米",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "脚手架钢管",
+        "pred": null
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "1009",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "Φ48×3.0",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "21350.44",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "5.79",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "m2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "土工布",
+        "pred": null
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "2379",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "200g/m2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "13774.41",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "131.07",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "m3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "碎石",
+        "pred": null
+      },
+      {
+        "path": "明细[2].序号",
+        "gt": "3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "275.3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "10-30mm",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "36083.57",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "商洛泽昌商贸有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260313-491",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-03-13",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "未央文化馆建设工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000217_heavy.jpg",
+    "old": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 54
+    },
+    "precision_only": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 54
+    },
+    "new": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 55
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [
+      "$: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": null
+      },
+      {
+        "path": "合计.金额",
+        "gt": "182133.85",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "5.56",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "个",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "扣件",
+        "pred": null
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "2121",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "直角",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "11792.76",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "25.93",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "m2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "挤塑板",
+        "pred": null
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "681",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "XPS 30mm",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "17658.33",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "4456.82",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "圆钢 HPB300",
+        "pred": null
+      },
+      {
+        "path": "明细[2].序号",
+        "gt": "3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "19",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ10",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "84679.58",
+        "pred": null
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "16.69",
+        "pred": null
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "米",
+        "pred": null
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "PPR 给水管",
+        "pred": null
+      },
+      {
+        "path": "明细[3].序号",
+        "gt": "4",
+        "pred": null
+      },
+      {
+        "path": "明细[3].数量",
+        "gt": "1600",
+        "pred": null
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "DN32",
+        "pred": null
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "26704",
+        "pred": null
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "424.44",
+        "pred": null
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "水泥",
+        "pred": null
+      },
+      {
+        "path": "明细[4].序号",
+        "gt": "5",
+        "pred": null
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "71.7",
+        "pred": null
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "P.O 42.5",
+        "pred": null
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "30432.35",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "4.84",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "m2",
+        "pred": null
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "土工布",
+        "pred": null
+      },
+      {
+        "path": "明细[5].序号",
+        "gt": "6",
+        "pred": null
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "1557",
+        "pred": null
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "200g/m2",
+        "pred": null
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "7535.88",
+        "pred": null
+      },
+      {
+        "path": "明细[6].单价",
+        "gt": "666.19",
+        "pred": null
+      },
+      {
+        "path": "明细[6].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[6].名称",
+        "gt": "保温砂浆",
+        "pred": null
+      },
+      {
+        "path": "明细[6].序号",
+        "gt": "7",
+        "pred": null
+      },
+      {
+        "path": "明细[6].数量",
+        "gt": "5",
+        "pred": null
+      },
+      {
+        "path": "明细[6].规格型号",
+        "gt": "I 型",
+        "pred": null
+      },
+      {
+        "path": "明细[6].金额",
+        "gt": "3330.95",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "兴平广泰建材有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260102-129",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-01-02",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "曲江文化馆建设工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000134_medium.jpg",
+    "old": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 26
+    },
+    "precision_only": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 26
+    },
+    "new": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 27
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [
+      "$: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": null
+      },
+      {
+        "path": "合计.金额",
+        "gt": "27777.42",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "0.67",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "个",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "标准砖",
+        "pred": null
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "17194",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "240×115×53",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "11515.24",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "7.09",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "个",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "钢筋套筒",
+        "pred": null
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "823",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "Φ20",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "5835.07",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "4.18",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "个",
+        "pred": null
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "扣件",
+        "pred": null
+      },
+      {
+        "path": "明细[2].序号",
+        "gt": "3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "2494",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "直角",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "10424.92",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑兴盛物资有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260403-600",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-04-03",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "曲江地下管廊工程",
+        "pred": null
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000802_medium.jpg",
+    "old": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 47
+    },
+    "precision_only": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 47
+    },
+    "new": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 48
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [
+      "$: expected object"
+    ],
+    "field_errors": [
+      {
+        "path": "单据类型",
+        "gt": "材料清单",
+        "pred": null
+      },
+      {
+        "path": "合计.金额",
+        "gt": "217299.02",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "254.51",
+        "pred": null
+      },
+      {
+        "path": "明细[0].单位",
+        "gt": "m3",
+        "pred": null
+      },
+      {
+        "path": "明细[0].名称",
+        "gt": "蒸压加气块",
+        "pred": null
+      },
+      {
+        "path": "明细[0].序号",
+        "gt": "1",
+        "pred": null
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "127.7",
+        "pred": null
+      },
+      {
+        "path": "明细[0].规格型号",
+        "gt": "600×200×200",
+        "pred": null
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "32500.93",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "387.73",
+        "pred": null
+      },
+      {
+        "path": "明细[1].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[1].名称",
+        "gt": "水泥",
+        "pred": null
+      },
+      {
+        "path": "明细[1].序号",
+        "gt": "2",
+        "pred": null
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "89.5",
+        "pred": null
+      },
+      {
+        "path": "明细[1].规格型号",
+        "gt": "P.O 42.5",
+        "pred": null
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "34701.83",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单价",
+        "gt": "50.14",
+        "pred": null
+      },
+      {
+        "path": "明细[2].单位",
+        "gt": "米",
+        "pred": null
+      },
+      {
+        "path": "明细[2].名称",
+        "gt": "镀锌钢管",
+        "pred": null
+      },
+      {
+        "path": "明细[2].序号",
+        "gt": "3",
+        "pred": null
+      },
+      {
+        "path": "明细[2].数量",
+        "gt": "295",
+        "pred": null
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "DN80",
+        "pred": null
+      },
+      {
+        "path": "明细[2].金额",
+        "gt": "14791.3",
+        "pred": null
+      },
+      {
+        "path": "明细[3].单价",
+        "gt": "46.01",
+        "pred": null
+      },
+      {
+        "path": "明细[3].单位",
+        "gt": "m2",
+        "pred": null
+      },
+      {
+        "path": "明细[3].名称",
+        "gt": "木模板",
+        "pred": null
+      },
+      {
+        "path": "明细[3].序号",
+        "gt": "4",
+        "pred": null
+      },
+      {
+        "path": "明细[3].数量",
+        "gt": "848",
+        "pred": null
+      },
+      {
+        "path": "明细[3].规格型号",
+        "gt": "1830×915×15",
+        "pred": null
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "39016.48",
+        "pred": null
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "80.71",
+        "pred": null
+      },
+      {
+        "path": "明细[4].单位",
+        "gt": "米",
+        "pred": null
+      },
+      {
+        "path": "明细[4].名称",
+        "gt": "电力电缆",
+        "pred": null
+      },
+      {
+        "path": "明细[4].序号",
+        "gt": "5",
+        "pred": null
+      },
+      {
+        "path": "明细[4].数量",
+        "gt": "205",
+        "pred": null
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "YJV 4×50",
+        "pred": null
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "16545.55",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单价",
+        "gt": "4196.44",
+        "pred": null
+      },
+      {
+        "path": "明细[5].单位",
+        "gt": "吨",
+        "pred": null
+      },
+      {
+        "path": "明细[5].名称",
+        "gt": "圆钢 HPB300",
+        "pred": null
+      },
+      {
+        "path": "明细[5].序号",
+        "gt": "6",
+        "pred": null
+      },
+      {
+        "path": "明细[5].数量",
+        "gt": "19",
+        "pred": null
+      },
+      {
+        "path": "明细[5].规格型号",
+        "gt": "Φ8",
+        "pred": null
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "79732.36",
+        "pred": null
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "三原四海建材科技有限公司",
+        "pred": null
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260205-720",
+        "pred": null
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-02-05",
+        "pred": null
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "灞桥地下管廊工程",
+        "pred": null
+      }
+    ]
+  }
+]

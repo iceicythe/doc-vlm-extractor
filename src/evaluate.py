@@ -1,4 +1,4 @@
-"""评测 —— 字段级 F1 / JSON 合法率 / 幻觉率。
+"""评测 —— 字段级 F1 / 严格 JSON / Schema / 整单正确率。
 
 设计依据：docs/schema_v1.md 第 4 节（评估口径）
 
@@ -10,8 +10,8 @@
     venv-gld/Scripts/python.exe src/evaluate.py --adapter outputs/sft_smoke/lora --limit 30 --tag sft
 
 产出：
-    outputs/eval_{tag}.json    指标汇总
-    outputs/eval_{tag}_cases.txt   错误样例（便于人工分析）
+    outputs/scoring-v2.0.0/eval_{tag}.json    指标汇总
+    outputs/scoring-v2.0.0/eval_{tag}_cases.txt   错误样例（便于人工分析）
 """
 
 from __future__ import annotations
@@ -52,246 +52,21 @@ PROMPTS = {
 }
 
 
-# ================================================================ 文本归一化
-def normalize(v: object) -> str:
-    """比对前的文本归一化：去空白、全角转半角、去千分位、统一小数、统一日期。"""
-    s = str(v).strip()
-    s = unicodedata.normalize("NFKC", s)          # 全角 → 半角
-    s = re.sub(r"\s+", "", s)                     # 去所有空白
-    s = s.replace(",", "").replace("，", "")       # 去千分位
+sys.path.insert(0, str(ROOT / "src"))
 
-    # 日期统一 YYYY-MM-DD
-    m = re.search(r"(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})", s)
-    if m:
-        y, mo, d = m.groups()
-        return f"{int(y):04d}-{int(mo):02d}-{int(d):02d}"
-
-    # 纯数字统一小数位（去尾零）
-    if re.fullmatch(r"-?\d+(\.\d+)?", s):
-        try:
-            f = float(s)
-            return f"{f:g}"
-        except ValueError:
-            pass
-    return s
+# Public compatibility imports: all callers use the same versioned CPU scorer.
+from scoring import (SCORER_VERSION, ROW_ALIGNMENT, normalize, parse_json, align_rows,
+                     flatten, flatten_flat, score_pred, score_one, prf, summarize,
+                     stable_hash, schema_errors)
 
 
-# ================================================================ 输出解析
-def parse_json(text: str) -> dict | None:
-    """从模型输出里抠出 JSON。容忍 ```json 代码块与前后噪声。"""
-    if not text:
-        return None
-    t = text.strip()
-
-    # 去 markdown 代码块
-    m = re.search(r"```(?:json)?\s*(.+?)```", t, re.S)
-    if m:
-        t = m.group(1).strip()
-
-    # 直接试
-    try:
-        obj = json.loads(t)
-        return obj if isinstance(obj, dict) else None
-    except json.JSONDecodeError:
-        pass
-
-    # 截取第一个 { 到最后一个 }
-    i, j = t.find("{"), t.rfind("}")
-    if i >= 0 and j > i:
-        try:
-            obj = json.loads(t[i:j + 1])
-            return obj if isinstance(obj, dict) else None
-        except json.JSONDecodeError:
-            return None
-    return None
+def _as_dict(value):
+    return value if isinstance(value, dict) else {}
 
 
-# ================================================================ 指标
-def align_rows(gt_rows: list, pred_rows: list) -> list[tuple[int, int]]:
-    """明细行对齐：先按序号，再按内容相似度贪心。返回 (gt_idx, pred_idx) 配对。"""
-    pairs: list[tuple[int, int]] = []
-    used_g, used_p = set(), set()
-
-    # ① 按序号
-    for gi, g in enumerate(gt_rows):
-        gs = normalize(g.get("序号", ""))
-        if not gs:
-            continue
-        for pi, p in enumerate(pred_rows):
-            if pi in used_p:
-                continue
-            if normalize(p.get("序号", "")) == gs:
-                pairs.append((gi, pi))
-                used_g.add(gi)
-                used_p.add(pi)
-                break
-
-    # ② 剩余按字段重合度贪心
-    rest_g = [i for i in range(len(gt_rows)) if i not in used_g]
-    rest_p = [i for i in range(len(pred_rows)) if i not in used_p]
-    scored = []
-    for gi in rest_g:
-        for pi in rest_p:
-            hit = sum(
-                1 for f in ROW_FIELDS
-                if normalize(gt_rows[gi].get(f, "")) == normalize(pred_rows[pi].get(f, ""))
-                and normalize(gt_rows[gi].get(f, "")) != ""
-            )
-            if hit:
-                scored.append((hit, gi, pi))
-    scored.sort(reverse=True)
-    for _, gi, pi in scored:
-        if gi in used_g or pi in used_p:
-            continue
-        pairs.append((gi, pi))
-        used_g.add(gi)
-        used_p.add(pi)
-
-    return pairs
-
-
-def _as_dict(v: object) -> dict:
-    """只接受 dict，其余（None / str / list）一律当空 dict，避免下游 .get() 崩。"""
-    return v if isinstance(v, dict) else {}
-
-
-def _as_rows(v: object) -> list[dict]:
-    """只保留是 dict 的明细行；非 dict 的行无法提供字段，直接丢弃。"""
-    if not isinstance(v, list):
-        return []
-    return [r for r in v if isinstance(r, dict)]
-
-
-def _salvage_total(pred: dict, tolerant: bool) -> dict:
-    """把「合计」的值规整成 dict。
-
-    零样本模型经常把合计直接输出成标量（"合计": "51330.24"），而不是
-    schema 要求的 {"金额": "51330.24"}。严格口径下这算没抽到（计入 FN）；
-    tolerant=True 时提升成 {"金额": v}，用于区分「格式不适配」与「内容抽错」。
-    """
-    t = pred.get("合计")
-    if isinstance(t, dict):
-        return t
-    if tolerant and isinstance(t, (str, int, float)):
-        s = normalize(t)
-        if re.fullmatch(r"-?\d+(\.\d+)?", s):
-            return {"金额": t}
-    return {}
-
-
-def flatten(gt: dict, pred: dict, tolerant: bool = False) -> tuple[dict, dict]:
-    """把 GT / 预测摊平成 {路径: 归一化值}。
-
-    全程类型防御：模型输出任何怪形状都不应让整轮评测崩掉
-    （推理成本 30 分钟起，打分崩了不该连累推理结果）。
-    """
-    gt, pred = _as_dict(gt), _as_dict(pred)
-    gout, pout = {}, {}
-
-    g_head, p_head = _as_dict(gt.get("表头")), _as_dict(pred.get("表头"))
-    for f in HEAD_FIELDS:
-        gv = normalize(g_head.get(f, ""))
-        if gv:
-            gout[f"表头.{f}"] = gv
-        pv = normalize(p_head.get(f, ""))
-        if pv:
-            pout[f"表头.{f}"] = pv
-
-    g_rows = _as_rows(gt.get("明细"))
-    p_rows = _as_rows(pred.get("明细"))
-    pairs = align_rows(g_rows, p_rows)
-
-    for n, (gi, pi) in enumerate(pairs):
-        for f in ROW_FIELDS:
-            gv = normalize(g_rows[gi].get(f, ""))
-            if gv:
-                gout[f"明细[{n}].{f}"] = gv
-            pv = normalize(p_rows[pi].get(f, ""))
-            if pv:
-                pout[f"明细[{n}].{f}"] = pv
-
-    # 未配对上的 GT 行 → 全部计入漏抽；未配对的预测行 → 全部计入多抽/幻觉
-    for k, gi in enumerate(i for i in range(len(g_rows)) if i not in {p[0] for p in pairs}):
-        for f in ROW_FIELDS:
-            gv = normalize(g_rows[gi].get(f, ""))
-            if gv:
-                gout[f"明细[unmatched_g{k}].{f}"] = gv
-    for k, pi in enumerate(i for i in range(len(p_rows)) if i not in {p[1] for p in pairs}):
-        for f in ROW_FIELDS:
-            pv = normalize(p_rows[pi].get(f, ""))
-            if pv:
-                pout[f"明细[unmatched_p{k}].{f}"] = pv
-
-    gv = normalize(_as_dict(gt.get("合计")).get("金额", ""))
-    if gv:
-        gout["合计.金额"] = gv
-    pv = normalize(_salvage_total(pred, tolerant).get("金额", ""))
-    if pv:
-        pout["合计.金额"] = pv
-
-    return gout, pout
-
-
-def flatten_flat(gt: dict, pred: dict, tolerant: bool = False) -> tuple[dict, dict]:
-    """扁平键值对模式（用于 WildReceipt 等真实收据）。
-
-    键名宽松匹配：忽略大小写、下划线、连字符、空格。
-    tolerant 参数只为与 flatten 保持同一签名，此处无额外含义。
-    """
-    def key(s: str) -> str:
-        return re.sub(r"[\s_\-]+", "", str(s).lower())
-
-    gout = {}
-    for k, v in _as_dict(gt).items():
-        nv = normalize(v)
-        if nv:
-            gout[key(k)] = nv
-
-    pout = {}
-    for k, v in _as_dict(pred).items():
-        nv = normalize(v)
-        if nv:
-            pout[key(k)] = nv
-    return gout, pout
-
-
-def score_pred(gt: dict, pred: dict | None, mode: str = "schema",
-               tolerant: bool = False) -> dict:
-    """对**已解析**的预测打分。pred=None 表示 JSON 解析失败（GT 全计入漏抽）。"""
-    flatten_fn = flatten_flat if mode == "flat" else flatten
-    res = {
-        "json_valid": pred is not None,
-        "tp": 0, "fp": 0, "fn": 0,
-        "hallucinated_keys": [],
-        "missing_keys": [],
-    }
-    if pred is None:
-        g, _ = flatten_fn(gt, {}, tolerant)
-        res["fn"] = len(g)
-        return res
-
-    g, p = flatten_fn(gt, pred, tolerant)
-    tp = sum(1 for k, v in g.items() if p.get(k) == v)
-    fn = len(g) - tp
-    fp = sum(1 for k, v in p.items() if g.get(k) != v)
-
-    res["tp"], res["fn"], res["fp"] = tp, fn, fp
-    res["hallucinated_keys"] = [k for k in p if k not in g]
-    res["missing_keys"] = [k for k in g if k not in p]
-    return res
-
-
-def score_one(gt: dict, raw_text: str, mode: str = "schema",
-              tolerant: bool = False) -> dict:
-    """单条样本打分。mode: schema（工程单据）/ flat（通用键值对）。"""
-    return score_pred(gt, parse_json(raw_text), mode, tolerant)
-
-
-def prf(tp: int, fp: int, fn: int) -> tuple[float, float, float]:
-    p = tp / (tp + fp) if tp + fp else 0.0
-    r = tp / (tp + fn) if tp + fn else 0.0
-    f = 2 * p * r / (p + r) if p + r else 0.0
-    return p, r, f
+def _as_rows(value):
+    # Keep malformed rows in their original positions for display/lexicon callers.
+    return [_as_dict(row) for row in value] if isinstance(value, list) else []
 
 
 # ================================================================ 主流程
@@ -334,6 +109,9 @@ def main() -> int:
                 records.append(json.loads(line))
     if args.limit:
         records = records[: args.limit]
+    if not records:
+        print("[FATAL] 数据为空")
+        return 1
 
     if args.prompt is not None and args.prompt_file is not None:
         print("[FATAL] --prompt 与 --prompt-file 只能给一个")
@@ -357,8 +135,7 @@ def main() -> int:
     print("评测")
     print("=" * 62)
     print(f"  数据      : {data_file.name}  {len(records)} 条")
-    print(f"  模式      : {'微调后 ' + args.adapter if args.adapter else '零样本'}"
-          + ("  [仅打分]" if args.score_only else ""))
+    print(f"  模式      : {'历史缓存重算（模型身份见缓存配置）' if args.score_only else '微调后 ' + args.adapter if args.adapter else '零样本'}")
     print(f"  prompt    : {args.mode} · 来源={prompt_src}")
 
     # ---------------- 模型 ----------------
@@ -509,10 +286,9 @@ def main() -> int:
 
     # ---------------- 打分 ----------------
     # 两套口径同时算：
-    #   严格   —— 必须完全符合 schema（合计 是标量 = 没抽到）
+    #   主字段指标 —— 不修复结构；Schema 合规另行统计
     #   宽容   —— 把 合计 标量这类「形状不对但语义同一」的输出救回来
-    # 严格口径与历史所有档位口径一致，保证跨档位可比；宽容口径用于
-    # 把「格式不适配」与「内容抽错」分开看。
+    # v2 与历史口径不同；宽容字段指标只用于诊断。
     total = {"tp": 0, "fp": 0, "fn": 0, "json_valid": 0, "hallucinated": 0}
     tol = {"tp": 0, "fp": 0, "fn": 0, "coerced": 0}
     by_level: dict[str, dict] = defaultdict(
@@ -525,15 +301,15 @@ def main() -> int:
     for rec, raw in zip(records, preds):
         try:
             pred = parse_json(raw)
-            r = score_pred(rec["gt"], pred, args.mode, tolerant=False)
+            r = score_one(rec["gt"], raw, args.mode, tolerant=False)
             r_t = (r if args.mode == "flat"
-                   else score_pred(rec["gt"], pred, args.mode, tolerant=True))
+                   else score_one(rec["gt"], raw, args.mode, tolerant=True))
         except Exception as e:       # 打分崩了不能连累已落盘的推理结果
             scoring_errors.append({"image": Path(rec["image"]).name,
                                    "error": f"{type(e).__name__}: {e}"})
             print(f"    [打分异常] {Path(rec['image']).name}: {type(e).__name__}: {e}",
                   flush=True)
-            continue
+            raise RuntimeError("Scoring failed; no partial metric report written") from e
 
         if pred is not None:
             t = pred.get("合计") if isinstance(pred, dict) else None
@@ -553,6 +329,7 @@ def main() -> int:
 
         # 全量落盘（含正确样本），失败分析需要完整 GT/PRED
         full.append({
+            **r,
             "image": Path(rec["image"]).name,
             "level": lv,
             "stem": (rec.get("meta") or {}).get("stem", ""),
@@ -586,12 +363,10 @@ def main() -> int:
     print(f"  字段级 P/R/F1 : {p:.4f} / {r_:.4f} / {f1:.4f}   [严格]")
     print(f"  字段级 P/R/F1 : {p_t:.4f} / {r_t_:.4f} / {f1_t:.4f}   [宽容]"
           f"（合计标量修复 {tol['coerced']}/{n} 条）")
-    print(f"  JSON 合法率   : {total['json_valid']}/{n} = {total['json_valid']/n:.1%}")
-    print(f"  幻觉率        : {total['hallucinated']}/{n} = {total['hallucinated']/n:.1%}")
+    print(f"  宽松解析成功率 : {total['json_valid']}/{n} = {total['json_valid']/n:.1%}")
+    print(f"  旧多出路径比例 : {total['hallucinated']}/{n} = {total['hallucinated']/n:.1%}")
     print(f"  TP/FP/FN      : {total['tp']}/{total['fp']}/{total['fn']}")
-    print(f"  推理耗时      : {infer_time:.0f}s（{infer_time/n:.1f}s/条）")
-    if scoring_errors:
-        print(f"  [警告] {len(scoring_errors)} 条打分异常，已跳过（见 summary.json）")
+    print(f"  本次生成耗时  : {infer_time:.0f}s（实际新生成 {n_done} 条；仅评分时不能作为推理耗时）")
     print()
     print("  分档位：")
     for lv in sorted(by_level):
@@ -599,15 +374,14 @@ def main() -> int:
         _, _, lf = prf(b["tp"], b["fp"], b["fn"])
         _, _, lf_t = prf(b["tp_t"], b["fp_t"], b["fn_t"])
         print(f"    {lv:<7} F1={lf:.4f} (宽容 {lf_t:.4f})  "
-              f"JSON合法={b['valid']}/{b['n']}")
+              f"宽松解析={b['valid']}/{b['n']}")
 
     summary = {
         "tag": args.tag, "split": args.split, "n": n,
         "adapter": args.adapter or None,
-        # 顶层键 = 严格口径（与历史档位口径一致，勿改语义）
+        # 顶层键 = 当前版本主字段指标
         "precision": p, "recall": r_, "f1": f1,
         "json_valid_rate": total["json_valid"] / n,
-        "hallucination_rate": total["hallucinated"] / n,
         "tp": total["tp"], "fp": total["fp"], "fn": total["fn"],
         "strict": {"precision": p, "recall": r_, "f1": f1,
                    "tp": total["tp"], "fp": total["fp"], "fn": total["fn"]},
@@ -618,29 +392,48 @@ def main() -> int:
         "by_level": {k: dict(v) for k, v in by_level.items()},
         "scoring_errors": scoring_errors,
     }
-    OUTPUTS.mkdir(parents=True, exist_ok=True)
-    (OUTPUTS / f"eval_{args.tag}.json").write_text(
+    summary.update(summarize(full))
+    summary["mode"] = args.mode
+    summary["schema_version"] = "materials-v1" if args.mode == "schema" else "wildreceipt-flat-v1"
+    summary["sample_gt_sha256"] = stable_hash([{ "image": x["image"], "gt": x["gt"] } for x in full])
+    summary["inference_config"] = {"model": MODEL_NAME, **fingerprint,
+                                    "max_new_tokens": MAX_NEW_TOKENS, "do_sample": False}
+    summary["prompt"] = prompt
+    summary["json_valid_rate"] = summary["loose_parse_success_rate"]  # compatibility alias
+    if args.score_only or not n_done:
+        summary["infer_seconds"] = None
+        summary["inference_config"] = {"saved_metadata": meta_seen,
+                                        "historical_configuration_verified": False}
+        summary["prompt"] = None
+        summary["adapter"] = (meta_seen or {}).get("adapter")
+    print(f"  新评分版本    : {SCORER_VERSION} / {ROW_ALIGNMENT}")
+    print(f"  严格 JSON     : {summary['strict_json_valid_count']}/{n}")
+    print(f"  Schema 合规   : {summary['schema_valid_count']}/{n}")
+    print(f"  整单正确      : {summary['document_correct_count']}/{n}")
+    version_dir = OUTPUTS / ("scoring-v" + SCORER_VERSION)
+    version_dir.mkdir(parents=True, exist_ok=True)
+    (version_dir / f"eval_{args.tag}.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    case_file = OUTPUTS / f"eval_{args.tag}_cases.txt"
+    case_file = version_dir / f"eval_{args.tag}_cases.txt"
     with open(case_file, "w", encoding="utf-8") as f:
         for c in cases[:40]:
             f.write(f"[{c['level']}] {c['image']}  json_valid={c['json_valid']}\n")
             f.write(f"  GT  : {c['gt']}\n")
             f.write(f"  PRED: {c['pred']}\n")
             if c["hallucinated_keys"]:
-                f.write(f"  幻觉字段: {c['hallucinated_keys']}\n")
+                f.write(f"  多出目标路径: {c['hallucinated_keys']}\n")
             if c["missing_keys"]:
                 f.write(f"  漏抽字段: {c['missing_keys']}\n")
             f.write("\n")
     # 全量预测（失败分析用；cases 只有错例且截断到 400 字符）
-    preds_file = OUTPUTS / f"eval_{args.tag}_preds.jsonl"
+    preds_file = version_dir / f"eval_{args.tag}_preds.jsonl"
     with open(preds_file, "w", encoding="utf-8") as f:
         for row in full:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     print()
-    print(f"  汇总  : {OUTPUTS / f'eval_{args.tag}.json'}")
+    print(f"  汇总  : {version_dir / f'eval_{args.tag}.json'}")
     print(f"  错例  : {case_file}  （{len(cases)} 条有问题）")
     print(f"  全量  : {preds_file}  （{len(full)} 条，供失败分析）")
     return 0

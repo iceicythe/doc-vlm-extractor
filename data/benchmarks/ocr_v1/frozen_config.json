@@ -1,0 +1,79 @@
+{
+  "frozen_at": "2026-09-26T02:26:27.952559+00:00",
+  "configuration": {
+    "engine_config": {
+      "intra_op_num_threads": 4,
+      "inter_op_num_threads": 1,
+      "text_score": 0.5,
+      "det_use_cuda": false,
+      "rec_use_cuda": false,
+      "cls_use_cuda": false,
+      "det_use_dml": false,
+      "rec_use_dml": false,
+      "cls_use_dml": false,
+      "det_limit_side_len": 736,
+      "det_limit_type": "min"
+    },
+    "packages": {
+      "rapidocr-onnxruntime": "1.4.4",
+      "onnxruntime": "1.20.1",
+      "numpy": "1.26.4",
+      "opencv-python": "4.10.0.84",
+      "pillow": "11.0.0"
+    },
+    "models": {
+      "ch_PP-OCRv4_det_infer.onnx": "d2a7720d45a54257208b1e13e36a8479894cb74155a5efe29462512d42f49da9",
+      "ch_PP-OCRv4_rec_infer.onnx": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+      "ch_ppocr_mobile_v2.0_cls_infer.onnx": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c"
+    },
+    "package_config_sha256": "bf94a1da4cba828e67b1d61e27cee14d9e7da27c9f272e04048a17e41ae97332",
+    "rules_version": "ocr-rules-1.0.0",
+    "rules_sha256": "ac41f421e91e7466ee53459afab5b415009ed01703b79ba2c7325f7ebb4dd69a",
+    "scorer_version": "2.0.0",
+    "scorer_sha256": "d4a2a2a33ab0e42d1c18720d34251415e8543c6c090daf93ec6cb2aad3d039ce"
+  },
+  "development_manifest": "data/benchmarks/ocr_v1/development.jsonl",
+  "development_manifest_sha256": "ae51ed72cc3a0f2d8265a7d37f2a9b4798ec3d1aca4a78e68b97acf42959e130",
+  "development_source_ids": [
+    "synth_000031",
+    "synth_000268",
+    "synth_000379",
+    "synth_000448",
+    "synth_000462",
+    "synth_000521",
+    "synth_000600",
+    "synth_000883"
+  ],
+  "development_samples": [
+    "synth_000600.png",
+    "synth_000883_heavy.jpg",
+    "synth_000268.png",
+    "synth_000379_medium.jpg",
+    "synth_000521_heavy.jpg",
+    "synth_000448.png",
+    "synth_000031.png",
+    "synth_000462_medium.jpg",
+    "synth_000521_medium.jpg",
+    "synth_000883_medium.jpg",
+    "synth_000379_heavy.jpg",
+    "synth_000379.png",
+    "synth_000268_heavy.jpg",
+    "synth_000521.png",
+    "synth_000031_heavy.jpg",
+    "synth_000268_medium.jpg",
+    "synth_000031_medium.jpg",
+    "synth_000600_heavy.jpg",
+    "synth_000448_medium.jpg",
+    "synth_000883.png",
+    "synth_000462.png",
+    "synth_000462_heavy.jpg",
+    "synth_000600_medium.jpg",
+    "synth_000448_heavy.jpg"
+  ],
+  "development_reports": [
+    "outputs/ocr-dev-v1/summary.json",
+    "outputs/ocr-dev-v2/summary.json"
+  ],
+  "selected_development_f1": 0.8436018957345972,
+  "policy": "No rule/config tuning after held-out test evaluation; any future revision needs a new final holdout."
+}

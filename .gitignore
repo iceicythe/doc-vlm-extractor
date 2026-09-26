@@ -1,6 +1,7 @@
 # ---------------- 虚拟环境 ----------------
 venv-gld/
 .venv/
+.venv-ocr/
 env/
 
 # ---------------- Python ----------------
@@ -78,3 +79,59 @@ requirements-backup.txt
 .idea/
 Thumbs.db
 desktop.ini
+
+# P0 v2 audit: curated synthetic evaluation artifacts only.
+!outputs/evaluation-v2-final/
+outputs/evaluation-v2-final/*
+!outputs/evaluation-v2-final/inventory.json
+!outputs/evaluation-v2-final/eval_zero_abl.json
+!outputs/evaluation-v2-final/eval_abl_base.json
+!outputs/evaluation-v2-final/eval_zero_abl_preds.jsonl
+!outputs/evaluation-v2-final/eval_abl_base_preds.jsonl
+!outputs/evaluation-v2-final/eval_zero_abl_diffs.json
+!outputs/evaluation-v2-final/eval_abl_base_diffs.json
+
+# Reproducible OCR baseline; do not expose other experimental output folders.
+!outputs/ocr-test-v1/
+outputs/ocr-test-v1/*
+!outputs/ocr-test-v1/summary.json
+!outputs/ocr-test-v1/predictions.jsonl
+!outputs/ocr-test-v1/ocr.jsonl
+!outputs/baseline-comparison-v1/
+outputs/baseline-comparison-v1/*
+!outputs/baseline-comparison-v1/comparison.json
+!outputs/baseline-comparison-v1/sft_lexicon_preds.jsonl
+!outputs/baseline-comparison-v1/failure_cases.json
+!outputs/baseline-comparison-v1/development-summary.json
+
+!outputs/layout-pilot-v1/
+outputs/layout-pilot-v1/*
+!outputs/layout-pilot-v1/configuration.json
+!outputs/layout-pilot-v1/predictions.jsonl
+!outputs/layout-pilot-v1/summary.json
+!outputs/layout-pilot-v1/paired-errors.json
+
+# Rebuilt locally by scripts/build_layout_train.py; rendered training images are bulky.
+data/benchmarks/layout_train_v1/images/
+data/benchmarks/layout_train_v1/train.jsonl
+
+!outputs/layout-pilot-layout-v1/
+outputs/layout-pilot-layout-v1/*
+!outputs/layout-pilot-layout-v1/configuration.json
+!outputs/layout-pilot-layout-v1/predictions.jsonl
+!outputs/layout-pilot-layout-v1/summary.json
+
+!outputs/layout-training-v1/
+outputs/layout-training-v1/*
+!outputs/layout-training-v1/comparison.json
+!outputs/layout-training-v1/sample-transitions.json
+
+!outputs/sft_layout_v1/
+outputs/sft_layout_v1/*
+!outputs/sft_layout_v1/run_config.json
+!outputs/sft_layout_v1/training_result.json
+
+!outputs/scoring-v2.0.0/
+outputs/scoring-v2.0.0/*
+!outputs/scoring-v2.0.0/eval_layout_v1_regression.json
+!outputs/scoring-v2.0.0/eval_layout_v1_regression_preds.jsonl

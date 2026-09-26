@@ -1,0 +1,10 @@
+{
+  "train_runtime_seconds": 662.4,
+  "train_loss": 0.006704,
+  "train_samples_per_second": 1.449,
+  "train_steps_per_second": 0.181,
+  "epoch": 1.6,
+  "peak_memory_allocated_gib_reported": 3.32,
+  "adapter_model_sha256": "f4f9205d3ae20b5f8efd3e854a46101e3c3c15cdb3184cce081c66ee33d24a3b",
+  "adapter_config_sha256": "244e07daec8d661e8b348b3a58938c8f5c8c08c40cbdac7e6f503da1473a5337"
+}

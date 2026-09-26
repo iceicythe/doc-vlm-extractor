@@ -1,0 +1,139 @@
+[
+  {
+    "source_id": "layout_001",
+    "A_image": "layout_001_A.png",
+    "D_image": "layout_001_D.png",
+    "A_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "长安鹏程建材科技有限公司",
+        "pred": "长安安盛建材科技有限公司"
+      }
+    ],
+    "D_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "长安鹏程建材科技有限公司",
+        "pred": "长安麒麟建材科技有限公司"
+      }
+    ],
+    "A_document_correct": false,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_002",
+    "A_image": "layout_002_A.png",
+    "D_image": "layout_002_D.png",
+    "A_errors": [],
+    "D_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "兴平润安建材有限公司",
+        "pred": "沣西鹏龙户政工程"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260409-889",
+        "pred": "CL-20260409-899"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣西棚户区改造工程",
+        "pred": "兴平润安建材有限公司"
+      }
+    ],
+    "A_document_correct": true,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_006",
+    "A_image": "layout_006_A.png",
+    "D_image": "layout_006_D.png",
+    "A_errors": [],
+    "D_errors": [
+      {
+        "path": "明细[1].金额",
+        "gt": "228599.46",
+        "pred": "22859.46"
+      }
+    ],
+    "A_document_correct": true,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_009",
+    "A_image": "layout_009_A.png",
+    "D_image": "layout_009_D.png",
+    "A_errors": [],
+    "D_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "陕西兴宇工程材料有限公司",
+        "pred": "陕西兴兴工程材料有限公司"
+      }
+    ],
+    "A_document_correct": true,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_010",
+    "A_image": "layout_010_A.png",
+    "D_image": "layout_010_D.png",
+    "A_errors": [],
+    "D_errors": [
+      {
+        "path": "表头.项目名称",
+        "gt": "临潼医院综合楼工程",
+        "pred": "临潼轨道交通综合楼工程"
+      }
+    ],
+    "A_document_correct": true,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_011",
+    "A_image": "layout_011_A.png",
+    "D_image": "layout_011_D.png",
+    "A_errors": [],
+    "D_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "安康兴达商贸有限公司",
+        "pred": "高陵地下管廊工程"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "高陵地下管廊工程",
+        "pred": "安康兴达贸易有限公司"
+      }
+    ],
+    "A_document_correct": true,
+    "D_document_correct": false
+  },
+  {
+    "source_id": "layout_012",
+    "A_image": "layout_012_A.png",
+    "D_image": "layout_012_D.png",
+    "A_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "陕西泽宇贸易有限公司",
+        "pred": "陕西春宇贸易有限公司"
+      }
+    ],
+    "D_errors": [
+      {
+        "path": "明细[3].金额",
+        "gt": "47078.45",
+        "pred": "47087.45"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "沣东文化馆建设工程",
+        "pred": "沣西文化馆建设工程"
+      }
+    ],
+    "A_document_correct": false,
+    "D_document_correct": false
+  }
+]

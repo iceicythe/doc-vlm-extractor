@@ -2,7 +2,7 @@
 
 设计原则
 --------
-1. **固定评测子集**：所有实验都在同一批 150 条（三档各 50）上评测，
+1. **固定评测子集**：所有实验都在同一批 102 条（三档各 34）上评测，
    否则不同实验的数字没法横向比。
 2. **控制变量**：
    - 分辨率实验 → 固定 max_steps=600（相同计算预算）
@@ -45,7 +45,9 @@ SUBSET_FILE = PROCESSED / "test_ablation.jsonl"
 # 100 条量级已足够支撑对照结论（此前经验：样本量 <50 时数字不可信）。
 SUBSET_PER_LEVEL = 34
 EVAL_BATCH = 6          # 评测批大小；evaluate.py 内有 OOM 自动降级兜底
-SUMMARY_FILE = OUTPUTS / "ablation_summary.json"
+from scoring import SCORER_VERSION
+SCORED = OUTPUTS / ("scoring-v" + SCORER_VERSION)
+SUMMARY_FILE = SCORED / "ablation_summary.json"
 
 # 基线：已有的 sft_v1（384px / 100% 数据 / 600 步 / 全层）
 BASELINE = {
@@ -144,14 +146,14 @@ def run_eval(tag: str, adapter: str, image_size: int, log_dir: Path) -> dict | N
         proc = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT)
     dt = time.time() - t0
 
-    res_file = OUTPUTS / f"eval_{out_tag}.json"
+    res_file = SCORED / f"eval_{out_tag}.json"
     if proc.returncode != 0 or not res_file.exists():
         print(f"    评测失败  日志 {log.name}")
         return None
     res = json.loads(res_file.read_text(encoding="utf-8"))
     res["_eval_seconds"] = round(dt, 1)
     print(f"    评测完成  F1={res.get('f1', 0):.4f}"
-          f"  幻觉={res.get('hallucination_rate', 0):.2%}"
+          f"  额外字段={res.get('extra_field_sample_rate', 0):.2%}"
           f"  用时 {dt/60:.1f} 分钟")
     return res
 
@@ -181,7 +183,7 @@ def load_summary() -> dict:
 
 
 def save_summary(data: dict) -> None:
-    OUTPUTS.mkdir(exist_ok=True)
+    SCORED.mkdir(parents=True, exist_ok=True)
     SUMMARY_FILE.write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -192,14 +194,14 @@ def print_table(data: dict) -> None:
     print("消融实验汇总")
     print("=" * 78)
     print(f"{'实验':<22}{'F1':>8}{'精确率':>9}{'召回率':>9}"
-          f"{'幻觉率':>9}{'合法率':>8}{'耗时(分)':>10}")
+          f"{'额外字段率':>9}{'合法率':>8}{'耗时(分)':>10}")
     print("-" * 78)
     for tag, r in data.items():
         if r.get("failed"):
             print(f"{r['label']:<22}{'FAILED':>8}  {r.get('error', '')[:34]}")
             continue
         print(f"{r['label']:<22}{r['f1']:>8.4f}{r['precision']:>9.4f}"
-              f"{r['recall']:>9.4f}{r['hallucination_rate']:>9.2%}"
+              f"{r['recall']:>9.4f}{r['extra_field_sample_rate']:>9.2%}"
               f"{r['json_valid_rate']:>8.2%}"
               f"{r.get('train_minutes', 0):>10.1f}")
     print("=" * 78)
@@ -256,7 +258,7 @@ def main() -> int:
         if res:
             summary["v1"] = {"label": BASELINE["label"], **{k: res[k] for k in
                              ("f1", "precision", "recall", "json_valid_rate",
-                              "hallucination_rate")},
+                              "extra_field_sample_rate")},
                              "train_minutes": 58.7,
                              "by_level": collect_levels("base", log_dir)}
             save_summary(summary)
@@ -288,7 +290,7 @@ def main() -> int:
             summary[tag] = {
                 "label": label,
                 **{k: res[k] for k in ("f1", "precision", "recall",
-                                       "json_valid_rate", "hallucination_rate")},
+                                       "json_valid_rate", "extra_field_sample_rate")},
                 "train_minutes": round(train_min / 60, 1),
                 "by_level": collect_levels(tag, log_dir),
             }

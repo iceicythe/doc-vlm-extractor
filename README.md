@@ -4,7 +4,13 @@
 
 项目包含合成数据构建、QLoRA 微调、分辨率与数据规模对比、真实英文收据跨域评测、词表后处理、DPO 探索和 Gradio 演示。主要训练实验使用单张 RTX 4060 Laptop 8GB 显卡。
 
-> **结果状态（2026-09-22）**：本文保留历史实验记录，但评分代码存在已知的数字归一化问题，尚未修复并复算。因此，下列分数是**旧评分口径下的历史结果**，不能作为已校正的准确性结论。本次更新修正文档表述与运行说明，不代表评分实现、历史报告或 Demo 中的数字已同步修复。
+> **当前结果（v2.0.0，2026-09-26）**：评分器已修复金额精度、编号前导零、严格 JSON 与 Schema 校验问题。同一 102 张测试图片重算后，零样本 F1 为 **0.6924**，原始 SFT 为 **0.9785**；SFT 整单正确 **58/102**。详见 [评分协议](docs/evaluation-v2.md) 和 [重算报告](docs/evaluation-v2-report.md)。
+>
+> **版式增强微调已完成**：在原 SFT LoRA 上用 A 回放与 B/C 新版式共 600 张继续训练 120 步。冻结 D 陌生版式 F1 **0.9776 → 0.9939**、整单正确 **5/12 → 9/12**；原 102 张测试 F1 **0.9785 → 0.9794**、整单正确 **58/102 → 61/102**，严格 JSON 与 Schema 均保持 **102/102**。详见 [版式增强报告](docs/layout-training-report.md)。
+>
+> **OCR 基线与人工复核已完成**：同一测试集、同一 v2 评分器下，OCR＋规则 F1 为 **0.8245**；Demo 已支持编辑 JSON、校验金额关系、保存审计记录以及导出 JSON/CSV。详见 [OCR 基线报告](docs/ocr-baseline-report.md) 和 [复核流程](docs/review-workflow.md)。
+>
+> README 后面的原有实验表、图表和静态 Demo 仍保留为历史旧口径记录，未逐项按 v2 重算；引用结果时应优先采用上面的 v2 报告。
 
 ## 输入与输出
 
@@ -51,13 +57,15 @@
 | 数据构建 | 材料清单渲染，旋转、模糊、透视、污渍等退化，按源样本划分 | [render.py](src/render.py)、[degrade.py](src/degrade.py)、[build_dataset.py](src/build_dataset.py) |
 | SFT | 4bit 基座上的 LoRA 微调，支持分辨率、数据比例及训练层范围配置 | [train_sft.py](src/train_sft.py) |
 | 对比实验 | 零样本 / SFT、分辨率、训练数据比例、仅语言侧 LoRA | [run_ablation.py](src/run_ablation.py) |
-| 评测 | 本地与 API 推理、JSON 解析、字段配对、增量保存 | [evaluate.py](src/evaluate.py)、[evaluate_api.py](src/evaluate_api.py) |
+| 可信评测 | Decimal 精确数值、类型感知归一化、严格 JSON、Schema、字段 F1 和整单正确率 | [scoring.py](src/scoring.py)、[evaluate.py](src/evaluate.py)、[evaluate_api.py](src/evaluate_api.py) |
+| OCR 基线 | RapidOCR 文字框识别与冻结规则解析，使用独立 CPU 环境 | [baseline_ocr.py](src/baseline_ocr.py) |
+| 版式增强 | 固定 A/D 留出集、B/C 新版式训练集、继续 SFT 与回归比较 | [build_layout_holdout.py](scripts/build_layout_holdout.py)、[build_layout_train.py](scripts/build_layout_train.py) |
 | 词表后处理 | 从训练集构建候选值集合，按字符串相似度保守纠错 | [build_lexicon.py](src/build_lexicon.py)、[inject_knowledge.py](src/inject_knowledge.py) |
 | DPO 探索 | 偏好样本构建、自定义训练循环、参考 adapter 检查 | [build_pref_data.py](src/build_pref_data.py)、[train_dpo.py](src/train_dpo.py) |
 | 提示词实验 | 人工完整字段清单与 DSPy/GEPA 优化指令对比 | [optimize_prompt_dspy.py](src/optimize_prompt_dspy.py) |
-| 展示 | 零样本、微调及词表处理结果对照 | [demo.py](src/demo.py) |
+| 展示与复核 | 多方案结果对照、可编辑 JSON、规则提示、审计保存与 JSON/CSV 导出 | [demo.py](src/demo.py)、[review.py](src/review.py) |
 
-OCR＋规则基线、8B 零样本对照尚未完成。它们仍是有价值的后续比较，尤其是 OCR 基线可以帮助判断引入 VLM 的收益与成本。
+本轮改进的任务、证据和剩余边界汇总在 [改进状态](docs/improvement-status.md)。8B 零样本对照仍未完成。
 
 ## 数据与任务边界
 
@@ -85,7 +93,7 @@ OCR＋规则基线、8B 零样本对照尚未完成。它们仍是有价值的�
 
 历史 DSPy 实验将该测试清单第 101–124 条用于优化、第 125–164 条用于验证，与前 100 条评测样本分开。这是项目自定义划分，不应表述为完整遵循官方训练 / 测试协议的 benchmark 成绩。
 
-## 历史实验结果（待评分修复后复算）
+## 历史实验结果（旧评分口径）
 
 以下数值来自已提交的汇总和报告。公开仓库没有完整的逐样本预测与训练日志，当前无法仅凭仓库内容独立复算所有历史指标。
 
@@ -150,16 +158,16 @@ OCR＋规则基线、8B 零样本对照尚未完成。它们仍是有价值的�
 
 这些负结果用于记录当前实验的边界，不作为对 DPO、自动提示词优化或多模态模型的一般性否定。
 
-## 评分定义与已知问题
+## 评分定义与结果边界
 
-当前评分实现在 [evaluate.py](src/evaluate.py)，尚待修复：
+v2.0.0 的共享评分实现在 [scoring.py](src/scoring.py)，本地评测与 API 评测复用同一套逻辑：
 
-1. **数字归一化损失精度。** `normalize()` 对纯数字执行 `float()` 和默认 `g` 格式化。例如 `123456.71` 与 `123456.72` 都变成 `123457`，不同结果可能被判为相同；编号 `00123` 也会与 `123` 合并。应改为按字段类型处理：金额使用精确十进制比较，编号和电话保留字符串意义。影响幅度必须使用原始预测重新计算，当前未知。
-2. **`hallucination_rate` 的命名过宽。** 当前主要统计“至少出现一个真值中没有的评分字段路径”的样本比例，本文称其为“额外字段样本率”。已有字段中填入错误值会影响 F1，却不一定增加该指标。schema 模式还会忽略部分未纳入评分的额外键，因此 0% 不代表没有无依据生成。
-3. **JSON 可解析不等于 schema 合规。** 解析器容忍代码块和前后文本，并提取 JSON 对象。`json_valid_rate` 更准确地说是“解析器成功取得对象的比例”，不能代替原始输出格式检查或字段类型验证。
-4. **字段 F1 不等于整单正确率。** 当前按配对后的字段路径和值计算 TP / FP / FN；schema 模式主要评分表头、明细和合计，并未完整验证所有输出约束。应另报整单全对率、schema 合规率以及关键金额字段的精确匹配结果。
+1. 金额和数量使用 `Decimal` 精确归一化，编号、电话等标识字段保留字符串意义与前导零。
+2. 同时报告宽松 JSON 解析率、严格 JSON 率、Schema 合规率、字段 micro-F1 和整单正确率，避免把“能解析”当成“格式完全合规”。
+3. 额外字段指标只描述评分路径中的多余字段，不等同于广义“幻觉率”。
+4. v2 重算保存评分版本、输入与预测文件哈希、逐样本预测和差异记录，便于复核。
 
-下一次发布校正结果时，需要保存评分版本、输入清单、逐样本原始输出和配置，并同步更新汇总、报告与 Demo。当前不提供“已校正准确率”或“零幻觉”的结论。
+回归测试覆盖金额精度、编号前导零、JSON 边界、Schema 及整单指标。完整定义见 [评分协议](docs/evaluation-v2.md)，修复验证见 [验证记录](docs/evaluation-v2-validation.md)，可复算资产见 [资产清单](docs/evaluation-inventory.md)。历史表格没有全部重跑，只能作为项目过程记录。
 
 ## 查看与复现
 
@@ -172,7 +180,7 @@ git clone https://github.com/iceicythe/doc-vlm-extractor.git
 cd doc-vlm-extractor
 ```
 
-当前仓库不包含模型权重、LoRA adapter、合成原图、公开数据原始包、完整训练日志和逐样本预测。因而不能在刚克隆后直接运行历史预测复算或静态预览再生成。
+当前仓库包含本轮 v2、OCR 与版式实验的精选逐样本预测、配置、哈希和汇总，但不包含模型权重、LoRA adapter、完整合成原图、公开数据原始包及全部历史训练日志。克隆后可以复核已发布预测的评分；重新推理和训练仍需自行准备图片、模型与 GPU 环境。
 
 ### 2. 准备环境
 
@@ -184,7 +192,7 @@ python -m venv venv-gld
 
 训练涉及 PyTorch、torchvision、transformers、Unsloth、TRL、PEFT、accelerate、bitsandbytes、datasets、Pillow 等；图像退化还依赖 NumPy，网页演示依赖 Gradio，API 与提示词实验另需相应客户端。
 
-**仓库尚未提供经过验证的依赖锁定文件。** 上面的环境创建命令不会安装这些依赖；需要按设备、CUDA 和所选训练栈准备兼容环境，不能保证直接安装各包最新版可以复现。依赖安装完成后运行：
+OCR 基线提供了 [requirements-ocr-lock.txt](requirements-ocr-lock.txt) 作为独立 CPU 环境锁定文件；完整 VLM 训练栈仍未提供统一锁定文件，需要按设备、CUDA 和所选训练栈准备兼容环境。依赖安装完成后运行：
 
 ```powershell
 .\venv-gld\Scripts\python.exe scripts\check_env.py
@@ -217,7 +225,7 @@ python -m venv venv-gld
 .\venv-gld\Scripts\python.exe src\evaluate.py --data data\processed\test_ablation.jsonl --adapter outputs\sft_v1\lora --tag abl_base --image-size 384
 ```
 
-训练输出为 `outputs/sft_v1/lora`。评测生成的分数仍沿用当前有已知问题的评分器，修复前只能用于调通流程。推理脚本支持续跑；改变配置后应使用新 tag，避免混淆实验产物。
+训练输出为 `outputs/sft_v1/lora`。当前评测命令使用 v2.0.0 共享评分器；推理脚本支持续跑，改变配置后应使用新 tag，避免混淆实验产物。
 
 ### 5. 真实收据与完整字段提示词
 
@@ -247,21 +255,26 @@ API 对照需要额外服务配置和调用额度，参数见 `src/evaluate_api.
 
 ```powershell
 .\venv-gld\Scripts\python.exe scripts\_test_evaluate_scoring.py
+.\venv-gld\Scripts\python.exe scripts\_test_scoring_v2.py
 .\venv-gld\Scripts\python.exe scripts\_test_evaluate_args.py
 .\venv-gld\Scripts\python.exe scripts\_test_dpo_math.py
 .\venv-gld\Scripts\python.exe scripts\_test_evaluate_api.py
+.\venv-gld\Scripts\python.exe scripts\_test_review.py
+.\venv-gld\Scripts\python.exe scripts\validate_layout_training.py
 ```
 
-各脚本仍需对应依赖。现有测试覆盖部分评分与训练辅助逻辑，不能证明上述数字归一化漏洞已修复，也不替代 GPU 训练 / 推理验证。
+各脚本仍需对应依赖。这些检查覆盖 v2 评分、API 一致性、人工复核和版式数据资产；GPU 推理与训练结果另见对应报告。
 
 ## 后续优先级
 
-- [ ] 修复按字段类型的数字归一化，增加精度与编号回归测试。
-- [ ] 明确额外字段、字段值错误、schema 合规和整单全对指标。
-- [ ] 发布逐样本预测、实验配置及可复算命令，重新生成历史对比表。
-- [ ] 锁定依赖版本，移除数据清单对个人绝对路径的依赖。
-- [ ] 补 OCR＋规则基线，并统一完整字段提示词。
-- [ ] 增加未见版式、未见词汇和真实单据测试；在验证集上选择后处理参数，再进行独立测试。
+- [x] 修复按字段类型的数字归一化，增加精度与编号回归测试。
+- [x] 明确额外字段、严格 JSON、Schema 合规和整单全对指标。
+- [x] 发布本轮逐样本预测、实验配置、文件哈希及可复算命令。
+- [x] 补 OCR＋规则基线，并接入人工复核与审计导出。
+- [x] 增加固定的未见版式留出集，完成版式增强训练和原测试集回归检查。
+- [ ] 收集约 50 张经授权的真实中文工程单据，完成最终真实分布盲测。
+- [ ] 为完整 VLM 训练栈提供跨机器验证过的依赖锁定，并移除旧数据清单中的个人绝对路径。
+- [ ] 补 8B 零样本对照和未见材料词汇测试。
 - [ ] 对小幅差异增加重复实验或按源样本分组的不确定性估计。
 
 ## 代码与历史记录导航
@@ -273,10 +286,15 @@ API 对照需要额外服务配置和调用额度，参数见 `src/evaluate_api.
 | `data/processed/` | 已提交的数据清单，图片需另行准备 |
 | `data/lexicon/` | 训练集派生词表 |
 | `outputs/ablation_summary.json` | 历史消融汇总 |
+| [改进状态](docs/improvement-status.md) | 本轮任务、证据、结果和剩余真实数据工作 |
+| [v2 重算报告](docs/evaluation-v2-report.md) | 校正评分后的零样本与 SFT 结果 |
+| [OCR 基线报告](docs/ocr-baseline-report.md) | OCR＋规则与 VLM 的同集比较 |
+| [版式增强报告](docs/layout-training-report.md) | 陌生版式提升与原测试集回归结果 |
+| [人工复核流程](docs/review-workflow.md) | 编辑、校验、审计和导出说明 |
 | [技术复盘](docs/retrospective.md) | 实现过程与调试记录 |
 | [历史 Results](outputs/results_onepager.md) | 旧版结果整理 |
 | [DPO 记录](outputs/report_dpo_negative.md) | 当前配置下的负结果分析 |
 | [提示词实验记录](outputs/report_dspy_flat.md) | 人工与自动指令优化对照 |
 | [报告附录](outputs/reports_appendix.md) | 错误分类及后处理统计 |
 
-历史文档保留实验过程，其中的强因果表述、“幻觉率”和旧评分结论尚未逐份修订。解释项目当前状态时，以本 README 的指标边界和复现限制为准。
+历史文档保留实验过程，其中的强因果表述、“幻觉率”和旧评分结论尚未逐份修订。解释项目当前状态时，以本 README 及本轮 v2、OCR、版式增强报告的指标边界为准。

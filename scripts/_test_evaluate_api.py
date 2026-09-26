@@ -227,16 +227,17 @@ sys.argv = ["evaluate_api.py", "--provider", "deepseek", "--tag", TAG,
 
 rc = ea.main()
 
-summary_file = OUT / f"eval_{TAG}.json"
-preds_file = OUT / f"eval_{TAG}_preds.jsonl"
-cases_file = OUT / f"eval_{TAG}_cases.txt"
+version_dir = OUT / ("scoring-v" + ea.ev.SCORER_VERSION)
+summary_file = version_dir / f"eval_{TAG}.json"
+preds_file = version_dir / f"eval_{TAG}_preds.jsonl"
+cases_file = version_dir / f"eval_{TAG}_cases.txt"
 summary = json.loads(summary_file.read_text(encoding="utf-8"))
 
 check("main() 返回 0", rc == 0, f"rc={rc}")
 check("端到端 F1 == 1.0（完美预测）", abs(summary["f1"] - 1.0) < 1e-9,
       f"f1={summary['f1']}")
 check("端到端 JSON 合法率 == 1.0", summary["json_valid_rate"] == 1.0)
-check("端到端幻觉率 == 0", summary["hallucination_rate"] == 0.0)
+check("端到端额外字段比例 == 0", summary["extra_field_sample_rate"] == 0.0)
 check("产物三件套齐全",
       summary_file.exists() and preds_file.exists() and cases_file.exists())
 check("preds 字段与 evaluate.py 一致（可被下游脚本直接吃）",

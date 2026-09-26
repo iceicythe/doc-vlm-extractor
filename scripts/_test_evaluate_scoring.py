@@ -74,8 +74,8 @@ raw4 = ('{"表头":{"项目名称":"沣西市政道路改造工程"},'
         '"数量":"200","单价":"120.27","金额":"24054.00"}],'
         '"合计":{"金额":"24054.00"}}')
 s4 = E.score_one(GT, raw4, "schema")
-check("不崩，字符串行被丢弃，正常行仍命中",
-      s4["tp"] >= 5 and not s4["hallucinated_keys"] or True, f"tp={s4['tp']} fp={s4['fp']}")
+check("不崩，坏行保留位置，结构错误和行错位计分",
+      s4["schema_valid"] is False and s4["fp"] > 0 and s4["fn"] > 0, f"tp={s4['tp']} fp={s4['fp']}")
 
 print("5) 明细 输出成 dict / 合计 输出成 list")
 for name, bad in [("明细=dict", '{"表头":{},"明细":{"序号":"1"},"合计":{"金额":"1"}}'),

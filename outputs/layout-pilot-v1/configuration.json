@@ -1,0 +1,20 @@
+{
+  "model": "unsloth/Qwen3-VL-2B-Instruct-unsloth-bnb-4bit",
+  "snapshot_revision": "d527b0e0b9a987d5d9d81d2d32ea72dda74751f6",
+  "adapter": "outputs/sft_v1/lora",
+  "adapter_weights_sha256": "60ac5289f83dcf8cce84bd3ee0f96122f2aa9e0fb28c8a7ee9b7c56acfe149db",
+  "adapter_config_sha256": "244e07daec8d661e8b348b3a58938c8f5c8c08c40cbdac7e6f503da1473a5337",
+  "image_size": 384,
+  "max_new_tokens": 768,
+  "max_seq_length": 2048,
+  "do_sample": false,
+  "batch": 1,
+  "prompt_sha256": "f844654b9992c9d7def6533d9b18841d7f96032a24f1f62b2eff38cad5bcb9f7",
+  "manifest_sha256": "80601b855852413e46992e551f20086039076e11e0abe357aaac673363674b9b",
+  "scorer_version": "2.0.0",
+  "scorer_sha256": "d4a2a2a33ab0e42d1c18720d34251415e8543c6c090daf93ec6cb2aad3d039ce",
+  "runner_sha256": "cd490880adde6e7ffbaf9796df4f4cd41e62e479dca68629efa8be849fdd131b",
+  "torch": "2.14.0+cu130",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "inference_only": true
+}

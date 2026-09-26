@@ -1,0 +1,2563 @@
+[
+  {
+    "sample_id": "synth_000569_heavy.jpg",
+    "old": {
+      "tp": 11,
+      "fp": 8,
+      "fn": 8
+    },
+    "precision_only": {
+      "tp": 11,
+      "fp": 8,
+      "fn": 8
+    },
+    "new": {
+      "tp": 12,
+      "fp": 8,
+      "fn": 8
+    },
+    "old_new_f1_delta": 0.021052631578947323,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "合计.金额",
+        "gt": "192372.01",
+        "pred": "182372.01"
+      },
+      {
+        "path": "明细[0].单价",
+        "gt": "522.21",
+        "pred": "52221"
+      },
+      {
+        "path": "明细[0].数量",
+        "gt": "100",
+        "pred": "22.21"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "52221",
+        "pred": "115444.44"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "4167.44",
+        "pred": "4474.44"
+      },
+      {
+        "path": "明细[1].数量",
+        "gt": "33.63",
+        "pred": "12.47"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "140151.01",
+        "pred": "56151.01"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "长安鑫泰建材有限公司",
+        "pred": "长安鑫通建材有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000802_heavy.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 45,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 46,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": -0.020390070921985748,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[4].金额",
+        "gt": "16545.55",
+        "pred": "16545.53"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "79732.36",
+        "pred": "79722.36"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000668_heavy.jpg",
+    "old": {
+      "tp": 9,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 9,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 10,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.019230769230769273,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "合计.金额",
+        "gt": "18661.61",
+        "pred": "18861.61"
+      },
+      {
+        "path": "明细[0].金额",
+        "gt": "18661.61",
+        "pred": "18861.61"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "蓝田鑫泰工程材料有限公司",
+        "pred": "宝鸡鑫泰工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000665.png",
+    "old": {
+      "tp": 11,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 11,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 12,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0064102564102564985,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "西安华信供应链管理有限公司",
+        "pred": "西安华昌供应链管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000772_medium.jpg",
+    "old": {
+      "tp": 17,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 17,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 18,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0052631578947368585,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑泽材建材科技有限公司",
+        "pred": "鄠邑泽源建材科技有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260220-836",
+        "pred": "CL-20260220-036"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000200_heavy.jpg",
+    "old": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 19,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0026315789473685403,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "铜川白云工程材料有限公司",
+        "pred": "铜川信元工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000978_heavy.jpg",
+    "old": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 19,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0026315789473685403,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "延安润泰工程材料有限公司",
+        "pred": "延安润建工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000059_medium.jpg",
+    "old": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 18,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 19,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0026315789473685403,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "三原金华供应链管理有限公司",
+        "pred": "蓝月亮供应链管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000014_heavy.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 38,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.0018292682926829285,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[3].金额",
+        "gt": "36195",
+        "pred": "35192"
+      },
+      {
+        "path": "明细[4].单价",
+        "gt": "470.49",
+        "pred": "470.4"
+      },
+      {
+        "path": "明细[4].金额",
+        "gt": "23947.94",
+        "pred": "23647.94"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000154_heavy.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 38,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.0018292682926829285,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[1].规格型号",
+        "gt": "XPS 30mm",
+        "pred": "XPS 90mm"
+      },
+      {
+        "path": "明细[2].规格型号",
+        "gt": "Φ25",
+        "pred": "Φ16"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "周至众联工程材料有限公司",
+        "pred": "周至众和工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000164_medium.jpg",
+    "old": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 37,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 38,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.0018292682926829285,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[4].金额",
+        "gt": "28812.64",
+        "pred": "28912.64"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "陕西润安商贸有限公司",
+        "pred": "陕西润安物资有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "鄠邑医院综合楼工程",
+        "pred": "雁塔医院综合楼工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000571_heavy.jpg",
+    "old": {
+      "tp": 31,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 31,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 32,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0017825311942958333,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[0].金额",
+        "gt": "25885.9",
+        "pred": "25865.9"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川鑫泰建材有限公司",
+        "pred": "铜川四海建材有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000125_heavy.jpg",
+    "old": {
+      "tp": 43,
+      "fp": 4,
+      "fn": 4
+    },
+    "precision_only": {
+      "tp": 43,
+      "fp": 4,
+      "fn": 4
+    },
+    "new": {
+      "tp": 44,
+      "fp": 4,
+      "fn": 4
+    },
+    "old_new_f1_delta": 0.0017730496453900457,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[0].单价",
+        "gt": "393.82",
+        "pred": "391.82"
+      },
+      {
+        "path": "明细[1].单价",
+        "gt": "19.75",
+        "pred": "117.55"
+      },
+      {
+        "path": "明细[1].金额",
+        "gt": "30652",
+        "pred": "30522"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "长安信宇商贸有限公司",
+        "pred": "长安恒宇商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000523.png",
+    "old": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 26,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0014245014245013454,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "周至永利建材科技有限公司",
+        "pred": "周至金利建材科技有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000106_heavy.jpg",
+    "old": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 26,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0014245014245013454,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[0].数量",
+        "gt": "1009",
+        "pred": "1000"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000027_medium.jpg",
+    "old": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 26,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0014245014245013454,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "汉中盛世建材有限公司",
+        "pred": "汉中恒盛建材有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000134_medium.jpg",
+    "old": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 25,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 26,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0014245014245013454,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑兴盛物资有限公司",
+        "pred": "鄠邑兴昌物资有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000286_heavy.jpg",
+    "old": {
+      "tp": 44,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 44,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 45,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.0013297872340425343,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "合计.金额",
+        "gt": "365896.26",
+        "pred": "365996.26"
+      },
+      {
+        "path": "明细[5].金额",
+        "gt": "177193.37",
+        "pred": "177113.37"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑西域商贸有限公司",
+        "pred": "鄠邑西城商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000309.png",
+    "old": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 33,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0008912655971479166,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "合计.金额",
+        "gt": "200124.83",
+        "pred": "200214.83"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000322_medium.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 33,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0008912655971479166,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "合计.金额",
+        "gt": "86081.32",
+        "pred": "88081.32"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000374_medium.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 33,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0008912655971479166,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "杨凌中远建材有限公司",
+        "pred": "杨凌中盛建材有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000849_medium.jpg",
+    "old": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 32,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 33,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0008912655971479166,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑华宇建材科技有限公司",
+        "pred": "鄠邑华信建材科技有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000872_heavy.jpg",
+    "old": {
+      "tp": 45,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 45,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 46,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0008865248226949118,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "鄠邑信泰贸易有限公司",
+        "pred": "鄠邑泰泰商贸有限公司"
+      },
+      {
+        "path": "表头.项目名称",
+        "gt": "未央住宅楼主体工程",
+        "pred": "长安住宅楼主体工程"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000961_heavy.jpg",
+    "old": {
+      "tp": 45,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 45,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 46,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0008865248226949118,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "宝鸡环宇建材有限公司",
+        "pred": "宝鸡亨宇建材有限公司"
+      },
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260306-361",
+        "pred": "CL-20260306-381"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000260_heavy.jpg",
+    "old": {
+      "tp": 58,
+      "fp": 3,
+      "fn": 3
+    },
+    "precision_only": {
+      "tp": 58,
+      "fp": 3,
+      "fn": 3
+    },
+    "new": {
+      "tp": 59,
+      "fp": 3,
+      "fn": 3
+    },
+    "old_new_f1_delta": 0.0007932310946590082,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[3].单价",
+        "gt": "4341.14",
+        "pred": "4431.14"
+      },
+      {
+        "path": "明细[3].金额",
+        "gt": "56434.82",
+        "pred": "58434.82"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "西安中盛物资有限公司",
+        "pred": "西安华通供应链有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000171.png",
+    "old": {
+      "tp": 52,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 52,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 53,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0006734006734007147,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[6].金额",
+        "gt": "14440.84",
+        "pred": "14400.84"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "汉中锦程商贸有限公司",
+        "pred": "汉中明程商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000992.png",
+    "old": {
+      "tp": 52,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 52,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 53,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0006734006734007147,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.单据编号",
+        "gt": "CL-20260525-112",
+        "pred": "CL-20260325-112"
+      },
+      {
+        "path": "表头.日期",
+        "gt": "2026-05-25",
+        "pred": "2026-03-25"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000164.png",
+    "old": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0006097560975609762,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "陕西润安商贸有限公司",
+        "pred": "陕西黄河商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000589.png",
+    "old": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0006097560975609762,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "榆林广盛工程材料有限公司",
+        "pred": "榆林广盛建材工程有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000589_heavy.jpg",
+    "old": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0006097560975609762,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "榆林广盛工程材料有限公司",
+        "pred": "榆林广昌工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000619_heavy.jpg",
+    "old": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0006097560975609762,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "渭南泰山物资贸易有限公司",
+        "pred": "渭南泰山贸易贸易有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000950_medium.jpg",
+    "old": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 39,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.0006097560975609762,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "高陵恒达物资有限公司",
+        "pred": "高陵信达物资有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000041.png",
+    "old": {
+      "tp": 59,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 59,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 60,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0005288207297726721,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[4].单价",
+        "gt": "163.47",
+        "pred": "163.67"
+      },
+      {
+        "path": "表头.供应商",
+        "gt": "铜川诚恒工程材料有限公司",
+        "pred": "铜川恒通工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000161_heavy.jpg",
+    "old": {
+      "tp": 59,
+      "fp": 2,
+      "fn": 2
+    },
+    "precision_only": {
+      "tp": 59,
+      "fp": 2,
+      "fn": 2
+    },
+    "new": {
+      "tp": 60,
+      "fp": 2,
+      "fn": 2
+    },
+    "old_new_f1_delta": 0.0005288207297726721,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[3].金额",
+        "gt": "55524.91",
+        "pred": "55224.91"
+      },
+      {
+        "path": "明细[4].规格型号",
+        "gt": "Φ48×3.5",
+        "pred": "Φ48×3.0"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000307.png",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 47,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00044326241134751143,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "陕西信材工程材料有限公司",
+        "pred": "陕西鑫材工程材料有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000934_heavy.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 47,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00044326241134751143,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[2].数量",
+        "gt": "2800",
+        "pred": "2880"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000133_medium.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 47,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00044326241134751143,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[1].金额",
+        "gt": "108550.89",
+        "pred": "108500.89"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000821_medium.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 47,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00044326241134751143,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[5].金额",
+        "gt": "43430.36",
+        "pred": "43403.36"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000898_medium.jpg",
+    "old": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 46,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 47,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00044326241134751143,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "蓝田金鼎建材科技有限公司",
+        "pred": "蓝田金桥建材科技有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000790.png",
+    "old": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 54,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00033670033670030186,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "明细[6].金额",
+        "gt": "126323.45",
+        "pred": "126233.45"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000217_heavy.jpg",
+    "old": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 54,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00033670033670030186,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "兴平广泰建材有限公司",
+        "pred": "兴平广源贸易有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000611_heavy.jpg",
+    "old": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 54,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00033670033670030186,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "兴平永利贸易有限公司",
+        "pred": "兴平永利建材有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000786_heavy.jpg",
+    "old": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 53,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 54,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00033670033670030186,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "延安晟泰供应链管理有限公司",
+        "pred": "延安泰岳供应链管理有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000632_medium.jpg",
+    "old": {
+      "tp": 60,
+      "fp": 1,
+      "fn": 1
+    },
+    "precision_only": {
+      "tp": 60,
+      "fp": 1,
+      "fn": 1
+    },
+    "new": {
+      "tp": 61,
+      "fp": 1,
+      "fn": 1
+    },
+    "old_new_f1_delta": 0.00026441036488633607,
+    "schema_errors": [],
+    "field_errors": [
+      {
+        "path": "表头.供应商",
+        "gt": "兴平信宇商贸有限公司",
+        "pred": "兴平亨宇商贸有限公司"
+      }
+    ]
+  },
+  {
+    "sample_id": "synth_000027.png",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000107.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000127.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000154.png",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000158.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000188.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000282.png",
+    "old": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000310.png",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000342.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000405.png",
+    "old": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000435.png",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000445.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000503.png",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000506.png",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000564.png",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000568.png",
+    "old": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 34,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000611.png",
+    "old": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 55,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000663.png",
+    "old": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000668.png",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000680.png",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000683.png",
+    "old": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000786.png",
+    "old": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 55,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000809.png",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000849.png",
+    "old": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 34,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000011_heavy.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000119_heavy.jpg",
+    "old": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 34,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000158_heavy.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000164_heavy.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000246_heavy.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000309_heavy.jpg",
+    "old": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 34,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000317_heavy.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000553_heavy.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000657_heavy.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000660_heavy.jpg",
+    "old": {
+      "tp": 61,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 61,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 62,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000737_heavy.jpg",
+    "old": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 34,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000882_heavy.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000989_heavy.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000014_medium.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000104_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000127_medium.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000182_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000305_medium.jpg",
+    "old": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 55,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000342_medium.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000378_medium.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000478_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000490_medium.jpg",
+    "old": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 41,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000506_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000569_medium.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000680_medium.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000754_medium.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000782_medium.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000790_medium.jpg",
+    "old": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 54,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 55,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000802_medium.jpg",
+    "old": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 47,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000877_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000918_medium.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000926_medium.jpg",
+    "old": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 13,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000935_medium.jpg",
+    "old": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 19,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  },
+  {
+    "sample_id": "synth_000951_medium.jpg",
+    "old": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "precision_only": {
+      "tp": 26,
+      "fp": 0,
+      "fn": 0
+    },
+    "new": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    "old_new_f1_delta": 0.0,
+    "schema_errors": [],
+    "field_errors": []
+  }
+]

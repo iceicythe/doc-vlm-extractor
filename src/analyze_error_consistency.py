@@ -38,38 +38,11 @@ DEFAULT = [
 ]
 
 
-def flatten(obj) -> dict:
-    """把嵌套 schema 摊平成 {字段路径: 值}。明细数组按索引对齐。"""
-    d: dict[str, object] = {}
-    for k in ("单据类型", "表头"):
-        v = obj.get(k)
-        if isinstance(v, dict):
-            for kk, vv in v.items():
-                d[f"{k}.{kk}"] = vv
-        else:
-            d[k] = v
-    v = obj.get("合计")
-    if isinstance(v, dict):
-        for kk, vv in v.items():
-            d[f"合计.{kk}"] = vv
-    for j, row in enumerate(obj.get("明细") or []):
-        if isinstance(row, dict):
-            for kk, vv in row.items():
-                d[f"明细[{j}].{kk}"] = vv
-    return d
+from scoring import flatten_object as flatten, parse_json, SCORER_VERSION
 
 
-def _as_dict(v):
-    """preds.jsonl 里 gt/pred 以 JSON 字符串存储（也可能是已解析的 dict）。"""
-    if isinstance(v, dict):
-        return v
-    if isinstance(v, str):
-        try:
-            o = json.loads(v)
-        except json.JSONDecodeError:
-            return None
-        return o if isinstance(o, dict) else None
-    return None
+def _as_dict(value):
+    return value if isinstance(value, dict) else parse_json(value)
 
 
 def load(path: Path) -> dict[str, dict]:
@@ -80,13 +53,14 @@ def load(path: Path) -> dict[str, dict]:
         if not line.strip():
             continue
         r = json.loads(line)
-        if not r.get("json_valid"):
-            continue
         g, pr = _as_dict(r.get("gt")), _as_dict(r.get("pred"))
-        if g is None or pr is None:
+        if g is None:
             skipped += 1
             continue
-        recs[r["stem"]] = {
+        sample_id = r.get("image") or r["stem"]
+        if sample_id in recs:
+            raise ValueError(f"Duplicate sample: {sample_id}")
+        recs[sample_id] = {
             "gt": flatten(g),
             "pred": flatten(pr),
             "level": r.get("level", "?"),
@@ -120,6 +94,7 @@ def main() -> int:
         print("至少需要两个可读的预测文件")
         return 1
 
+    print(f"评分版本：{SCORER_VERSION}；按完整图片 ID 比较，解析失败按全漏抽保留")
     labels = [lb for lb, _ in data]
     stems = sorted(set.intersection(*(set(d) for _, d in data)))
     print(f"比较 {len(data)} 个配置，共同样本 {len(stems)} 张\n")
@@ -213,9 +188,9 @@ def main() -> int:
     # ---- 结论 ----
     print("\n" + "=" * 62)
     print("判读：")
-    print(f"  · 「仅单次出错」占比 {single / n_wrong_any * 100:.1f}% "
+    print(f"  · 「仅单次出错」占比 {single / max(1, n_wrong_any) * 100:.1f}% "
           f"→ 随配置切换翻转，属决策边界抖动")
-    print(f"  · 「全配置都错」占比 {stable / n_wrong_any * 100:.1f}% "
+    print(f"  · 「全配置都错」占比 {stable / max(1, n_wrong_any) * 100:.1f}% "
           f"→ 稳定复现；能否消除取决于属感知层还是决策层")
 
     # ---- 写报告 ----

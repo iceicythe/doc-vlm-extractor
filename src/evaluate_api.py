@@ -507,6 +507,7 @@ def main() -> int:
         b["n"] += 1; b["valid"] += int(r["json_valid"])
 
         full.append({
+            **r,
             "image": Path(rec["image"]).name, "level": lv,
             "stem": (rec.get("meta") or {}).get("stem", ""),
             "gt": rec["gt"], "pred": raw, "json_valid": r["json_valid"],
@@ -533,8 +534,8 @@ def main() -> int:
     print("结果")
     print("=" * 62)
     print(f"  字段级 P/R/F1 : {p:.4f} / {r_:.4f} / {f1:.4f}")
-    print(f"  JSON 合法率   : {total['json_valid']}/{n} = {total['json_valid'] / n:.1%}")
-    print(f"  幻觉率        : {total['hallucinated']}/{n} = {total['hallucinated'] / n:.1%}")
+    print(f"  宽松解析成功率 : {total['json_valid']}/{n} = {total['json_valid'] / n:.1%}")
+    print(f"  旧多出路径比例 : {total['hallucinated']}/{n} = {total['hallucinated'] / n:.1%}")
     print(f"  TP/FP/FN      : {total['tp']}/{total['fp']}/{total['fn']}")
     print(f"  耗时          : {infer_time:.0f}s（{infer_time / n:.1f}s/条）")
     print(f"  用量          : 入 {caller.usage['in']} tok / 出 {caller.usage['out']} tok"
@@ -544,7 +545,7 @@ def main() -> int:
     for lv in sorted(by_level):
         b = by_level[lv]
         _, _, lf = ev.prf(b["tp"], b["fp"], b["fn"])
-        print(f"    {lv:<7} F1={lf:.4f}  JSON合法={b['valid']}/{b['n']}")
+        print(f"    {lv:<7} F1={lf:.4f}  宽松解析={b['valid']}/{b['n']}")
 
     summary = {
         "tag": args.tag, "split": args.split, "n": n,
@@ -554,35 +555,45 @@ def main() -> int:
         "max_pixels": args.max_pixels,
         "precision": p, "recall": r_, "f1": f1,
         "json_valid_rate": total["json_valid"] / n,
-        "hallucination_rate": total["hallucinated"] / n,
         "tp": total["tp"], "fp": total["fp"], "fn": total["fn"],
         "infer_seconds": infer_time,
         "tokens_in": caller.usage["in"], "tokens_out": caller.usage["out"],
         "cost_cny_estimate": round(cost, 4),
         "by_level": {k: dict(v) for k, v in by_level.items()},
     }
-    (OUTPUTS / f"eval_{args.tag}.json").write_text(
+    summary.update(ev.summarize(full))
+    summary["mode"] = args.mode
+    summary["schema_version"] = "materials-v1" if args.mode == "schema" else "wildreceipt-flat-v1"
+    summary["sample_gt_sha256"] = ev.stable_hash([{ "image": x["image"], "gt": x["gt"] } for x in full])
+    summary["inference_config"] = {**fingerprint, "max_new_tokens": args.max_new_tokens,
+                                    "temperature": 0.0, "extra_body": caller.extra_body}
+    summary["prompt"] = prompt
+    if not n_done:
+        summary["infer_seconds"] = None
+    version_dir = OUTPUTS / ("scoring-v" + ev.SCORER_VERSION)
+    version_dir.mkdir(parents=True, exist_ok=True)
+    (version_dir / f"eval_{args.tag}.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    case_file = OUTPUTS / f"eval_{args.tag}_cases.txt"
+    case_file = version_dir / f"eval_{args.tag}_cases.txt"
     with open(case_file, "w", encoding="utf-8") as f:
         for c in cases[:40]:
             f.write(f"[{c['level']}] {c['image']}  json_valid={c['json_valid']}\n")
             f.write(f"  GT  : {c['gt']}\n")
             f.write(f"  PRED: {c['pred']}\n")
             if c["hallucinated_keys"]:
-                f.write(f"  幻觉字段: {c['hallucinated_keys']}\n")
+                f.write(f"  多出目标路径: {c['hallucinated_keys']}\n")
             if c["missing_keys"]:
                 f.write(f"  漏抽字段: {c['missing_keys']}\n")
             f.write("\n")
 
-    preds_file = OUTPUTS / f"eval_{args.tag}_preds.jsonl"
+    preds_file = version_dir / f"eval_{args.tag}_preds.jsonl"
     with open(preds_file, "w", encoding="utf-8") as f:
         for row in full:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     print()
-    print(f"  汇总  : {OUTPUTS / f'eval_{args.tag}.json'}")
+    print(f"  汇总  : {version_dir / f'eval_{args.tag}.json'}")
     print(f"  错例  : {case_file}  （{len(cases)} 条有问题）")
     print(f"  全量  : {preds_file}  （{len(full)} 条，供失败分析）")
     return 0

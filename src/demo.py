@@ -30,6 +30,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import os
@@ -49,7 +50,9 @@ OUTPUTS = ROOT / "outputs"
 LEXICON = ROOT / "data" / "lexicon" / "v1.json"
 
 MODEL_NAME = "unsloth/Qwen3-VL-2B-Instruct-unsloth-bnb-4bit"
-SFT_DIR = OUTPUTS / "sft_v1" / "lora"
+SFT_DIR = (OUTPUTS / "sft_layout_v1" / "lora"
+           if (OUTPUTS / "sft_layout_v1" / "lora").exists()
+           else OUTPUTS / "sft_v1" / "lora")
 MAX_NEW_TOKENS = 768
 TEST_FILE = PROCESSED / "test_ablation.jsonl"
 
@@ -59,10 +62,11 @@ MIN_SIM, MIN_GAP = 0.50, 0.05
 # 全局指标（同域 = test_ablation 102 条；跨域 = wildreceipt_test 前 100 条）。
 # 数字来源写在第三列，--check 会去核对能核对的那几个。
 GLOBAL_TIERS = [
-    ("① OCR 规则基线", None, None, "未做"),
-    ("② 2B 零样本", 0.7349, 0.3190, "outputs/eval_zero_abl.json"),
+    ("① OCR 规则基线", 0.8245, None, "outputs/ocr-test-v1/summary.json"),
+    ("② 2B 零样本", 0.6924, 0.3190, "outputs/evaluation-v2-final/eval_zero_abl.json"),
     ("② + 知识注入", 0.7870, None, "outputs/report_inject_zero_abl.md"),
-    ("③ 2B SFT 384px", 0.9782, 0.2842, "outputs/eval_abl_base.json"),
+    ("③ 2B SFT 384px", 0.9785, 0.2842, "outputs/evaluation-v2-final/eval_abl_base.json"),
+    ("③ + 版式增强", 0.9794, None, "outputs/scoring-v2.0.0/eval_layout_v1_regression.json"),
     ("③ + 知识注入", 0.9779, None, "outputs/report_inject_abl_base.md"),
     ("④ 8B 零样本", None, None, "未做"),
     ("⑤ API 上界", None, None, "待跑（DeepSeek / 百炼）"),
@@ -88,89 +92,44 @@ INJ = _load_module("_inj", ROOT / "src" / "inject_knowledge.py")
 EV = INJ.load_evaluate()
 INJ.EV = EV
 INJ.NORM = EV.normalize
+import review as REV  # noqa: E402
 
 
 # ============================================================ 展示用的摊平
 def flatten_pairs(gt: dict, pred: dict | None) -> dict:
-    """按 `evaluate.flatten` 的结构摊平，但**同时保留原始写法**供展示。
-
-    返回 {"gt": {...}, "pred": {...}}，每个 path 对应
-        {"raw": 原始字符串, "norm": 归一化值, "shape": 形状是否不符}
-
-    与 `evaluate.flatten` 的等价性由 `--check` 逐路径验证 —— 展示层不能
-    自己发明一套比较规则，否则屏幕上的红绿和报告里的 F1 是两回事。
-
-    两处刻意的差异：
-      * `raw` 保留模型原样（如 "￥1,234.00"），`norm` 用于判定；
-      * 零样本常把 `合计` 输出成标量。严格口径下它算漏抽（norm=""),
-        但展示层要把它显示出来并标注「形状不符」，所以额外保留 shape=True。
-    """
+    """Display raw values, but use the shared scorer for every normalized path."""
     pred_failed = pred is None
-    gt = EV._as_dict(gt)
-    pred = EV._as_dict(pred)
+    gt, pred = EV._as_dict(gt), EV._as_dict(pred)
+    gnorm, pnorm = EV.flatten(gt, pred)
 
-    gout: "OrderedDict[str, dict]" = OrderedDict()
-    pout: "OrderedDict[str, dict]" = OrderedDict()
-    slot_of_pi: dict[int, str] = {}          # 预测行下标 → flatten 的槽位编号
+    def raw_paths(obj):
+        out = {}
+        def visit(value, path):
+            out[path] = value
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    key = key.replace("\\", "\\\\").replace(".", "\\.").replace("[", "\\[").replace("]", "\\]")
+                    visit(child, f"{path}.{key}" if path else key)
+            elif isinstance(value, list):
+                for i, child in enumerate(value):
+                    visit(child, f"{path}[{i}]")
+        visit(obj, "")
+        return out
 
-    def put(bucket, path, raw, shape=False):
-        bucket[path] = {"raw": raw, "norm": EV.normalize(raw), "shape": shape}
+    def entries(obj, norms):
+        raw = raw_paths(obj)
+        return OrderedDict((key, {"raw": raw.get(key, ""), "norm": value, "shape": False})
+                           for key, value in norms.items())
 
-    # ---------------- 表头 ----------------
-    g_head, p_head = EV._as_dict(gt.get("表头")), EV._as_dict(pred.get("表头"))
-    for f in EV.HEAD_FIELDS:
-        gv = g_head.get(f, "")
-        if EV.normalize(gv):
-            put(gout, f"表头.{f}", gv)
-        pv = p_head.get(f, "")
-        if EV.normalize(pv):
-            put(pout, f"表头.{f}", pv)
-
-    # ---------------- 明细（行对齐复用官方实现） ----------------
-    g_rows, p_rows = EV._as_rows(gt.get("明细")), EV._as_rows(pred.get("明细"))
-    pairs = EV.align_rows(g_rows, p_rows)
-
-    for n, (gi, pi) in enumerate(pairs):
-        slot_of_pi[pi] = str(n)
-        for f in EV.ROW_FIELDS:
-            gv = g_rows[gi].get(f, "")
-            if EV.normalize(gv):
-                put(gout, f"明细[{n}].{f}", gv)
-            pv = p_rows[pi].get(f, "")
-            if EV.normalize(pv):
-                put(pout, f"明细[{n}].{f}", pv)
-
-    used_g = {p[0] for p in pairs}
-    used_p = {p[1] for p in pairs}
-    for k, gi in enumerate(i for i in range(len(g_rows)) if i not in used_g):
-        for f in EV.ROW_FIELDS:
-            gv = g_rows[gi].get(f, "")
-            if EV.normalize(gv):
-                put(gout, f"明细[unmatched_g{k}].{f}", gv)
-    for k, pi in enumerate(i for i in range(len(p_rows)) if i not in used_p):
-        slot_of_pi[pi] = f"unmatched_p{k}"
-        for f in EV.ROW_FIELDS:
-            pv = p_rows[pi].get(f, "")
-            if EV.normalize(pv):
-                put(pout, f"明细[unmatched_p{k}].{f}", pv)
-
-    # ---------------- 合计 ----------------
-    gv = EV._as_dict(gt.get("合计")).get("金额", "")
-    if EV.normalize(gv):
-        put(gout, "合计.金额", gv)
-
-    pt = pred.get("合计")
-    if isinstance(pt, dict):
-        pv = pt.get("金额", "")
-        if EV.normalize(pv):
-            put(pout, "合计.金额", pv)
-    elif pt is not None and EV.normalize(pt):
-        # 形状不符：展示出来，但不是有效值（严格口径计为漏抽）
-        pout["合计.金额"] = {"raw": pt, "norm": "", "shape": True}
-
-    return {"gt": gout, "pred": pout, "slot_of_pi": slot_of_pi,
-            "shape_wrong": bool(pout.get("合计.金额", {}).get("shape")),
-            "parse_failed": pred_failed}
+    gout, pout = entries(gt, gnorm), entries(pred, pnorm)
+    total = pred.get("合计")
+    shape_wrong = total is not None and not isinstance(total, dict)
+    if shape_wrong:
+        pout["合计.金额"] = {"raw": total, "norm": "", "shape": True}
+    rows = pred.get("明细")
+    return {"gt": gout, "pred": pout,
+            "slot_of_pi": {i: str(i) for i in range(len(rows))} if isinstance(rows, list) else {},
+            "shape_wrong": shape_wrong, "parse_failed": pred_failed}
 
 
 def remap_changed(changed: dict, slot_of_pi: dict) -> dict:
@@ -363,7 +322,7 @@ HEADER_HTML = f"""{SHELL_CSS}
   <div class="ht">MiniVLM · 工程材料清单字段抽取</div>
   <div class="hs">同一张单据 · 同一个 2B 模型 · 同一份 prompt —— 唯一变量是 <code>LoRA</code> 适配器
     （零样本靠 <code>disable_adapter()</code> 临时摘掉）。
-    下方四个面板与真值逐字段对照，右侧条为各档字段级 F1。</div>
+    下方四个面板与真值逐字段对照，右侧条为 v2 字段级 F1；全局对比表保留历史旧口径，尚未全部重算。</div>
   {_chips()}
 </div>
 """
@@ -374,28 +333,14 @@ def _esc(v: object) -> str:
 
 
 def _stray_keys(pred_obj: dict | None) -> list[str]:
-    """预测里超出 schema 的键。
-
-    ⚠ 这些键**官方口径完全不计入** —— `evaluate.flatten` 只遍历 schema 内的字段，
-    所以多写一个 `备注` 既不算 TP 也不算 FP。Demo 必须和它保持一致（否则屏幕上的
-    红绿和报告里的 F1 是两套账），但要在面板上显式提示，免得看的人以为漏显了。
-    """
-    if not isinstance(pred_obj, dict):
-        return []
-    top_ok = {"单据类型", "表头", "明细", "合计"}
-    out = [k for k in pred_obj if k not in top_ok]
-    rows = pred_obj.get("明细")
-    if isinstance(rows, list):
-        for i, r in enumerate(rows):
-            if isinstance(r, dict):
-                out += [f"明细[{i}].{k}" for k in r if k not in EV.ROW_FIELDS]
-    return out
+    from scoring import extra_fields
+    return extra_fields(pred_obj)
 
 
 def _sort_key(path: str):
     if path.startswith("表头."):
         g, idx, f = 0, 0, path.split(".", 1)[1]
-    elif path.startswith("明细["):
+    elif path.startswith("明细[") and "." in path:
         head, f = path.split(".", 1)
         inner = head[len("明细["):-1]
         if inner.startswith("unmatched"):
@@ -409,10 +354,12 @@ def _sort_key(path: str):
 
 
 def _group_title(path: str) -> str:
-    if path.startswith("表头."):
+    if path == "表头" or path.startswith("表头."):
         return "表头"
-    if path.startswith("合计."):
+    if path == "合计" or path.startswith("合计."):
         return "合计"
+    if not re.match(r"明细\[\d+\]", path):
+        return "单据信息与额外字段"
     inner = path.split(".", 1)[0][len("明细["):-1]
     if inner.startswith("unmatched_g"):
         return "明细 · 只有真值（模型漏整行）"
@@ -500,7 +447,7 @@ def render_panel(title: str, sub: str, gt: dict, pred_obj: dict | None,
     strays = _stray_keys(pred_obj)
     if strays:
         shown = "、".join(strays[:6]) + ("…" if len(strays) > 6 else "")
-        foot = ('<div class="note">另有 schema 之外的键未参与比对：'
+        foot = ('<div class="note">Schema 之外的键已计入多抽：'
                 f'<code>{_esc(shown)}</code> —— 官方口径不计入 F1，故此处也不标色。</div>')
 
     return (f"<div class='mvw'>{head}"
@@ -702,12 +649,12 @@ def run(image_path: str | None, size_label: str):
         err = ("<div class='mvw'><div class='ph'><span class='tier'>模型未就绪</span>"
                "</div><div class='body'>"
                f"<div class='raw'>{_esc(_LOAD_ERR)}</div></div></div>")
-        return err, "", "", "", err, ""
+        return err, "", "", "", err, "", "", "", {}
     if not image_path:
         msg = ("<div class='mvw'><div class='ph'><span class='tier'>等待输入</span></div>"
                "<div class='body'><div class='empty'>请在左侧上传一张单据，"
                "或从测试集里选一张（带真值）→ 点「开始抽取」。</div></div></div>")
-        return msg, "", "", "", msg, ""
+        return msg, "", "", "", msg, "", "", "", {}
 
     size = int(size_label)
     gt = find_gt_by_path(image_path)
@@ -761,7 +708,50 @@ def run(image_path: str | None, size_label: str):
         ("③ 2B SFT", gt, obj_s, f"{t_s:.1f}s"),
         ("③ + 知识注入", gt, obj_si, f"改动 {st_si['changed']} 处"),
     ])
-    return p1, p2, p3, p4, metrics, p5
+    editable = json.dumps(obj_s, ensure_ascii=False, indent=2) if obj_s is not None else raw_s
+    model_hash = hashlib.sha256((SFT_DIR / "adapter_model.safetensors").read_bytes()).hexdigest()[:12]
+    review_state = {
+        "sample_id": Path(image_path).stem,
+        "image_path": str(image_path),
+        "raw_output": raw_s,
+        "model_version": f"{SFT_DIR.relative_to(ROOT)}@{model_hash}",
+        "prompt_sha256": hashlib.sha256(load_prompt().encode("utf-8")).hexdigest(),
+    }
+    return p1, p2, p3, p4, metrics, p5, editable, REV.validation_html(editable), review_state
+
+
+def save_review_ui(state, edited_text, error_types, notes):
+    import gradio as gr
+    try:
+        saved = REV.save_review(state or {}, edited_text or "", error_types or [], notes or "")
+        choices = REV.list_reviews()
+        status = (f"<div style='color:#067647'><b>已保存复核记录</b><br>"
+                  f"修改字段 {len(saved['record']['modified_fields'])} 个；记录不会覆盖原始模型输出。"
+                  f"</div>")
+        return status, [saved["record_path"], saved["csv_path"]], gr.Dropdown(choices=choices, value=saved["record_path"])
+    except Exception as exc:  # noqa: BLE001
+        return f"<div style='color:#b42318'><b>保存失败：</b>{html.escape(str(exc))}</div>", [], gr.Dropdown(choices=REV.list_reviews())
+
+
+def refresh_reviews_ui():
+    import gradio as gr
+    return gr.Dropdown(choices=REV.list_reviews(), value=None)
+
+
+def load_review_ui(path):
+    if not path:
+        return "", "", {}, []
+    try:
+        record = REV.load_review(path)
+        text = json.dumps(record["reviewed_document"], ensure_ascii=False, indent=2)
+        state = {"sample_id": record.get("sample_id"), "image_path": record.get("image_path"),
+                 "raw_output": record.get("original_raw_output"), "model_version": record.get("model_version"),
+                 "prompt_sha256": record.get("prompt_sha256")}
+        csv_path = str(REV.REVIEW_ROOT / "exports" / (record["review_id"] + ".csv"))
+        files = [str(path)] + ([csv_path] if Path(csv_path).exists() else [])
+        return text, REV.validation_html(text), state, files
+    except Exception as exc:  # noqa: BLE001
+        return "", f"<div style='color:#b42318'>载入失败：{html.escape(str(exc))}</div>", {}, []
 
 
 def build_ui():
@@ -803,9 +793,33 @@ def build_ui():
                 with gr.Row():
                     p5 = gr.HTML()
 
+        with gr.Accordion("人工复核与导出", open=False):
+            gr.Markdown("编辑模型原始提取结果；金额关系只提示，不会自动改值。保存后可重新载入，并导出带审计信息的 JSON 与表格 CSV。")
+            review_state = gr.State({})
+            editor = gr.Code(label="可编辑 JSON", language="json", lines=20)
+            review_status = gr.HTML()
+            with gr.Row():
+                error_types = gr.CheckboxGroup(choices=REV.ERROR_TYPES, label="错误类型（可多选）")
+                notes = gr.Textbox(label="复核备注", lines=3)
+            with gr.Row():
+                validate_btn = gr.Button("重新校验")
+                save_btn = gr.Button("保存复核并导出", variant="primary")
+            review_files = gr.File(label="JSON / CSV 导出", file_count="multiple")
+            with gr.Row():
+                saved_dd = gr.Dropdown(choices=REV.list_reviews(), label="已保存复核记录", filterable=True)
+                refresh_btn = gr.Button("刷新记录")
+                load_btn = gr.Button("重新载入")
+
         dd.change(lambda v: label2path.get(v), inputs=dd, outputs=img_in)
         rnd.click(lambda: random.choice(list(label2path)), outputs=dd)
-        btn.click(run, inputs=[img_in, size_rd], outputs=[p1, p2, p3, p4, met, p5])
+        btn.click(run, inputs=[img_in, size_rd],
+                  outputs=[p1, p2, p3, p4, met, p5, editor, review_status, review_state])
+        validate_btn.click(REV.validation_html, inputs=editor, outputs=review_status)
+        save_btn.click(save_review_ui, inputs=[review_state, editor, error_types, notes],
+                       outputs=[review_status, review_files, saved_dd])
+        refresh_btn.click(refresh_reviews_ui, outputs=saved_dd)
+        load_btn.click(load_review_ui, inputs=saved_dd,
+                       outputs=[editor, review_status, review_state, review_files])
     return demo
 
 
@@ -924,7 +938,7 @@ def _check() -> int:
     h_miss = render_panel("t", "s", gt, {"表头": {}, "明细": [], "合计": {}})
     ck("漏抽→黄", 'class="miss"' in h_miss)
 
-    # 「多余」的官方语义：GT 该字段为空、模型却填了（未知键名如 备注 完全不参与比对）
+    # 多出目标值与 Schema 外字段均计入 FP。
     gt_nu = {"表头": {}, "明细": [{"序号": "1", "名称": "中砂"}],
              "合计": {"金额": "24054.00"}}
     pr_nu = {"表头": {}, "明细": [{"序号": "1", "名称": "中砂", "单位": "m3"}],
@@ -933,7 +947,7 @@ def _check() -> int:
     h_stray = render_panel("t", "s", gt, {"表头": {"项目名称": "x"},
                                           "明细": [{"名称": "中砂", "备注": "手写批注"}],
                                           "合计": {"金额": "1"}})
-    ck("schema 之外的键被显式提示", "未参与比对" in h_stray and "备注" in h_stray)
+    ck("schema 之外的键被显式提示", "已计入多抽" in h_stray and "备注" in h_stray)
 
     h_null = render_panel("t", "s", gt, None, "```json\n{truncated")
     ck("解析失败→不抛异常且提示截断", "解析失败" in h_null)
